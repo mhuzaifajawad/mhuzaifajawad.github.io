@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Work — ML Engineer</title>
+<meta name="description" content="Selected machine learning and computer vision projects: multimodal fusion, dataset engineering, robustness research, medical imaging, and published benchmarking.">
+<meta name="robots" content="noindex, follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="tb-left">
+      <span class="dots"><i></i><i></i><i></i></span>
+      <span class="tb-title">ml-engineer — bash — 96&times;28 — <span id="clk">--:--:--</span></span>
+    </div>
+    <button class="menu-btn" id="menuBtn">≡ menu</button>
+    <nav class="cmds" id="cmds">
+      <a href="index.html">home</a>
+      <a href="work.html" class="active">work</a>
+      <a href="services.html">services</a>
+      <a href="about.html">about</a>
+    </nav>
+  </div>
+</div>
+
+<header class="wrap" style="padding-top:56px;padding-bottom:8px">
+  <div class="prompt">$ <b data-type="ls -la ~/work --sort=impact"></b><span class="cursor"></span></div>
+  <h1 class="term">Selected <span class="g">work</span></h1>
+  <p class="sub">Projects spanning multimodal AI, dataset engineering, robustness research, medical imaging, and published benchmarking.</p>
+</header>
+
+<main class="wrap">
+  <section class="sec" style="padding-top:24px">
+
+    <div class="row rv">
+      <div class="meta"><span class="k">MULTIMODAL AI</span>video + wearable sensors<br>PyTorch · research</div>
+      <div>
+        <h3>Multimodal Human Activity Recognition <span class="m">84.9% Detection F1</span></h3>
+        <p>Built an end-to-end pipeline fusing RGB video and wearable IMU data to detect human transition activities in continuous streams. Designed a learned, input-conditioned gated fusion head that improved on maximum-score late fusion by +3.8% across 10 random seeds under strict leave-one-subject-out validation, winning on 9 of 10 seeds.</p>
+        <p>The learned gate produced stable, interpretable per-class trust weights — showing exactly when the model relies on motion versus visual evidence. Separately, tuning the temporal-suppression window delivered a further +13.8% improvement, unanimous across all validation folds.</p>
+        <div class="chips"><span class="chip">PyTorch</span><span class="chip">2D/3D-CNN</span><span class="chip">Sensor Fusion</span><span class="chip">LOSO Validation</span><span class="chip">Optuna</span></div>
+      </div>
+    </div>
+
+    <div class="row rv">
+      <div class="meta"><span class="k">DATA ENGINEERING</span>multi-view video<br>OpenCV · pipelines</div>
+      <div>
+        <h3>Multi-View Activity Dataset Pipeline <span class="m">81,681 frames</span></h3>
+        <p>Transformed raw, unorganized multi-camera recordings into a fully model-ready dataset. Handled synchronization and quality control across four camera views, standardized viewport generation, and trimmed footage into 272 labelled activity clips.</p>
+        <p>Produced frame and subject-crop extraction at scale, multi-level annotation files (clip, temporal-boundary, step, sequence, frame, and crop level), CSV manifests, label maps, and subject-independent train/validation/test splits — plus baseline training notebooks for immediate experimentation.</p>
+        <div class="chips"><span class="chip">OpenCV</span><span class="chip">Data Pipelines</span><span class="chip">Annotation</span><span class="chip">Multi-View</span></div>
+      </div>
+    </div>
+
+    <div class="row rv">
+      <div class="meta"><span class="k">COMPUTER VISION</span>robustness research<br>Taiwan</div>
+      <div>
+        <h3>Crowd Counting Under Adverse Weather <span class="m">distribution shift</span></h3>
+        <p>Developed a crowd-counting model robust to rain and reduced visibility. Generated synthetic adverse-weather data with OpenCV to cover conditions entirely absent from the original training distribution.</p>
+        <p>Evaluated performance across a range of visibility levels to identify precisely where the learned representation degrades — findings that directly inform how vision systems should be deployed in uncontrolled, real-world environments.</p>
+        <div class="chips"><span class="chip">OpenCV</span><span class="chip">Synthetic Data</span><span class="chip">Robustness Testing</span></div>
+      </div>
+    </div>
+
+    <div class="row rv">
+      <div class="meta"><span class="k">MEDICAL IMAGING</span>segmentation<br>nnU-Net v2</div>
+      <div>
+        <h3>Transfer Learning for Tumor Segmentation <span class="m">0.719 Dice</span></h3>
+        <p>Compared single-domain against multi-domain pre-training for liver-tumor segmentation using nnU-Net v2, demonstrating that anatomical diversity in pre-training outperforms task-specific depth — an 8% Dice improvement over the baseline.</p>
+        <div class="chips"><span class="chip">nnU-Net v2</span><span class="chip">Segmentation</span><span class="chip">Transfer Learning</span></div>
+      </div>
+    </div>
+
+    <div class="row rv">
+      <div class="meta"><span class="k">PUBLICATION</span>arXiv:2505.08259<br>benchmarking</div>
+      <div>
+        <h3>CNN vs. Vision Transformer Efficiency Study</h3>
+        <p>A systematic comparison of convolutional networks and Vision Transformers on Tiny ImageNet and DermaMNIST, examining accuracy–compute trade-offs across architectures for constrained image-classification tasks. Published on arXiv as a co-authored study.</p>
+        <div class="chips"><span class="chip">CNN</span><span class="chip">Vision Transformer</span><span class="chip">Benchmarking</span><span class="chip">Efficiency</span></div>
+      </div>
+    </div>
+
+    <div class="row rv">
+      <div class="meta"><span class="k">SCIENTIFIC ML</span>signal classification<br>interpretability</div>
+      <div>
+        <h3>Signal Classification from Wavelet Scalograms <span class="m">&gt;95% accuracy</span></h3>
+        <p>A dual-pipeline CNN classifying physical parameters from complex scientific signals, using both raw waveforms and 2D wavelet scalograms as complementary representations.</p>
+        <p>Applied Grad-CAM, integrated gradients, and temporal-masking ablation to confirm the model based its decisions on physically meaningful signal structure rather than dataset artifacts — a validation step that matters whenever a model's reasoning has to be defensible.</p>
+        <div class="chips"><span class="chip">1D/2D CNN</span><span class="chip">Wavelet Transform</span><span class="chip">Grad-CAM</span><span class="chip">Interpretability</span></div>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="sec" style="padding-top:10px">
+    <div class="cta rv">
+      <h2>Want something similar built?</h2>
+      <p>These are research-grade builds — the same rigor applies to production work.</p>
+      <div class="note">Please contact me through Upwork to discuss your project.</div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap f">
+    <span>&copy; 2026 — ML &amp; Computer Vision Engineering</span>
+    <span class="hire">status: available for work</span>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

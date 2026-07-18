@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ML Engineer — Computer Vision &amp; Sensor AI</title>
+<meta name="description" content="Machine learning engineer building computer vision, sensor, and time-series systems that hold up on real-world data.">
+<meta name="robots" content="noindex, follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="tb-left">
+      <span class="dots"><i></i><i></i><i></i></span>
+      <span class="tb-title">ml-engineer — bash — 96&times;28 — <span id="clk">--:--:--</span></span>
+    </div>
+    <button class="menu-btn" id="menuBtn">≡ menu</button>
+    <nav class="cmds" id="cmds">
+      <a href="index.html" class="active">home</a>
+      <a href="work.html">work</a>
+      <a href="services.html">services</a>
+      <a href="about.html">about</a>
+    </nav>
+  </div>
+</div>
+
+<header class="wrap" style="padding-top:64px;padding-bottom:20px">
+  <div class="prompt">$ <b data-type="whoami --role"></b><span class="cursor"></span></div>
+  <h1 class="term">Machine learning for<br><span class="g">real-world data</span></h1>
+  <p class="sub">I build <b>computer vision, sensor, and time-series</b> systems for researchers, startups, and engineering teams &mdash; models that keep working once they leave the lab.</p>
+  <div class="btns">
+    <a href="work.html" class="btn pri">./view_work</a>
+    <a href="services.html" class="btn">./services</a>
+  </div>
+
+  <div class="out" style="margin-top:30px">
+    <div><span class="ok">✓</span> multimodal fusion &middot; video + wearable sensors</div>
+    <div><span class="ok">✓</span> robustness testing under distribution shift</div>
+    <div><span class="ok">✓</span> dataset pipelines, annotation &amp; reproducible evaluation</div>
+    <div><span class="ok">✓</span> interpretability: Grad-CAM, integrated gradients, ablations</div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="sec">
+    <div class="sec-head rv"><span class="idx">[01]</span><h2>At a glance</h2><span class="rule"></span></div>
+    <div class="stats rv">
+      <div class="stat"><div class="n">84.9%</div><div class="l">DETECTION F1 — HAR FUSION</div></div>
+      <div class="stat"><div class="n">81.6k</div><div class="l">FRAMES PIPELINED</div></div>
+      <div class="stat"><div class="n">3</div><div class="l">COUNTRIES OF RESEARCH</div></div>
+      <div class="stat"><div class="n">1</div><div class="l">arXiv PUBLICATION</div></div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head rv"><span class="idx">[02]</span><h2>What I do</h2><span class="rule"></span></div>
+    <div class="grid g3">
+      <div class="card rv">
+        <div class="tag">// VISION</div>
+        <h3>Computer Vision</h3>
+        <p>Classification, detection, segmentation, and activity recognition &mdash; with explicit testing for the conditions that break models in production.</p>
+      </div>
+      <div class="card rv">
+        <div class="tag">// SENSORS</div>
+        <h3>Sensor &amp; Time-Series</h3>
+        <p>Wearable IMU, physiological, and multichannel streams: preprocessing, CNN-LSTM architectures, and sliding-window detection.</p>
+      </div>
+      <div class="card rv">
+        <div class="tag">// FUSION</div>
+        <h3>Multimodal Fusion</h3>
+        <p>Combining video, sensor, and other sources into one decision using learned fusion that beats naive rules and stays explainable.</p>
+      </div>
+    </div>
+    <div class="btns rv" style="margin-top:20px">
+      <a href="services.html" class="btn">$ cat services.md →</a>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head rv"><span class="idx">[03]</span><h2>Recent work</h2><span class="rule"></span></div>
+
+    <div class="row rv">
+      <div class="meta"><span class="k">MULTIMODAL AI</span>video + wearable sensors</div>
+      <div>
+        <h3>Multimodal Activity Recognition <span class="m">84.9% Detection F1</span></h3>
+        <p>End-to-end pipeline fusing RGB video and wearable IMU to detect transition activities in continuous streams. A learned input-conditioned fusion head improved on maximum-score fusion by +3.8% under leave-one-subject-out validation.</p>
+        <div class="chips"><span class="chip">PyTorch</span><span class="chip">3D-CNN</span><span class="chip">Sensor Fusion</span><span class="chip">LOSO</span></div>
+      </div>
+    </div>
+
+    <div class="row rv">
+      <div class="meta"><span class="k">DATA ENGINEERING</span>multi-view video</div>
+      <div>
+        <h3>Multi-View Dataset Pipeline <span class="m">81,681 frames</span></h3>
+        <p>Raw multi-camera footage turned into a model-ready dataset: four-view synchronization, quality control, activity trimming, frame and crop extraction, multi-level annotation, and subject-independent splits.</p>
+        <div class="chips"><span class="chip">OpenCV</span><span class="chip">Pipelines</span><span class="chip">Annotation</span></div>
+      </div>
+    </div>
+
+    <div class="btns rv" style="margin-top:22px">
+      <a href="work.html" class="btn">$ ls -la work/ →</a>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="cta rv">
+      <h2>Have a project in mind?</h2>
+      <p>Available for machine learning, computer vision, and sensor-data work &mdash; from prototype through validated system.</p>
+      <div class="note">Please contact me through Upwork to discuss your project.</div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap f">
+    <span>&copy; 2026 — ML &amp; Computer Vision Engineering</span>
+    <span class="hire">status: available for work</span>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

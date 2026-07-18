@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>About — ML Engineer</title>
+<meta name="description" content="Background: MSc Data Science, machine learning and computer vision research across Pakistan, Taiwan, and Kazakhstan. Technical stack and approach.">
+<meta name="robots" content="noindex, follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="tb-left">
+      <span class="dots"><i></i><i></i><i></i></span>
+      <span class="tb-title">ml-engineer — bash — 96&times;28 — <span id="clk">--:--:--</span></span>
+    </div>
+    <button class="menu-btn" id="menuBtn">≡ menu</button>
+    <nav class="cmds" id="cmds">
+      <a href="index.html">home</a>
+      <a href="work.html">work</a>
+      <a href="services.html">services</a>
+      <a href="about.html" class="active">about</a>
+    </nav>
+  </div>
+</div>
+
+<header class="wrap" style="padding-top:56px;padding-bottom:8px">
+  <div class="prompt">$ <b data-type="cat about.txt"></b><span class="cursor"></span></div>
+  <h1 class="term">Background &amp; <span class="g">approach</span></h1>
+  <p class="sub">Machine learning engineer and researcher with an MSc in Data Science and research experience across three countries.</p>
+</header>
+
+<main class="wrap">
+
+  <section class="sec" style="padding-top:24px">
+    <div class="sec-head rv"><span class="idx">[01]</span><h2>Profile</h2><span class="rule"></span></div>
+    <div class="out rv">
+      <p style="color:var(--muted);margin-bottom:12px">I work on machine learning for real-world sensing and perception &mdash; computer vision, sensor and time-series data, and the places where those two meet. Most of my projects share a common thread: making models that don't just score well on a benchmark, but hold up when the data shifts.</p>
+      <p style="color:var(--muted);margin-bottom:12px">That focus came out of research. Building activity-recognition systems from wearable sensors and video taught me how quickly accuracy collapses on an unseen subject. Testing crowd-counting models under synthetic rain showed exactly where a learned representation gives out. Both experiences shaped how I evaluate everything now: on data the model has never touched, in conditions that resemble the real deployment.</p>
+      <p style="color:var(--muted)">I also care about being able to explain a model's decision. Interpretability tools &mdash; Grad-CAM, integrated gradients, channel-importance, ablation studies &mdash; are part of my default workflow, not an afterthought.</p>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head rv"><span class="idx">[02]</span><h2>Education</h2><span class="rule"></span></div>
+    <div class="row rv">
+      <div class="meta"><span class="k">2024 — 2026</span>Kazakhstan</div>
+      <div>
+        <h3>MSc, Data Science</h3>
+        <p>Nazarbayev University. Coursework in computer vision, intelligent systems, big data analytics, natural language processing, and probability &amp; statistics.</p>
+      </div>
+    </div>
+    <div class="row rv">
+      <div class="meta"><span class="k">2018 — 2022</span>Pakistan</div>
+      <div>
+        <h3>BSc, Computer Systems Engineering</h3>
+        <p>University of Engineering &amp; Technology, Peshawar.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head rv"><span class="idx">[03]</span><h2>Research experience</h2><span class="rule"></span></div>
+    <div class="row rv">
+      <div class="meta"><span class="k">RESEARCH ASSISTANT</span>multimodal AI</div>
+      <div>
+        <h3>Machine Learning &amp; Multimodal AI</h3>
+        <p>Multimodal human activity recognition for smart-care applications, using wearable sensor data and RGB video. Built the end-to-end pipeline and a learned fusion model evaluated through leave-one-subject-out validation.</p>
+      </div>
+    </div>
+    <div class="row rv">
+      <div class="meta"><span class="k">GRADUATE RA</span>scientific ML</div>
+      <div>
+        <h3>Scientific Machine Learning</h3>
+        <p>Machine-learning research across scientific signal classification and environmental time-series modelling, including custom loss design and interpretability analysis.</p>
+      </div>
+    </div>
+    <div class="row rv">
+      <div class="meta"><span class="k">RESEARCH TRAINEE</span>computer vision · Taiwan</div>
+      <div>
+        <h3>Computer Vision Under Adverse Conditions</h3>
+        <p>Developed and evaluated crowd-counting models under rain and reduced visibility, generating synthetic weather data and mapping performance across visibility levels.</p>
+      </div>
+    </div>
+    <div class="row rv">
+      <div class="meta"><span class="k">RESEARCH ASSISTANT</span>embedded ML</div>
+      <div>
+        <h3>ML on Resource-Constrained Hardware</h3>
+        <p>Trained and benchmarked models on embedded hardware under tight memory and compute limits, running ablation studies to identify which components mattered most.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec">
+    <div class="sec-head rv"><span class="idx">[04]</span><h2>Technical stack</h2><span class="rule"></span></div>
+    <div class="grid g2">
+      <div class="card rv">
+        <div class="tag">// LANGUAGES</div>
+        <h3>Programming</h3>
+        <p>Python, MATLAB, C++</p>
+      </div>
+      <div class="card rv">
+        <div class="tag">// FRAMEWORKS</div>
+        <h3>Deep Learning</h3>
+        <p>PyTorch, TensorFlow, Keras</p>
+      </div>
+      <div class="card rv">
+        <div class="tag">// LIBRARIES</div>
+        <h3>Data &amp; Vision</h3>
+        <p>NumPy, Pandas, Scikit-learn, OpenCV</p>
+      </div>
+      <div class="card rv">
+        <div class="tag">// METHODS</div>
+        <h3>Techniques</h3>
+        <p>Multimodal fusion, 3D CNN, CNN-LSTM, Grad-CAM, integrated gradients, cross-validation, hyperparameter optimization (Optuna), wavelet transforms, custom loss design</p>
+      </div>
+      <div class="card rv">
+        <div class="tag">// TOOLS</div>
+        <h3>Workflow</h3>
+        <p>Git, Linux, Jupyter Notebook, Google Colab, LaTeX</p>
+      </div>
+      <div class="card rv">
+        <div class="tag">// LANGUAGES</div>
+        <h3>Communication</h3>
+        <p>English (fluent), Urdu (native)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" style="padding-top:0">
+    <div class="cta rv">
+      <h2>Ready when you are.</h2>
+      <p>Available for machine learning, computer vision, and sensor-data projects.</p>
+      <div class="note">Please contact me through Upwork to discuss your project.</div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap f">
+    <span>&copy; 2026 — ML &amp; Computer Vision Engineering</span>
+    <span class="hire">status: available for work</span>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
