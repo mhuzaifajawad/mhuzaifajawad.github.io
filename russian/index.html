@@ -1,1 +1,2476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Учи русский · Learn Russian</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=PT+Sans:ital,wght@0,400;0,700;1,400&family=PT+Mono&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#EBE2D0;
+    --paper-2:#E3D8C2;
+    --ink:#16140E;
+    --ink-soft:#3a362c;
+    --red:#CC2222;
+    --red-deep:#9E1B1B;
+    --gold:#D99A2B;
+    --card:#F6F0E2;
+    --line:rgba(22,20,14,.16);
+    --line-strong:rgba(22,20,14,.4);
+    --ok:#2E7D4F;
+    --ok-bg:#e6efe4;
+    --err:#C0392B;
+    --err-bg:#f3e2df;
+    --shadow:6px 6px 0 var(--ink);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:'PT Sans',system-ui,sans-serif;line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* subtle constructivist paper texture */
+  body::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.06;
+    background-image:repeating-linear-gradient(135deg,var(--ink) 0 1px,transparent 1px 22px);
+  }
+  h1,h2,h3,.display{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.02em;font-weight:600;line-height:1.05}
+  a{color:var(--red-deep)}
+  .cyr{font-family:'PT Sans',sans-serif}
+  .mono{font-family:'PT Mono',monospace}
 
+  /* ---------- Layout ---------- */
+  .wrap{position:relative;z-index:1;max-width:1180px;margin:0 auto;padding:0 20px}
+  header.top{
+    position:sticky;top:0;z-index:20;background:var(--ink);color:var(--paper);
+    border-bottom:4px solid var(--red);
+  }
+  .top-inner{max-width:1180px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:18px}
+  .brand{font-family:'Oswald';font-weight:700;font-size:22px;letter-spacing:.04em;text-transform:uppercase;color:var(--paper);white-space:nowrap}
+  .brand b{color:var(--red)}
+  .progress-wrap{margin-left:auto;display:flex;align-items:center;gap:10px;font-family:'Oswald';font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+  .bar{width:130px;height:10px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.3)}
+  .bar > i{display:block;height:100%;width:0;background:var(--red);transition:width .4s ease}
+
+  main{display:grid;grid-template-columns:230px 1fr;gap:34px;padding:30px 0 90px}
+  nav.side{position:sticky;top:82px;align-self:start;max-height:calc(100vh - 110px);overflow:auto}
+  nav.side ol{list-style:none;margin:0;padding:0;counter-reset:les}
+  nav.side li{counter-increment:les}
+  nav.side button{
+    width:100%;text-align:left;background:transparent;border:none;cursor:pointer;
+    font-family:'Oswald';text-transform:uppercase;letter-spacing:.03em;font-size:14px;
+    color:var(--ink-soft);padding:9px 10px 9px 40px;position:relative;border-left:3px solid transparent;
+  }
+  nav.side button::before{
+    content:counter(les,decimal-leading-zero);position:absolute;left:8px;top:9px;
+    font-size:12px;color:var(--red-deep);font-weight:700;
+  }
+  nav.side button:hover{background:var(--paper-2)}
+  nav.side button.active{color:var(--ink);border-left-color:var(--red);background:var(--paper-2);font-weight:600}
+  nav.side button.done::after{content:"✓";color:var(--ok);margin-left:6px;font-family:'PT Sans'}
+
+  /* ---------- Hero ---------- */
+  .hero{position:relative;background:var(--ink);color:var(--paper);overflow:hidden;border-bottom:6px solid var(--red)}
+  .hero .wrap{padding:56px 20px 60px}
+  .hero-diag{position:absolute;right:-8%;top:-30%;width:60%;height:180%;background:var(--red);transform:rotate(18deg);opacity:.92}
+  .hero-diag2{position:absolute;right:-4%;top:-30%;width:60%;height:180%;background:transparent;border-right:6px solid var(--gold);transform:rotate(18deg)}
+  .hero h1{font-size:clamp(42px,8vw,92px);font-weight:700;margin:0;line-height:.92}
+  .hero h1 .r{color:var(--red)}
+  .hero .sub{position:relative;max-width:540px;margin-top:18px;font-size:18px;color:#e7ddc8}
+  .hero .kicker{font-family:'Oswald';letter-spacing:.35em;text-transform:uppercase;font-size:13px;color:var(--gold);margin-bottom:14px}
+  .hero .cta{position:relative;margin-top:26px;display:inline-flex;gap:12px;flex-wrap:wrap}
+  .btn{font-family:'Oswald';text-transform:uppercase;letter-spacing:.06em;font-weight:600;font-size:15px;
+    border:3px solid var(--ink);background:var(--paper);color:var(--ink);padding:11px 20px;cursor:pointer;box-shadow:var(--shadow);transition:transform .08s ease,box-shadow .08s ease}
+  .btn:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 var(--ink)}
+  .btn:active{transform:translate(2px,2px);box-shadow:2px 2px 0 var(--ink)}
+  .btn.red{background:var(--red);color:#fff;border-color:#fff;box-shadow:6px 6px 0 var(--red-deep)}
+  .btn.ghost{background:transparent;color:var(--paper);border-color:var(--paper);box-shadow:none}
+  .btn.ghost:hover{background:var(--paper);color:var(--ink)}
+
+  /* ---------- Lesson content ---------- */
+  section.lesson{display:none;animation:fade .3s ease}
+  section.lesson.show{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .eyebrow{font-family:'Oswald';letter-spacing:.28em;text-transform:uppercase;font-size:12px;color:var(--red-deep);display:flex;align-items:center;gap:10px}
+  .eyebrow::before{content:"";width:34px;height:3px;background:var(--red)}
+  .lesson h2{font-size:clamp(30px,5vw,46px);margin:.25em 0 .1em}
+  .lesson .lead{font-size:18px;max-width:70ch;color:var(--ink-soft)}
+  .card{background:var(--card);border:3px solid var(--ink);box-shadow:var(--shadow);padding:22px;margin:22px 0}
+  .card h3{font-size:20px;margin:0 0 12px;display:flex;align-items:center;gap:10px}
+  .card h3 .tag{font-family:'Oswald';font-size:11px;background:var(--ink);color:var(--paper);padding:3px 8px;letter-spacing:.1em}
+
+  .note{border-left:5px solid var(--gold);background:#f7efd9;padding:12px 16px;margin:16px 0;font-size:15.5px}
+  .note b{color:var(--red-deep)}
+
+  /* vocab list */
+  .vocab{display:grid;gap:2px}
+  .vrow{display:grid;grid-template-columns:1fr 1fr 1.2fr auto;gap:14px;align-items:center;background:var(--card);
+    border:2px solid var(--ink);padding:10px 12px}
+  .vrow .ru{font-size:22px;font-weight:700}
+  .vrow .tr{font-family:'PT Mono';font-size:13px;color:var(--ink-soft)}
+  .vrow .en{font-size:15px}
+  .say{border:2px solid var(--ink);background:var(--paper);width:38px;height:38px;cursor:pointer;font-size:16px;line-height:1;
+    display:grid;place-items:center;flex:none;transition:background .12s}
+  .say:hover{background:var(--red);color:#fff;border-color:var(--red)}
+  .say.playing{background:var(--gold);border-color:var(--gold)}
+
+  /* ---------- Alphabet grid (signature) ---------- */
+  .alpha-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px;margin-top:8px}
+  .letter{position:relative;background:var(--card);border:3px solid var(--ink);aspect-ratio:1/1;cursor:pointer;
+    display:grid;place-items:center;overflow:hidden;transition:transform .1s}
+  .letter:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--red)}
+  .letter .big{font-family:'Oswald';font-weight:700;font-size:38px;line-height:1;margin-top:4px}
+  .letter .lower{font-family:'Oswald';font-weight:500;font-size:13px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--red-deep);line-height:1.05;text-align:center;padding:2px 4px 4px}
+  .letter.sel .lower{color:#ffe}
+  .letter .corner{position:absolute;top:4px;left:6px;font-family:'PT Mono';font-size:10px;color:var(--red-deep)}
+  .letter.sel{background:var(--red);color:#fff;border-color:var(--ink)}
+  .letter.sel .lower{color:#ffe}
+  .letter.sel .corner{color:#fff}
+  .letter-detail{background:var(--ink);color:var(--paper);border:3px solid var(--red);padding:18px 20px;margin-top:14px;
+    display:none;grid-template-columns:auto 1fr auto;gap:20px;align-items:center}
+  .letter-detail.show{display:grid}
+  .letter-detail .glyph{font-family:'Oswald';font-weight:700;font-size:64px;color:var(--red);line-height:.9}
+  .letter-detail .info b{color:var(--gold);font-family:'Oswald';letter-spacing:.05em}
+  .letter-detail .ex{font-size:19px;font-weight:700}
+
+  /* ---------- Flashcards ---------- */
+  .fc-stage{display:flex;flex-direction:column;align-items:center;gap:16px}
+  .flashcard{width:min(420px,100%);height:230px;perspective:1200px;cursor:pointer}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+  .flashcard.flip .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;border:3px solid var(--ink);box-shadow:var(--shadow);
+    display:grid;place-items:center;text-align:center;padding:18px}
+  .fc-front{background:var(--card)}
+  .fc-back{background:var(--ink);color:var(--paper);transform:rotateY(180deg)}
+  .fc-front .ru{font-size:44px;font-weight:700}
+  .fc-front .hint{font-family:'Oswald';letter-spacing:.2em;text-transform:uppercase;font-size:11px;color:var(--red-deep);margin-top:8px}
+  .fc-back .tr{font-family:'PT Mono';color:var(--gold);font-size:16px}
+  .fc-back .en{font-size:26px;font-weight:700;margin-top:6px}
+  .fc-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:center}
+  .fc-count{font-family:'Oswald';letter-spacing:.1em;font-size:14px}
+
+  /* ---------- Quiz ---------- */
+  .quiz .q{margin:0 0 6px;font-weight:700;font-size:17px}
+  .quiz .q .qn{color:var(--red-deep);font-family:'Oswald';margin-right:6px}
+  .opts{display:grid;gap:8px;margin:10px 0 4px}
+  .opt{text-align:left;border:2px solid var(--ink);background:var(--paper);padding:11px 14px;cursor:pointer;font-size:16px;font-family:inherit;transition:background .1s}
+  .opt:hover:not(:disabled){background:var(--paper-2)}
+  .opt:disabled{cursor:default}
+  .opt.correct{background:var(--ok-bg);border-color:var(--ok);color:#1c5334;font-weight:700}
+  .opt.wrong{background:var(--err-bg);border-color:var(--err);color:#7a251d;text-decoration:line-through}
+  .explain{display:none;margin-top:8px;font-size:15px;border-left:4px solid var(--ok);padding:8px 12px;background:var(--ok-bg)}
+  .explain.show{display:block}
+  .quiz-score{font-family:'Oswald';font-size:16px;letter-spacing:.05em;margin-top:14px}
+
+  .lesson-foot{display:flex;justify-content:space-between;gap:12px;margin-top:34px;flex-wrap:wrap}
+  .mark-done{font-family:'Oswald';text-transform:uppercase;letter-spacing:.06em;border:3px solid var(--ok);background:var(--paper);color:var(--ok);padding:11px 18px;cursor:pointer;font-weight:600;box-shadow:5px 5px 0 var(--ok)}
+  .mark-done.is-done{background:var(--ok);color:#fff}
+  .mark-done.is-done:hover{background:var(--red);border-color:var(--red);box-shadow:5px 5px 0 var(--red-deep)}
+
+  footer.foot{background:var(--ink);color:#cfc6b2;padding:26px 0;font-size:14px;text-align:center;border-top:5px solid var(--red)}
+  footer.foot .mono{color:var(--gold)}
+
+  .skip{position:absolute;left:-999px}
+  .skip:focus{left:12px;top:8px;z-index:50;background:#fff;padding:8px;border:2px solid var(--red)}
+  :focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+
+  @media(max-width:860px){
+    main{grid-template-columns:1fr;gap:18px;padding-top:16px}
+    nav.side{position:static;max-height:none;border:2px solid var(--ink);background:var(--card);padding:6px}
+    nav.side ol{display:flex;flex-wrap:wrap;gap:4px}
+    nav.side li{flex:1 1 auto}
+    nav.side button{padding:8px 8px 8px 26px;font-size:12px}
+    nav.side button::before{left:6px;top:8px}
+    .vrow{grid-template-columns:1fr auto;grid-auto-rows:min-content}
+    .vrow .tr{grid-column:1/2}
+    .vrow .en{grid-column:1/2}
+    .vrow .say{grid-row:1/4;grid-column:2}
+    .progress-wrap .lbl{display:none}
+  }
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+  /* ---------- Grammar blocks ---------- */
+  .card.grammar{background:var(--card)}
+  .gbody{font-size:16px}
+  .gbody b{color:var(--red-deep)}
+  .gbody p{margin:.5em 0}
+  .sublabel{font-family:'Oswald';text-transform:uppercase;letter-spacing:.12em;font-size:12px;color:var(--red-deep);margin:18px 0 8px;display:flex;align-items:center;gap:8px}
+  .sublabel::before{content:"";width:20px;height:3px;background:var(--red)}
+  .tbl-wrap{overflow-x:auto;margin:12px 0}
+  table.gtbl{border-collapse:collapse;width:100%;font-size:15px;background:var(--paper)}
+  table.gtbl th{background:var(--ink);color:var(--paper);font-family:'Oswald';text-transform:uppercase;letter-spacing:.04em;font-size:12px;padding:8px 10px;text-align:left;border:2px solid var(--ink)}
+  table.gtbl td{border:2px solid var(--ink);padding:7px 10px;vertical-align:top}
+  table.gtbl td.rh{font-weight:700;background:var(--paper-2);white-space:nowrap}
+  table.gtbl .cyr{font-size:16px}
+  .exlist{display:grid;gap:6px}
+  .exrow{display:flex;gap:10px;align-items:flex-start;background:var(--paper);border:2px solid var(--ink);padding:8px 10px}
+  .ex-ru{font-size:17px;font-weight:700}
+  .ex-tr{font-family:'PT Mono';font-size:12px;color:var(--ink-soft)}
+  .ex-en{font-size:14px;color:var(--ink-soft)}
+  .say.sm{width:30px;height:30px;font-size:13px;flex:none}
+  .constr{display:grid;gap:8px}
+  .constr-row{border:2px solid var(--ink);border-left:6px solid var(--red);background:var(--paper);padding:10px 12px}
+  .pat{font-family:'PT Mono';font-weight:700;font-size:15px}
+  .gloss{font-size:14px;color:var(--ink-soft);margin:2px 0 5px}
+  .cex{font-size:15px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+  /* ---------- Practice drills ---------- */
+  .card.drills{background:var(--card)}
+  .drill-item{border:2px solid var(--ink);border-left:6px solid var(--gold);background:var(--paper);padding:12px 14px;margin:10px 0}
+  .drill-item.right{border-left-color:var(--ok)}
+  .drill-item.wrong{border-left-color:var(--err)}
+  .drill-q{font-size:16px;margin-bottom:9px}
+  .drill-q .dn{font-family:'Oswald';color:var(--red-deep);margin-right:6px;font-weight:600}
+  .drill-in{display:flex;gap:8px;flex-wrap:wrap}
+  .drill-input{font-family:'PT Sans';font-size:17px;padding:8px 11px;border:2px solid var(--ink);background:#fff;min-width:170px;flex:1}
+  .drill-input:disabled{background:var(--ok-bg);color:#1c5334;font-weight:700}
+  .btn.sm-btn{font-size:13px;padding:8px 16px;box-shadow:3px 3px 0 var(--ink)}
+  .drill-fb{margin-top:9px;font-size:15px;display:none}
+  .drill-fb.show{display:block}
+  .drill-item.right .drill-fb{color:#1c5334}
+  .drill-item.wrong .drill-fb{color:#7a251d}
+  .drill-fb b{font-weight:700}
+  .drill-score{font-family:'Oswald';font-size:15px;letter-spacing:.05em;margin-top:14px}
+
+  /* ---------- Reading passages ---------- */
+  .card.reading{background:var(--card)}
+  .rd-controls{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+  .rd-text{display:grid;gap:6px}
+  .rd-line{display:flex;gap:10px;align-items:flex-start;background:var(--paper);border:2px solid var(--ink);padding:8px 10px}
+  .rd-ru{font-size:17px;font-weight:700;display:block}
+  .rd-en{font-size:14px;color:var(--ink-soft);display:none;margin-top:3px}
+  .rd-text.show-en .rd-en{display:block}
+  /* ---------- Nav units ---------- */
+  nav.side li.nav-unit{counter-increment:none;list-style:none;font-family:'Oswald';text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--paper);background:var(--red-deep);padding:5px 10px;margin:12px 0 4px;font-weight:600}
+  nav.side li.nav-unit:first-child{margin-top:0}
+  @media(max-width:860px){ nav.side li.nav-unit{flex-basis:100%;width:100%;text-align:center} }
+</style>
+</head>
+<body>
+<a class="skip" href="#content">Skip to lessons</a>
+
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">УЧИ <b>·</b> RUSSKIY</div>
+    <div class="progress-wrap">
+      <span class="lbl">Progress</span>
+      <span class="bar"><i id="progBar"></i></span>
+      <span id="progText" class="mono">0/0</span>
+    </div>
+  </div>
+</header>
+
+<div class="hero" id="top">
+  <div class="hero-diag"></div>
+  <div class="hero-diag2"></div>
+  <div class="wrap">
+    <div class="kicker">Cyrillic · Pronunciation · Real phrases</div>
+    <h1>Learn<br><span class="r">русский</span><br>язык</h1>
+    <p class="sub">A hands-on course built the way the good books teach it — start with the alphabet, hear every sound, and walk away able to actually <em>say</em> things. Made for talking to someone you love.</p>
+    <div class="cta">
+      <button class="btn red" onclick="go('alphabet')">Start with the alphabet →</button>
+      <button class="btn ghost" onclick="go('love')">Skip to sweet talk ♥</button>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+<main>
+  <nav class="side" aria-label="Lessons">
+    <ol id="lessonNav"></ol>
+  </nav>
+
+  <div id="content"></div>
+</main>
+</div>
+
+<footer class="foot">
+  <div>Built for practice, not perfection — click, listen, repeat. · <span class="mono">Удачи!</span> (Good luck!)</div>
+  <div style="margin-top:6px;opacity:.7">Progress is saved in your browser. Audio uses your device's Russian voice — install a Russian voice pack for the clearest sound.</div>
+</footer>
+
+<script>
+/* ============================================================
+   DATA — extend freely: add a lesson object to LESSONS.
+   type: 'alphabet' | 'vocab'  (vocab lessons auto-build
+   flashcards from their `words`, plus an optional quiz).
+   ============================================================ */
+const ALPHABET = [
+  {u:"А",l:"а",name:"A",tr:"a",sound:"like <b>a</b> in father",ex:"мама",exen:"mum"},
+  {u:"Б",l:"б",name:"Be",tr:"b",sound:"like <b>b</b> in boy",ex:"брат",exen:"brother"},
+  {u:"В",l:"в",name:"Ve",tr:"v",sound:"like <b>v</b> in van",ex:"вода",exen:"water"},
+  {u:"Г",l:"г",name:"Ge",tr:"g",sound:"like <b>g</b> in go",ex:"город",exen:"city"},
+  {u:"Д",l:"д",name:"De",tr:"d",sound:"like <b>d</b> in dog",ex:"дом",exen:"house"},
+  {u:"Е",l:"е",name:"Ye",tr:"ye",sound:"like <b>ye</b> in yes",ex:"нет",exen:"no"},
+  {u:"Ё",l:"ё",name:"Yo",tr:"yo",sound:"like <b>yo</b> in yolk (always stressed)",ex:"ёлка",exen:"fir tree"},
+  {u:"Ж",l:"ж",name:"Zhe",tr:"zh",sound:"like <b>s</b> in pleasure",ex:"жена",exen:"wife"},
+  {u:"З",l:"з",name:"Ze",tr:"z",sound:"like <b>z</b> in zoo",ex:"зима",exen:"winter"},
+  {u:"И",l:"и",name:"I",tr:"ee",sound:"like <b>ee</b> in see",ex:"мир",exen:"peace/world"},
+  {u:"Й",l:"й",name:"Y (short I)",tr:"y",sound:"short <b>y</b>, like in boy",ex:"чай",exen:"tea"},
+  {u:"К",l:"к",name:"Ka",tr:"k",sound:"like <b>k</b> in kite",ex:"кот",exen:"cat"},
+  {u:"Л",l:"л",name:"El",tr:"l",sound:"like <b>l</b> in lamp",ex:"луна",exen:"moon"},
+  {u:"М",l:"м",name:"Em",tr:"m",sound:"like <b>m</b> in map",ex:"море",exen:"sea"},
+  {u:"Н",l:"н",name:"En",tr:"n",sound:"like <b>n</b> in net",ex:"ночь",exen:"night"},
+  {u:"О",l:"о",name:"O",tr:"o",sound:"like <b>o</b> in more (when stressed)",ex:"окно",exen:"window"},
+  {u:"П",l:"п",name:"Pe",tr:"p",sound:"like <b>p</b> in pen",ex:"папа",exen:"dad"},
+  {u:"Р",l:"р",name:"Er",tr:"r",sound:"a rolled/trilled <b>r</b>",ex:"рука",exen:"hand"},
+  {u:"С",l:"с",name:"Es",tr:"s",sound:"like <b>s</b> in sun",ex:"солнце",exen:"sun"},
+  {u:"Т",l:"т",name:"Te",tr:"t",sound:"like <b>t</b> in top",ex:"там",exen:"there"},
+  {u:"У",l:"у",name:"U",tr:"oo",sound:"like <b>oo</b> in boot",ex:"утро",exen:"morning"},
+  {u:"Ф",l:"ф",name:"Ef",tr:"f",sound:"like <b>f</b> in fan",ex:"фото",exen:"photo"},
+  {u:"Х",l:"х",name:"Kha",tr:"kh",sound:"like <b>ch</b> in Scottish loch",ex:"хлеб",exen:"bread"},
+  {u:"Ц",l:"ц",name:"Tse",tr:"ts",sound:"like <b>ts</b> in cats",ex:"цвет",exen:"colour"},
+  {u:"Ч",l:"ч",name:"Che",tr:"ch",sound:"like <b>ch</b> in chair",ex:"час",exen:"hour"},
+  {u:"Ш",l:"ш",name:"Sha",tr:"sh",sound:"like <b>sh</b> in shop (hard)",ex:"школа",exen:"school"},
+  {u:"Щ",l:"щ",name:"Shcha",tr:"shch",sound:"a soft, long <b>sh</b>",ex:"щи",exen:"cabbage soup"},
+  {u:"Ъ",l:"ъ",name:"Hard sign",tr:"—",sound:"hard sign — no sound, keeps a hard break",ex:"объект",exen:"object"},
+  {u:"Ы",l:"ы",name:"Yery",tr:"y",sound:"a deep <b>i</b>, tongue pulled back",ex:"ты",exen:"you"},
+  {u:"Ь",l:"ь",name:"Soft sign",tr:"'",sound:"soft sign — no sound, softens the letter before it",ex:"день",exen:"day"},
+  {u:"Э",l:"э",name:"E",tr:"e",sound:"like <b>e</b> in met",ex:"это",exen:"this"},
+  {u:"Ю",l:"ю",name:"Yu",tr:"yu",sound:"like <b>u</b> in universe",ex:"юг",exen:"south"},
+  {u:"Я",l:"я",name:"Ya",tr:"ya",sound:"like <b>ya</b> in yard",ex:"я",exen:"I"},
+];
+
+const DRILLS = {
+  nouns:[
+    {prompt:"Plural: стол (table) → ___",answer:"столы",exp:"consonant + -ы."},
+    {prompt:"Plural: книга (book) → ___",answer:"книги",exp:"spelling rule — after г use -и."},
+    {prompt:"Plural: окно (window) → ___",answer:"окна",exp:"neuter -о → -а."},
+    {prompt:"Plural: море (sea) → ___",answer:"моря",exp:"neuter -е → -я."}
+  ],
+  pronouns:[
+    {prompt:"Make it negative: «Я студент» → «Я ___ студент»",answer:"не",exp:"не goes before the predicate."},
+    {prompt:"A woman says “I was home”: «Я ___ дома»",answer:"была",exp:"past “to be”, feminine → была."},
+    {prompt:"“This is my house”: «___ мой дом»",answer:"это",exp:"Это = this is (no verb needed)."}
+  ],
+  verbs:[
+    {prompt:"читать (to read): ты → «Ты ___ книгу»",answer:"читаешь",exp:"1st conjugation, ты → -ешь."},
+    {prompt:"читать: они → «Они ___»",answer:"читают",exp:"1st conj, они → -ют."},
+    {prompt:"говорить (to speak): я → «Я ___ по-русски»",answer:"говорю",exp:"2nd conj, я → -ю."},
+    {prompt:"говорить: она → «Она ___»",answer:"говорит",exp:"2nd conj, она → -ит."},
+    {prompt:"хотеть (to want): я → «Я ___ кофе»",answer:"хочу",exp:"irregular: я хочу."},
+    {prompt:"жить (to live): ты → «Где ты ___?»",answer:"живёшь",accept:["живешь"],exp:"живёшь."},
+    {prompt:"любить (to love): я → «Я тебя ___»",answer:"люблю",exp:"note the extra л: люблю."}
+  ],
+  prepositional:[
+    {prompt:"дом → «Я в ___» (in the house)",answer:"доме",exp:"masc + -е."},
+    {prompt:"Москва → «Мы в ___»",answer:"москве",exp:"fem -а → -е."},
+    {prompt:"работа → «Она на ___» (at work)",answer:"работе",exp:"работа takes на + -е."},
+    {prompt:"стол → «Книга на ___» (on the table)",answer:"столе",exp:"masc + -е."},
+    {prompt:"ты → «Я думаю о ___» (about you)",answer:"тебе",exp:"о + prepositional: о тебе."}
+  ],
+  accusative:[
+    {prompt:"музыка → «Я люблю ___»",answer:"музыку",exp:"fem -а → -у."},
+    {prompt:"мама → «Я вижу ___»",answer:"маму",exp:"fem -а → -у."},
+    {prompt:"ты → «Я люблю ___» (you)",answer:"тебя",exp:"object “you” = тебя."},
+    {prompt:"я → «Ты видишь ___?» (me)",answer:"меня",exp:"object “me” = меня."},
+    {prompt:"кофе → «Я хочу ___»",answer:"кофе",exp:"indeclinable — no change."}
+  ],
+  genitive:[
+    {prompt:"“I have a cat”: «У меня ___ кот»",answer:"есть",exp:"У + genitive + есть."},
+    {prompt:"молоко → «Здесь нет ___» (no milk)",answer:"молока",exp:"after нет, -о → -а."},
+    {prompt:"брат → «Это книга ___» (brother's)",answer:"брата",exp:"masc + -а = “of the brother”."},
+    {prompt:"“Do you have time?”: «___ тебя есть время?»",answer:"у",exp:"У тебя есть…?"},
+    {prompt:"вода → «Здесь нет ___»",answer:"воды",exp:"fem -а → -ы after нет."}
+  ],
+  dative:[
+    {prompt:"“I like coffee”: «___ нравится кофе» (I)",answer:"мне",exp:"the liker goes in the dative: Мне."},
+    {prompt:"“I like you”: «Ты ___ нравишься»",answer:"мне",exp:"Ты мне нравишься."},
+    {prompt:"“Give me water”: «Дай ___ воду»",answer:"мне",exp:"the receiver is dative: мне."},
+    {prompt:"“I miss you”: «Я скучаю ___ тебе»",answer:"по",exp:"скучать по + dative."},
+    {prompt:"“I'm 20”: «___ двадцать лет» (I)",answer:"мне",exp:"age uses the dative: Мне двадцать лет."}
+  ],
+  instrumental:[
+    {prompt:"молоко → «кофе с ___» (with milk)",answer:"молоком",exp:"с + instrumental: -ом."},
+    {prompt:"я → «Пойдём со ___» (with me)",answer:"мной",exp:"со мной."},
+    {prompt:"ты → «Я хочу быть с ___» (with you)",answer:"тобой",exp:"с тобой."},
+    {prompt:"друг → «Я иду с ___» (with a friend)",answer:"другом",exp:"masc + -ом."},
+    {prompt:"сахар → «чай с ___» (with sugar)",answer:"сахаром",exp:"masc + -ом."}
+  ],
+  adjectives:[
+    {prompt:"красивый + девушка (f): «___ девушка»",answer:"красивая",exp:"feminine → -ая."},
+    {prompt:"новый + телефон (m): «___ телефон»",answer:"новый",exp:"masculine → -ый."},
+    {prompt:"красивый + место (n): «___ место»",answer:"красивое",exp:"neuter → -ое."},
+    {prompt:"умный (to a woman): «Ты очень ___»",answer:"умная",exp:"feminine: умная."},
+    {prompt:"хороший + идея (f): «___ идея»",answer:"хорошая",exp:"feminine: хорошая."}
+  ],
+  possessives:[
+    {prompt:"my + девушка (f): «___ девушка»",answer:"моя",exp:"feminine → моя."},
+    {prompt:"my + друг (m): «___ друг»",answer:"мой",exp:"masculine → мой."},
+    {prompt:"my + имя (n): «___ имя»",answer:"моё",accept:["мое"],exp:"neuter → моё."},
+    {prompt:"our + дом (m): «___ дом»",answer:"наш",exp:"masculine → наш."},
+    {prompt:"“You are my love” (любовь is f): «Ты — ___ любовь»",answer:"моя",exp:"любовь is feminine → моя."}
+  ],
+  past:[
+    {prompt:"читать (a woman): «Я ___ книгу»",answer:"читала",exp:"feminine past → -ла."},
+    {prompt:"быть (they): «Они ___ дома»",answer:"были",exp:"plural past → -ли."},
+    {prompt:"жить (he): «Он ___ в Москве»",answer:"жил",exp:"masculine past → -л."},
+    {prompt:"говорить (she): «Она ___ по-русски»",answer:"говорила",exp:"feminine → говорила."},
+    {prompt:"идти (he, irregular): «Он ___ домой»",answer:"шёл",accept:["шел"],exp:"идти → шёл (m)."}
+  ],
+  future:[
+    {prompt:"«Завтра я ___ работать» (will, process)",answer:"буду",exp:"буду + imperfective infinitive."},
+    {prompt:"«Мы ___ дома» (will be)",answer:"будем",exp:"мы → будем."},
+    {prompt:"быть, future for ты: «Ты ___ читать?»",answer:"будешь",exp:"ты → будешь."},
+    {prompt:"«Они ___ жить здесь» (will live)",answer:"будут",exp:"они → будут."}
+  ],
+  aspect:[
+    {prompt:"One-time, done (man, yesterday): «Вчера я ___ письмо» — write, perfective",answer:"написал",exp:"perfective past: написал (a completed result)."},
+    {prompt:"Process (man): «Я долго ___ письмо» — write, imperfective",answer:"писал",exp:"imperfective past for an ongoing process."},
+    {prompt:"Future, will finish it: «Я ___ книгу» (прочитать)",answer:"прочитаю",exp:"perfective present-endings = completed future."},
+    {prompt:"Habit: «Каждый день я ___ книги» (читать)",answer:"читаю",exp:"habit → imperfective present."}
+  ],
+  "plural-cases":[
+    {prompt:"Prepositional pl: стол → «на ___»",answer:"столах",exp:"prepositional plural → -ах."},
+    {prompt:"Instrumental pl: книга → «с ___»",answer:"книгами",exp:"instrumental plural → -ами."},
+    {prompt:"Dative pl: студент → «Я дал книги ___»",answer:"студентам",exp:"dative plural → -ам."},
+    {prompt:"Genitive pl: книга → «много ___»",answer:"книг",exp:"fem -а → zero ending: книг."},
+    {prompt:"Genitive pl: стол → «пять ___»",answer:"столов",exp:"masc consonant → -ов: столов."}
+  ],
+  "adj-decl":[
+    {prompt:"prep m: «в ___ доме» (новый)",answer:"новом",exp:"masc prepositional → -ом."},
+    {prompt:"instr m: «с ___ другом» (новый)",answer:"новым",exp:"masc instrumental → -ым."},
+    {prompt:"gen f: «нет ___ машины» (новая)",answer:"новой",exp:"fem genitive → -ой."},
+    {prompt:"acc f: «Я вижу ___ машину» (новая)",answer:"новую",exp:"fem accusative → -ую."},
+    {prompt:"dat m: «к ___ дому» (новый)",answer:"новому",exp:"masc dative → -ому."}
+  ],
+  motion:[
+    {prompt:"on foot, right now: «Я ___ домой»",answer:"иду",exp:"one direction now, on foot → иду."},
+    {prompt:"regularly, on foot: «Я ___ в спортзал»",answer:"хожу",exp:"habit on foot → хожу."},
+    {prompt:"by vehicle, now: «Мы ___ в Москву»",answer:"едем",exp:"now, by vehicle → едем."},
+    {prompt:"regularly, by vehicle: «Я ___ на работу»",answer:"езжу",exp:"habit by vehicle → езжу."}
+  ],
+  counting:[
+    {prompt:"after 2: «две ___» (книга)",answer:"книги",exp:"2,3,4 → genitive singular: книги."},
+    {prompt:"after 5: «пять ___» (книга)",answer:"книг",exp:"5+ → genitive plural: книг."},
+    {prompt:"after 3: «три ___» (стол)",answer:"стола",exp:"2,3,4 → genitive singular: стола."},
+    {prompt:"on Monday: «___ понедельник»",answer:"в",exp:"в + accusative day: в понедельник."}
+  ],
+  connectors:[
+    {prompt:"because: «Я рад, ___ ты здесь»",answer:"потому что",exp:"потому что = because."},
+    {prompt:"so / therefore: «Было поздно, ___ я ушёл»",answer:"поэтому",exp:"поэтому = so."},
+    {prompt:"in order to: «Я учу русский, ___ говорить с тобой»",answer:"чтобы",exp:"чтобы + infinitive = in order to."},
+    {prompt:"that: «Я знаю, ___ ты прав»",answer:"что",exp:"что introduces a reported clause."},
+    {prompt:"if: «___ хочешь, позвони»",answer:"если",exp:"если = if."}
+  ],
+  "vocab-food":[
+    {prompt:"apple → ___ (in Russian)",answer:"яблоко"},
+    {prompt:"fish → ___ (in Russian)",answer:"рыба"},
+    {prompt:"breakfast → ___ (in Russian)",answer:"завтрак"},
+    {prompt:"bread → ___ (in Russian)",answer:"хлеб"},
+    {prompt:"meat → ___ (in Russian)",answer:"мясо"}
+  ],
+  "vocab-home":[
+    {prompt:"kitchen → ___ (in Russian)",answer:"кухня"},
+    {prompt:"door → ___ (in Russian)",answer:"дверь"},
+    {prompt:"bed → ___ (in Russian)",answer:"кровать"},
+    {prompt:"key → ___ (in Russian)",answer:"ключ"},
+    {prompt:"window → ___ (in Russian)",answer:"окно"}
+  ],
+  "vocab-city":[
+    {prompt:"shop → ___ (in Russian)",answer:"магазин"},
+    {prompt:"pharmacy → ___ (in Russian)",answer:"аптека"},
+    {prompt:"train station → ___ (in Russian)",answer:"вокзал"},
+    {prompt:"street → ___ (in Russian)",answer:"улица"},
+    {prompt:"park → ___ (in Russian)",answer:"парк"}
+  ],
+  "vocab-work":[
+    {prompt:"work → ___ (in Russian)",answer:"работа"},
+    {prompt:"money → ___ (in Russian)",answer:"деньги"},
+    {prompt:"doctor → ___ (in Russian)",answer:"врач"},
+    {prompt:"exam → ___ (in Russian)",answer:"экзамен"},
+    {prompt:"teacher → ___ (in Russian)",answer:"учитель"}
+  ],
+  "vocab-travel":[
+    {prompt:"train → ___ (in Russian)",answer:"поезд"},
+    {prompt:"ticket → ___ (in Russian)",answer:"билет"},
+    {prompt:"map → ___ (in Russian)",answer:"карта"},
+    {prompt:"hotel → ___ (in Russian)",answer:"гостиница"},
+    {prompt:"car → ___ (in Russian)",answer:"машина"}
+  ],
+  "vocab-health":[
+    {prompt:"head → ___ (in Russian)",answer:"голова"},
+    {prompt:"medicine → ___ (in Russian)",answer:"лекарство"},
+    {prompt:"heart → ___ (in Russian)",answer:"сердце"},
+    {prompt:"hand / arm → ___ (in Russian)",answer:"рука"},
+    {prompt:"pain → ___ (in Russian)",answer:"боль"}
+  ],
+  "vocab-clothes":[
+    {prompt:"dress → ___ (in Russian)",answer:"платье"},
+    {prompt:"shoes → ___ (in Russian)",answer:"туфли"},
+    {prompt:"jacket → ___ (in Russian)",answer:"куртка"},
+    {prompt:"bag → ___ (in Russian)",answer:"сумка"},
+    {prompt:"hat → ___ (in Russian)",answer:"шапка"}
+  ],
+  "vocab-nature":[
+    {prompt:"rain → ___ (in Russian)",answer:"дождь"},
+    {prompt:"snow → ___ (in Russian)",answer:"снег"},
+    {prompt:"sun → ___ (in Russian)",answer:"солнце"},
+    {prompt:"sea → ___ (in Russian)",answer:"море"},
+    {prompt:"forest → ___ (in Russian)",answer:"лес"}
+  ],
+  "vocab-time":[
+    {prompt:"week → ___ (in Russian)",answer:"неделя"},
+    {prompt:"today → ___ (in Russian)",answer:"сегодня"},
+    {prompt:"tomorrow → ___ (in Russian)",answer:"завтра"},
+    {prompt:"winter → ___ (in Russian)",answer:"зима"},
+    {prompt:"year → ___ (in Russian)",answer:"год"}
+  ],
+  "vocab-verbs2":[
+    {prompt:"to buy → ___ (in Russian)",answer:"покупать"},
+    {prompt:"to understand → ___ (in Russian)",answer:"понимать"},
+    {prompt:"to help → ___ (in Russian)",answer:"помогать"},
+    {prompt:"to wait → ___ (in Russian)",answer:"ждать"},
+    {prompt:"to see → ___ (in Russian)",answer:"видеть"}
+  ],
+  "vocab-adj2":[
+    {prompt:"big → ___ (in Russian)",answer:"большой"},
+    {prompt:"small → ___ (in Russian)",answer:"маленький"},
+    {prompt:"good → ___ (in Russian)",answer:"хороший"},
+    {prompt:"new → ___ (in Russian)",answer:"новый"},
+    {prompt:"fast → ___ (in Russian)",answer:"быстрый"}
+  ],
+  "vocab-tech":[
+    {prompt:"phone → ___ (in Russian)",answer:"телефон"},
+    {prompt:"message → ___ (in Russian)",answer:"сообщение"},
+    {prompt:"password → ___ (in Russian)",answer:"пароль"},
+    {prompt:"news → ___ (in Russian)",answer:"новости"},
+    {prompt:"photo → ___ (in Russian)",answer:"фото"}
+  ]
+};
+
+const LESSONS = [
+  {
+    id:"alphabet", nav:"The Alphabet", type:"alphabet",
+    eyebrow:"Lesson 01 · Кириллица",
+    title:"The Cyrillic Alphabet",
+    lead:"33 letters. Some are old friends in disguise, a few are false friends, and a handful are brand new. Tap any letter to reveal its name, sound and example — then hear it. Everything else gets easier once these click.",
+    tips:[
+      "Three letters look like English but sound different — the <b>false friends</b>: <b>В</b>=v, <b>Н</b>=n, <b>Р</b>=r, <b>С</b>=s, <b>У</b>=oo, <b>Х</b>=kh.",
+      "Ъ and Ь make no sound of their own — they are signals for the letters around them.",
+      "Russian is written almost exactly as it is pronounced. Learn the letters and you can read <em>anything</em>, even words you do not know yet."
+    ]
+  },
+  {
+    id:"sounds", nav:"Sounds & Stress", type:"vocab",
+    eyebrow:"Lesson 02 · Произношение",
+    title:"Sounds & Stress",
+    lead:"Two rules do most of the work in sounding natural: where the stress falls, and what happens to the letter О when it is not stressed. Get these and your accent jumps ahead instantly.",
+    grammar:[
+      {
+        heading:"Stress changes everything",
+        body:"<p>Every Russian word has <b>one</b> stressed syllable, and it is pronounced longer and clearer than the rest. Stress is not marked in normal writing, so it must be learned per word (dictionaries and courses mark it with an accent, like <b>мá</b>ма).</p><p>Stress also <b>reshapes vowels around it</b> — which brings us to the single most important sound rule.</p>"
+      },
+      {
+        heading:"Vowel reduction: О sounds like А",
+        body:"<p>When <b>О</b> is <b>not</b> the stressed syllable, it is pronounced like a short <b>А</b> (an “uh” sound). This is why native speech sounds different from the spelling.</p>",
+        examples:[
+          {ru:"молокó",tr:"ma-la-KO",en:"milk — first two О sound like “a”, only the last is a true O"},
+          {ru:"хорошó",tr:"kha-ra-SHO",en:"good / well"},
+          {ru:"Москвá",tr:"mask-VA",en:"Moscow — the О sounds like “a”"},
+          {ru:"спасибо",tr:"spa-SEE-ba",en:"thank you — final О reduces to “a”"}
+        ]
+      },
+      {
+        heading:"Hard vs soft consonants",
+        body:"<p>Most consonants come in two flavours: <b>hard</b> and <b>soft</b> (palatalised, with a slight “y” glide). A consonant becomes soft when followed by <b>Ь</b> or by the soft vowels <b>Е, Ё, И, Ю, Я</b>.</p><p>You do not need to master this on day one — just know that <b>день</b> (day) is softer than <b>дом</b> (house), and your ear will tune in fast.</p>"
+      }
+    ],
+    tips:["Don't stress about stress at first — copy the audio, exaggerate the strong syllable, and mumble the rest. That's exactly what natives do."]
+  },
+  {
+    id:"greetings", nav:"Greetings", type:"vocab",
+    eyebrow:"Lesson 03 · Приветствия",
+    title:"Greetings & Register",
+    lead:"Your first real conversation — plus the single most important social rule in Russian: informal (ты) vs formal (вы). Get these and you can already be warm, polite, and appropriate.",
+    grammar:[
+      {
+        heading:"Ты vs Вы — who you're talking to",
+        body:"<p>Russian has two words for “you”. Choosing the wrong one is the #1 giveaway of a beginner.</p><p><b>ты</b> — one person you're close to: friends, family, kids, your girlfriend.<br><b>вы</b> — a stranger, someone older, someone senior, or <b>any</b> group of people.</p>",
+        table:{cols:["Situation","Greeting","Goodbye"],rows:[
+          ["Informal (ты)","Привет","Пока"],
+          ["Formal (вы)","Здравствуйте","До свидания"]
+        ]}
+      },
+      {
+        heading:"“Это” — this is / it is",
+        body:"<p><b>Это</b> means “this is” or “it is”, and needs no verb. Point and name.</p>",
+        examples:[
+          {ru:"Это Анна",tr:"eta Anna",en:"This is Anna"},
+          {ru:"Это мой дом",tr:"eta moy dom",en:"This is my house"},
+          {ru:"Это не проблема",tr:"eta ne prablema",en:"That's not a problem"}
+        ],
+        constructions:[
+          {pattern:"Это + [name / noun]",gloss:"This is … / It's …",example:{ru:"Это моя девушка",en:"This is my girlfriend"}}
+        ]
+      }
+    ],
+    words:[
+      {ru:"Привет",tr:"privét",en:"Hi (informal)"},
+      {ru:"Здравствуйте",tr:"zdrávstvuyte",en:"Hello (formal)"},
+      {ru:"Доброе утро",tr:"dóbroye útro",en:"Good morning"},
+      {ru:"Добрый день",tr:"dóbryy den'",en:"Good afternoon"},
+      {ru:"Добрый вечер",tr:"dóbryy vécher",en:"Good evening"},
+      {ru:"Как дела?",tr:"kak delá?",en:"How are you?"},
+      {ru:"Хорошо",tr:"khoroshó",en:"Good / Well"},
+      {ru:"Спасибо",tr:"spasíbo",en:"Thank you"},
+      {ru:"Пожалуйста",tr:"pozháluysta",en:"Please / You're welcome"},
+      {ru:"Извините",tr:"izviníte",en:"Excuse me / Sorry"},
+      {ru:"Пока",tr:"paká",en:"Bye (informal)"},
+      {ru:"До свидания",tr:"do svidániya",en:"Goodbye (formal)"}
+    ],
+    quiz:[
+      {q:"Your girlfriend messages you in the morning. The friendly reply is:",opts:["Здравствуйте","Привет, доброе утро!","До свидания"],a:1,exp:"With someone close you use the informal привет — здравствуйте would sound oddly stiff."},
+      {q:"You greet your girlfriend's grandmother for the first time. You say:",opts:["Привет","Здравствуйте","Пока"],a:1,exp:"An elder you've just met = formal вы register, so здравствуйте."},
+      {q:"Which word means both “please” AND “you're welcome”?",opts:["Спасибо","Пожалуйста","Извините"],a:1,exp:"Пожалуйста does double duty."},
+      {q:"“Это моя девушка” means:",opts:["Where is my girlfriend?","This is my girlfriend","I love my girlfriend"],a:1,exp:"Это + noun = “this is …”, no verb needed."}
+    ]
+  },
+  {
+    id:"nouns", nav:"Nouns & Gender", type:"vocab",
+    eyebrow:"Lesson 04 · Род существительных",
+    title:"Nouns & Gender",
+    lead:"Every Russian noun is masculine, feminine, or neuter — and you can usually tell just by the last letter. Gender is the hinge everything else swings on: adjectives, possessives, and endings all agree with it.",
+    grammar:[
+      {
+        heading:"How to tell the gender",
+        body:"<p>Look at the ending of the dictionary (nominative) form:</p>",
+        table:{cols:["Gender","Typical ending","Examples"],rows:[
+          ["Masculine","a consonant, or -й","дом (house), стол (table), чай (tea)"],
+          ["Feminine","-а / -я","мама (mum), вода (water), земля (land)"],
+          ["Neuter","-о / -е","окно (window), море (sea), имя (name)"]
+        ]},
+        examples:[
+          {ru:"дом",tr:"dom",en:"house — masculine (ends in a consonant)"},
+          {ru:"вода",tr:"vadá",en:"water — feminine (ends in -а)"},
+          {ru:"окно",tr:"aknó",en:"window — neuter (ends in -о)"}
+        ]
+      },
+      {
+        heading:"The tricky -ь ending",
+        body:"<p>Nouns ending in the soft sign <b>-ь</b> can be masculine <b>or</b> feminine — these you simply memorise.</p>",
+        examples:[
+          {ru:"день",tr:"den'",en:"day — masculine"},
+          {ru:"ночь",tr:"noch'",en:"night — feminine"}
+        ]
+      },
+      {
+        heading:"Making things plural",
+        body:"<p>Basic nominative plural:</p>",
+        table:{cols:["Ending","Becomes","Example"],rows:[
+          ["consonant / -а (m/f)","-ы (or -и)","стол → столы, книга → книги"],
+          ["-о (neuter)","-а","окно → окна"],
+          ["-е (neuter)","-я","море → моря"]
+        ]},
+        constructions:[
+          {pattern:"Spelling rule: after к г х ж ш щ ч → use -и not -ы",gloss:"книга → книги (not книгы)",example:{ru:"книги",en:"books"}}
+        ]
+      }
+    ],
+    words:[
+      {ru:"дом",tr:"dom",en:"house (m)"},
+      {ru:"книга",tr:"kníga",en:"book (f)"},
+      {ru:"окно",tr:"aknó",en:"window (n)"},
+      {ru:"друг",tr:"drug",en:"friend (m)"},
+      {ru:"девушка",tr:"dévushka",en:"girl / girlfriend (f)"},
+      {ru:"море",tr:"móre",en:"sea (n)"},
+      {ru:"город",tr:"górad",en:"city (m)"},
+      {ru:"мама",tr:"máma",en:"mum (f)"}
+    ],
+    quiz:[
+      {q:"What gender is “вода” (water)?",opts:["Masculine","Feminine","Neuter"],a:1,exp:"It ends in -а, so it's feminine."},
+      {q:"What gender is “окно” (window)?",opts:["Masculine","Feminine","Neuter"],a:2,exp:"Ends in -о → neuter."},
+      {q:"“город” (city) ends in a consonant, so it is:",opts:["Masculine","Feminine","Neuter"],a:0,exp:"Consonant ending → masculine."},
+      {q:"The plural of “книга” is:",opts:["книгы","книги","книга"],a:1,exp:"Spelling rule: after г you use -и, giving книги."}
+    ]
+  },
+  {
+    id:"pronouns", nav:"Pronouns & “to be”", type:"vocab",
+    eyebrow:"Lesson 05 · Местоимения",
+    title:"Pronouns & “to be”",
+    lead:"Here's a gift Russian gives beginners: it drops the verb “to be” in the present. “Я студент” is literally “I student” and means “I am a student.” No am/is/are to conjugate.",
+    grammar:[
+      {
+        heading:"The personal pronouns",
+        table:{cols:["Russian","Sound","English"],rows:[
+          ["я","ya","I"],["ты","ty","you (informal)"],["он","on","he"],["она","aná","she"],
+          ["оно","anó","it"],["мы","my","we"],["вы","vy","you (formal/plural)"],["они","aní","they"]
+        ]}
+      },
+      {
+        heading:"No “to be” in the present",
+        body:"<p>Just place two words side by side — no linking verb. To make it negative, put <b>не</b> before the second word.</p>",
+        examples:[
+          {ru:"Я студент",tr:"ya studént",en:"I am a student"},
+          {ru:"Он врач",tr:"on vrach",en:"He is a doctor"},
+          {ru:"Мы друзья",tr:"my druzyá",en:"We are friends"},
+          {ru:"Я не дома",tr:"ya ne dóma",en:"I am not home"}
+        ],
+        constructions:[
+          {pattern:"[subject] + [noun/adjective]",gloss:"X is Y (present tense, no verb)",example:{ru:"Ты красивая",en:"You are beautiful"}},
+          {pattern:"[subject] + не + …",gloss:"X is not …",example:{ru:"Это не проблема",en:"That's not a problem"}}
+        ]
+      },
+      {
+        heading:"Past and future (just so you've seen it)",
+        body:"<p>The verb “to be” <b>does</b> appear in the past and future. Past agrees with gender: <b>был</b> (m), <b>была</b> (f), <b>было</b> (n), <b>были</b> (pl). Future uses <b>буду, будешь…</b> You'll drill these later — for now, present tense needs nothing.</p>",
+        examples:[
+          {ru:"Я был дома",tr:"ya byl dóma",en:"I was home (man speaking)"},
+          {ru:"Она была рада",tr:"aná bylá ráda",en:"She was glad"}
+        ]
+      }
+    ],
+    quiz:[
+      {q:"How do you say “She is here”? (здесь = here)",opts:["Она здесь","Он здесь","Оно здесь"],a:0,exp:"Она = she; no verb “is” needed."},
+      {q:"“Я не студент” means:",opts:["I am a student","I am not a student","You are a student"],a:1,exp:"не before the word makes it negative."},
+      {q:"Which pronoun do you use for your girlfriend?",opts:["вы","ты","они"],a:1,exp:"ты — the informal, close “you”."},
+      {q:"A woman says “I was home.” Which is correct?",opts:["Я был дома","Я была дома","Я было дома"],a:1,exp:"Past “to be” agrees with gender: была for a woman."}
+    ]
+  },
+  {
+    id:"verbs", nav:"Verbs (Present)", type:"vocab",
+    eyebrow:"Lesson 06 · Настоящее время",
+    title:"Present-Tense Verbs",
+    lead:"Now things move. Russian present-tense verbs follow two main patterns (conjugations). Learn one model verb from each and you can conjugate hundreds.",
+    grammar:[
+      {
+        heading:"1st conjugation — читать (to read)",
+        body:"<p>Drop <b>-ть</b>, add these endings. Most verbs in <b>-ать / -ять</b> follow this.</p>",
+        table:{cols:["Pronoun","Form","Ending"],rows:[
+          ["я","читаю","-ю"],["ты","читаешь","-ешь"],["он / она","читает","-ет"],
+          ["мы","читаем","-ем"],["вы","читаете","-ете"],["они","читают","-ют"]
+        ]}
+      },
+      {
+        heading:"2nd conjugation — говорить (to speak)",
+        body:"<p>Verbs in <b>-ить</b> mostly take these endings (note the <b>-и-</b> and the -ят on “they”).</p>",
+        table:{cols:["Pronoun","Form","Ending"],rows:[
+          ["я","говорю","-ю"],["ты","говоришь","-ишь"],["он / она","говорит","-ит"],
+          ["мы","говорим","-им"],["вы","говорите","-ите"],["они","говорят","-ят"]
+        ]}
+      },
+      {
+        heading:"Three must-know verbs",
+        body:"<p><b>любить</b> (to love) and <b>хотеть</b> (to want) are slightly irregular but everywhere — especially for talking to someone you love.</p>",
+        table:{cols:["","любить (love)","хотеть (want)","жить (live)"],rows:[
+          ["я","люблю","хочу","живу"],
+          ["ты","любишь","хочешь","живёшь"],
+          ["он/она","любит","хочет","живёт"],
+          ["мы","любим","хотим","живём"],
+          ["вы","любите","хотите","живёте"],
+          ["они","любят","хотят","живут"]
+        ]},
+        examples:[
+          {ru:"Я тебя люблю",tr:"ya tebyá lyublyú",en:"I love you"},
+          {ru:"Ты говоришь по-русски?",tr:"ty gavarísh pa-rússki?",en:"Do you speak Russian?"},
+          {ru:"Где ты живёшь?",tr:"gde ty zhivyósh?",en:"Where do you live?"}
+        ]
+      }
+    ],
+    words:[
+      {ru:"читать",tr:"chitát'",en:"to read"},
+      {ru:"говорить",tr:"gavarít'",en:"to speak / say"},
+      {ru:"любить",tr:"lyubít'",en:"to love"},
+      {ru:"хотеть",tr:"khatét'",en:"to want"},
+      {ru:"жить",tr:"zhit'",en:"to live"},
+      {ru:"знать",tr:"znat'",en:"to know"},
+      {ru:"работать",tr:"rabótat'",en:"to work"},
+      {ru:"понимать",tr:"panimát'",en:"to understand"}
+    ],
+    quiz:[
+      {q:"“I speak” (говорить, 2nd conj) is:",opts:["я говораю","я говорю","я говоришь"],a:1,exp:"1st person singular ending is -ю: говорю."},
+      {q:"Complete: “Ты ____ по-русски?” (читать)",opts:["читаешь","читает","читаю"],a:0,exp:"ты takes -ешь in the 1st conjugation: читаешь."},
+      {q:"“I want” is:",opts:["я хочу","я хотю","я хочешь"],a:0,exp:"хотеть is irregular in the singular: я хочу."},
+      {q:"Which ending do “они” (they) take in the 2nd conjugation?",opts:["-ют","-ят","-ешь"],a:1,exp:"2nd conjugation “they” = -ят (говорят, любят)."}
+    ]
+  },
+  {
+    id:"cases", nav:"The Cases (Map)", type:"vocab",
+    eyebrow:"Lesson 07 · Падежи",
+    title:"The Case System — Your Map",
+    lead:"Russian has six cases. A case is just the ending a noun takes to show its job in the sentence — subject, object, “of”, “to”, “with”, or location. English does this too (I → me → my); Russian just does it to every noun. Here's the whole map before we take them one at a time.",
+    grammar:[
+      {
+        heading:"What each case is for",
+        table:{cols:["Case","Answers","Job","Marker word"],rows:[
+          ["Nominative","кто? что?","the subject","—"],
+          ["Accusative","кого? что?","the direct object","(вижу, люблю…)"],
+          ["Genitive","кого? чего?","“of”, possession, “no…”","нет, у, из"],
+          ["Dative","кому? чему?","“to”, the receiver","дать, нравиться, по"],
+          ["Instrumental","кем? чем?","“with / by”","с"],
+          ["Prepositional","о ком? о чём?","location, “about”","в, на, о"]
+        ]}
+      },
+      {
+        heading:"The same word, six ways",
+        body:"<p>Watch how <b>стол</b> (table) shifts as its job changes. You don't need to produce these yet — just see the machine turning.</p>",
+        examples:[
+          {ru:"Стол здесь",tr:"stol zdes'",en:"The table is here (nominative — subject)"},
+          {ru:"Я вижу стол",tr:"ya vízhu stol",en:"I see the table (accusative — object)"},
+          {ru:"ножка стола",tr:"nózhka stalá",en:"the leg of the table (genitive — “of”)"},
+          {ru:"на столе",tr:"na stalé",en:"on the table (prepositional — location)"}
+        ]
+      }
+    ],
+    tips:["Don't try to memorise all six at once. The next lessons take them one at a time, easiest first, each with the patterns you'll actually use."]
+  },
+  {
+    id:"prepositional", nav:"Case: Location", type:"vocab",
+    eyebrow:"Lesson 08 · Предложный падеж",
+    title:"Prepositional Case — Location & “About”",
+    lead:"The friendliest case to start with. It only ever appears after в (in), на (on/at), and о (about), and its ending is almost always a simple -е. Use it to say where you are and what you're thinking about.",
+    grammar:[
+      {
+        heading:"The endings (mostly just add -е)",
+        table:{cols:["Gender / ending","Change","Example"],rows:[
+          ["Masc consonant","+ -е","дом → в доме (in the house)"],
+          ["Fem -а / -я","→ -е","Москва → в Москве (in Moscow)"],
+          ["Neut -о","→ -е","письмо → в письме (in the letter)"],
+          ["ends in -ие/-ия/-ий","→ -и","Россия → в России (in Russia)"]
+        ]}
+      },
+      {
+        heading:"в vs на",
+        body:"<p><b>в</b> = inside something; <b>на</b> = on a surface or at an activity/open place. A few words just take на by tradition: <b>на работе</b> (at work), <b>на почте</b> (at the post office).</p>",
+        examples:[
+          {ru:"Я в доме",tr:"ya v dóme",en:"I'm in the house"},
+          {ru:"Она на работе",tr:"aná na rabóte",en:"She's at work"},
+          {ru:"Мы в Москве",tr:"my v Maskvé",en:"We're in Moscow"},
+          {ru:"Книга на столе",tr:"kníga na stalé",en:"The book is on the table"}
+        ]
+      },
+      {
+        heading:"о + prepositional = “about”",
+        body:"<p>Use <b>о</b> (or <b>об</b> before a vowel) to say “about”. The pronoun forms are worth memorising: <b>обо мне</b> (about me), <b>о тебе</b> (about you).</p>",
+        constructions:[
+          {pattern:"думать о + [prepositional]",gloss:"to think about …",example:{ru:"Я думаю о тебе",en:"I'm thinking about you"}},
+          {pattern:"в / на + [place in prepositional]",gloss:"in / at [place]",example:{ru:"Я в кафе",en:"I'm in the café"}}
+        ]
+      }
+    ],
+    words:[
+      {ru:"в доме",tr:"v dóme",en:"in the house"},
+      {ru:"на работе",tr:"na rabóte",en:"at work"},
+      {ru:"в городе",tr:"v górade",en:"in the city"},
+      {ru:"в Москве",tr:"v Maskvé",en:"in Moscow"},
+      {ru:"о тебе",tr:"a tebé",en:"about you"},
+      {ru:"на столе",tr:"na stalé",en:"on the table"}
+    ],
+    quiz:[
+      {q:"“I'm in the city.” (город → ?)",opts:["Я в город","Я в городе","Я в города"],a:1,exp:"Prepositional adds -е: в городе."},
+      {q:"“She's at work” uses which preposition + word?",opts:["в работе","на работе","о работе"],a:1,exp:"работа traditionally takes на: на работе."},
+      {q:"Complete the sweet line: “Я думаю ___ тебе.”",opts:["в","на","о"],a:2,exp:"о + prepositional = “about”: о тебе (about you)."},
+      {q:"“in Moscow” (Москва) is:",opts:["в Москва","в Москву","в Москве"],a:2,exp:"Feminine -а → -е: в Москве."}
+    ]
+  },
+  {
+    id:"accusative", nav:"Case: Objects", type:"vocab",
+    eyebrow:"Lesson 09 · Винительный падеж",
+    title:"Accusative Case — Direct Objects",
+    lead:"The accusative marks the thing an action lands on: what you see, want, read — and who you love. The good news: for most masculine and neuter things, nothing changes at all.",
+    grammar:[
+      {
+        heading:"When the ending changes (and when it doesn't)",
+        table:{cols:["Noun type","Change","Example"],rows:[
+          ["Masc inanimate / Neuter","no change","Я читаю журнал / письмо"],
+          ["Feminine -а → -у","-а → -у","музыка → Я люблю музыку"],
+          ["Feminine -я → -ю","-я → -ю","песня → Я слушаю песню"],
+          ["Masc animate (person)","takes -а/-я","брат → Я вижу брата"]
+        ]}
+      },
+      {
+        heading:"Pronoun objects — memorise these",
+        body:"<p>These come up constantly, especially <b>тебя</b> (you) and <b>меня</b> (me).</p>",
+        table:{cols:["Subject","Object"],rows:[
+          ["я → ","меня (me)"],["ты → ","тебя (you)"],["он → ","его (him)"],["она → ","её (her)"],
+          ["мы → ","нас (us)"],["вы → ","вас (you)"],["они → ","их (them)"]
+        ]}
+      },
+      {
+        heading:"Putting it to work",
+        examples:[
+          {ru:"Я люблю тебя",tr:"ya lyublyú tebyá",en:"I love you (тебя = you, object)"},
+          {ru:"Я хочу кофе",tr:"ya khachú kófe",en:"I want coffee (кофе never changes)"},
+          {ru:"Ты любишь музыку?",tr:"ty lyúbish múzyku?",en:"Do you like music? (музыка → музыку)"},
+          {ru:"Я вижу маму",tr:"ya vízhu mámu",en:"I see mum (мама → маму)"}
+        ],
+        constructions:[
+          {pattern:"Я люблю / хочу / вижу + [accusative]",gloss:"I love / want / see …",example:{ru:"Я хочу тебя видеть",en:"I want to see you"}}
+        ]
+      }
+    ],
+    words:[
+      {ru:"меня",tr:"menyá",en:"me"},
+      {ru:"тебя",tr:"tebyá",en:"you"},
+      {ru:"его",tr:"yevó",en:"him / it"},
+      {ru:"её",tr:"yeyó",en:"her"},
+      {ru:"музыку",tr:"múzyku",en:"music (obj.)"},
+      {ru:"кофе",tr:"kófe",en:"coffee (no change)"}
+    ],
+    quiz:[
+      {q:"“I love you” is:",opts:["Я люблю ты","Я люблю тебя","Я люблю тебе"],a:1,exp:"Object “you” = тебя in the accusative."},
+      {q:"“Я люблю музыку” — why музыку not музыка?",opts:["It's plural","Feminine -а becomes -у as the object","It's a typo"],a:1,exp:"Feminine -а → -у in the accusative."},
+      {q:"Which word does NOT change in the accusative?",opts:["мама","музыка","кофе"],a:2,exp:"Indeclinable loanwords like кофе never change."},
+      {q:"“Do you see me?” — “Ты видишь ___?”",opts:["я","меня","мне"],a:1,exp:"“me” as an object = меня."}
+    ]
+  },
+  {
+    id:"genitive", nav:"Case: Have / Of", type:"vocab",
+    eyebrow:"Lesson 10 · Родительный падеж",
+    title:"Genitive Case — Having & “Of”",
+    lead:"The workhorse case. It builds “X of Y”, it says something isn't there (нет + genitive), and — crucially — it's how Russian says “to have”: literally “by me there is…”.",
+    grammar:[
+      {
+        heading:"The endings",
+        table:{cols:["Gender / ending","Change","Example"],rows:[
+          ["Masc consonant","+ -а","друг → друга"],
+          ["Masc -й / Fem -я","→ -я","чай → чая, песня → песни*"],
+          ["Fem -а","→ -ы","мама → мамы"],
+          ["Neut -о","→ -а","окно → окна"]
+        ]}
+      },
+      {
+        heading:"Saying “to have” — у + genitive + есть",
+        body:"<p>Russian has no verb “to have”. Instead: <b>«У [owner in genitive] есть [thing]»</b> = literally “by the owner there is a thing”. Learn the pronoun forms:</p>",
+        table:{cols:["Owner","Have-form"],rows:[
+          ["я → ","у меня"],["ты → ","у тебя"],["он → ","у него"],["она → ","у неё"],
+          ["мы → ","у нас"],["вы → ","у вас"],["они → ","у них"]
+        ]},
+        constructions:[
+          {pattern:"У [owner] есть + [thing]",gloss:"[owner] has [thing]",example:{ru:"У меня есть кот",en:"I have a cat"}},
+          {pattern:"У [owner] есть …?",gloss:"Does [owner] have …?",example:{ru:"У тебя есть время?",en:"Do you have time?"}}
+        ]
+      },
+      {
+        heading:"“There is no …” — нет + genitive",
+        body:"<p>To say something is absent, use <b>нет</b> followed by the genitive.</p>",
+        examples:[
+          {ru:"Здесь нет молока",tr:"zdes' net malaká",en:"There's no milk here (молоко → молока)"},
+          {ru:"У меня нет времени",tr:"u menyá net vrémeni",en:"I have no time"},
+          {ru:"Это книга брата",tr:"eta kníga bráta",en:"This is (my) brother's book (“of the brother”)"}
+        ]
+      }
+    ],
+    words:[
+      {ru:"у меня есть",tr:"u menyá yest'",en:"I have"},
+      {ru:"у тебя есть",tr:"u tebyá yest'",en:"you have"},
+      {ru:"нет",tr:"net",en:"there is no…"},
+      {ru:"время",tr:"vrémya",en:"time"},
+      {ru:"брата",tr:"bráta",en:"brother's / of the brother"},
+      {ru:"воды",tr:"vadý",en:"of water / no water"}
+    ],
+    quiz:[
+      {q:"“I have a cat” is:",opts:["Я есть кот","У меня есть кот","Меня кот"],a:1,exp:"“Have” = У + genitive pronoun + есть: У меня есть кот."},
+      {q:"“Do you have time?” uses which owner-form?",opts:["у тебя","у меня","у неё"],a:0,exp:"“you” as owner = у тебя."},
+      {q:"“There's no milk” — молоко becomes:",opts:["молоко","молоку","молока"],a:2,exp:"After нет, neuter -о → -а: нет молока."},
+      {q:"“книга брата” means:",opts:["a brotherly book","the brother's book","two books"],a:1,exp:"Genitive = “of the brother”, i.e. the brother's book."}
+    ]
+  },
+  {
+    id:"dative", nav:"Case: To / Like", type:"vocab",
+    eyebrow:"Lesson 11 · Дательный падеж",
+    title:"Dative Case — Giving, Liking, Age",
+    lead:"The dative is the receiver — who you give something to, who you message. It also powers the everyday verb “to like” (нравиться) and the way Russians state age.",
+    grammar:[
+      {
+        heading:"The endings & pronouns",
+        table:{cols:["Owner / noun","Dative"],rows:[
+          ["я → ","мне (to me)"],["ты → ","тебе (to you)"],["он → ","ему"],["она → ","ей"],
+          ["мы → ","нам"],["вы → ","вам"],["они → ","им"]
+        ]}
+      },
+      {
+        heading:"“I like …” — мне нравится",
+        body:"<p>Russian “like” flips the logic: the thing you like is the <b>subject</b>, and <b>you</b> go in the dative. Literally “to me is pleasing”.</p>",
+        examples:[
+          {ru:"Мне нравится кофе",tr:"mne nrávitsa kófe",en:"I like coffee (lit. “to me coffee is pleasing”)"},
+          {ru:"Ты мне нравишься",tr:"ty mne nrávishsya",en:"I like you (lit. “you are pleasing to me”)"},
+          {ru:"Мне нравится Москва",tr:"mne nrávitsa Maskvá",en:"I like Moscow"}
+        ],
+        constructions:[
+          {pattern:"[dative] + нравится + [thing]",gloss:"… likes [thing]",example:{ru:"Ей нравится музыка",en:"She likes music"}},
+          {pattern:"[dative] + [number] + лет",gloss:"… is [number] years old",example:{ru:"Мне двадцать лет",en:"I'm twenty"}}
+        ]
+      },
+      {
+        heading:"Giving & “по”",
+        body:"<p>Verbs of giving/telling take a dative receiver. And <b>скучать по</b> (to miss) uses <b>по</b> + dative — that's the grammar behind your love-lesson phrase.</p>",
+        examples:[
+          {ru:"Дай мне воду",tr:"day mne vódu",en:"Give me water"},
+          {ru:"Я скучаю по тебе",tr:"ya skucháyu pa tebé",en:"I miss you (по + dative)"}
+        ]
+      }
+    ],
+    words:[
+      {ru:"мне",tr:"mne",en:"to me"},
+      {ru:"тебе",tr:"tebé",en:"to you"},
+      {ru:"нравится",tr:"nrávitsa",en:"is pleasing (like)"},
+      {ru:"дай мне",tr:"day mne",en:"give me"},
+      {ru:"по тебе",tr:"pa tebé",en:"(missing) you"}
+    ],
+    quiz:[
+      {q:"“I like coffee” is:",opts:["Я нравится кофе","Мне нравится кофе","Меня нравится кофе"],a:1,exp:"The liker goes in the dative: Мне нравится кофе."},
+      {q:"“I like you” (romantic) is:",opts:["Ты мне нравишься","Я тебя нравлюсь","Тебе я нравлюсь"],a:0,exp:"Ты мне нравишься — “you are pleasing to me”."},
+      {q:"“Я скучаю ___ тебе” — which word?",opts:["о","по","с"],a:1,exp:"скучать по + dative = to miss someone."},
+      {q:"“to me” is:",opts:["меня","мне","мной"],a:1,exp:"Dative of я = мне."}
+    ]
+  },
+  {
+    id:"instrumental", nav:"Case: With", type:"vocab",
+    eyebrow:"Lesson 12 · Творительный падеж",
+    title:"Instrumental Case — “With / By”",
+    lead:"The last of the six. It means “with” (после с) or “by means of”, and it's how you order coffee with milk — and say you want to be with someone.",
+    grammar:[
+      {
+        heading:"The endings & pronouns",
+        table:{cols:["Owner / noun","Instrumental"],rows:[
+          ["я → ","мной (со мной = with me)"],["ты → ","тобой (с тобой = with you)"],
+          ["он → ","им"],["она → ","ей"],["мы → ","нами"],["вы → ","вами"],["они → ","ими"],
+          ["Masc + -ом","брат → братом",""],["Fem -а → -ой","мама → мамой",""]
+        ]}
+      },
+      {
+        heading:"с + instrumental = “with”",
+        body:"<p>Use <b>с</b> (or <b>со</b> before tricky clusters, e.g. <b>со мной</b>) plus the instrumental.</p>",
+        examples:[
+          {ru:"кофе с молоком",tr:"kófe s malakóm",en:"coffee with milk (молоко → молоком)"},
+          {ru:"Я иду с другом",tr:"ya idú s drúgam",en:"I'm going with a friend (друг → другом)"},
+          {ru:"Пойдём со мной",tr:"paydyóm sa mnoy",en:"Come with me"}
+        ],
+        constructions:[
+          {pattern:"с + [instrumental]",gloss:"with …",example:{ru:"чай с сахаром",en:"tea with sugar"}},
+          {pattern:"быть с + [instrumental]",gloss:"to be with …",example:{ru:"Я хочу быть с тобой",en:"I want to be with you"}}
+        ]
+      }
+    ],
+    words:[
+      {ru:"со мной",tr:"sa mnoy",en:"with me"},
+      {ru:"с тобой",tr:"s taboy",en:"with you"},
+      {ru:"с молоком",tr:"s malakóm",en:"with milk"},
+      {ru:"с сахаром",tr:"s sákharam",en:"with sugar"},
+      {ru:"с другом",tr:"s drúgam",en:"with a friend"}
+    ],
+    quiz:[
+      {q:"“coffee with milk” is:",opts:["кофе с молоко","кофе с молоком","кофе о молоке"],a:1,exp:"с + instrumental: молоко → молоком."},
+      {q:"“with me” is:",opts:["со мной","у меня","мне"],a:0,exp:"Instrumental of я with с = со мной."},
+      {q:"“I want to be with you” ends with:",opts:["с ты","с тебя","с тобой"],a:2,exp:"с + instrumental of ты = с тобой."},
+      {q:"Which preposition triggers the instrumental here?",opts:["в","с","о"],a:1,exp:"с (“with”) takes the instrumental case."}
+    ]
+  },
+  {
+    id:"adjectives", nav:"Adjectives", type:"vocab",
+    eyebrow:"Lesson 13 · Прилагательные",
+    title:"Adjectives & Agreement",
+    lead:"Adjectives must match the gender and number of their noun. This is exactly why you tell a woman “ты красивАЯ” and a man “ты красивЫЙ” — same word, different ending.",
+    grammar:[
+      {
+        heading:"Nominative endings",
+        table:{cols:["Gender / number","Ending","Example (красивый = beautiful)"],rows:[
+          ["Masculine","-ый / -ий / -ой","красивый дом"],
+          ["Feminine","-ая / -яя","красивая девушка"],
+          ["Neuter","-ое / -ее","красивое место"],
+          ["Plural","-ые / -ие","красивые глаза"]
+        ]}
+      },
+      {
+        heading:"Agreement in action",
+        examples:[
+          {ru:"новый телефон",tr:"nóvyy telefón",en:"a new phone (m)"},
+          {ru:"хорошая идея",tr:"kharóshaya idéya",en:"a good idea (f)"},
+          {ru:"красивое место",tr:"krasívaye mésta",en:"a beautiful place (n)"},
+          {ru:"Ты очень красивая",tr:"ty óchen krasívaya",en:"You're very beautiful (to a woman)"}
+        ],
+        constructions:[
+          {pattern:"[adjective agreeing] + [noun]",gloss:"a [quality] [thing]",example:{ru:"добрый человек",en:"a kind person"}},
+          {pattern:"Ты очень + [adjective]",gloss:"You're very …",example:{ru:"Ты очень умная",en:"You're very smart (to a woman)"}}
+        ]
+      }
+    ],
+    words:[
+      {ru:"красивый",tr:"krasívyy",en:"beautiful (m)"},
+      {ru:"красивая",tr:"krasívaya",en:"beautiful (f)"},
+      {ru:"новый",tr:"nóvyy",en:"new"},
+      {ru:"хороший",tr:"kharóshiy",en:"good"},
+      {ru:"большой",tr:"bal'shóy",en:"big"},
+      {ru:"умная",tr:"úmnaya",en:"smart (f)"}
+    ],
+    quiz:[
+      {q:"To tell your girlfriend she's beautiful:",opts:["Ты красивый","Ты красивая","Ты красивое"],a:1,exp:"Feminine ending -ая: красивая."},
+      {q:"“a new phone” (телефон is masculine):",opts:["новая телефон","новое телефон","новый телефон"],a:2,exp:"Masculine noun → masculine adjective -ый: новый."},
+      {q:"“красивое” would describe a noun that is:",opts:["masculine","feminine","neuter"],a:2,exp:"-ое is the neuter ending (красивое место)."},
+      {q:"Which ending is plural?",opts:["-ая","-ые","-ое"],a:1,exp:"-ые / -ие mark the plural (красивые)."}
+    ]
+  },
+  {
+    id:"possessives", nav:"My / Your", type:"vocab",
+    eyebrow:"Lesson 14 · Притяжательные",
+    title:"Possessives — My, Your, Our",
+    lead:"Like adjectives, “my/your/our” agree with the thing owned, not the owner. So “my” is мой for a masculine noun but моя for a feminine one — “моя любовь”, my love.",
+    grammar:[
+      {
+        heading:"The forms",
+        table:{cols:["Meaning","Masc","Fem","Neut","Plural"],rows:[
+          ["my","мой","моя","моё","мои"],
+          ["your (ты)","твой","твоя","твоё","твои"],
+          ["our","наш","наша","наше","наши"],
+          ["your (вы)","ваш","ваша","ваше","ваши"]
+        ]}
+      },
+      {
+        heading:"his / her / their don't change",
+        body:"<p>Good news: <b>его</b> (his), <b>её</b> (her) and <b>их</b> (their) are invariable — same in every gender. Only мой/твой/наш/ваш agree.</p>",
+        examples:[
+          {ru:"мой друг",tr:"moy drug",en:"my friend (m)"},
+          {ru:"моя девушка",tr:"mayá dévushka",en:"my girlfriend (f)"},
+          {ru:"твоё имя",tr:"tvayó ímya",en:"your name (n)"},
+          {ru:"это наш дом",tr:"eta nash dom",en:"this is our house"}
+        ],
+        constructions:[
+          {pattern:"Ты — моя + [noun]",gloss:"You are my …",example:{ru:"Ты — моя любовь",en:"You are my love"}}
+        ]
+      }
+    ],
+    words:[
+      {ru:"мой",tr:"moy",en:"my (m)"},
+      {ru:"моя",tr:"mayá",en:"my (f)"},
+      {ru:"твой",tr:"tvoy",en:"your (m)"},
+      {ru:"наш",tr:"nash",en:"our (m)"},
+      {ru:"её",tr:"yeyó",en:"her (unchanging)"},
+      {ru:"моё сердце",tr:"mayó sértse",en:"my heart"}
+    ],
+    quiz:[
+      {q:"“my girlfriend” (девушка is feminine):",opts:["мой девушка","моя девушка","моё девушка"],a:1,exp:"Feminine noun → моя."},
+      {q:"“You are my love” (любовь is feminine) is:",opts:["Ты моё любовь","Ты мой любовь","Ты моя любовь"],a:2,exp:"любовь is feminine, so моя любовь."},
+      {q:"Which possessive never changes form?",opts:["мой","наш","её"],a:2,exp:"его / её / их are invariable."},
+      {q:"“our house” (дом, masculine):",opts:["наш дом","наша дом","наше дом"],a:0,exp:"Masculine → наш."}
+    ]
+  },
+  {
+    id:"numbers", nav:"Numbers", type:"vocab",
+    eyebrow:"Lesson 15 · Числа",
+    title:"Numbers 0–20",
+    lead:"Prices, ages, phone numbers, how many coffees. Say each one out loud — Russian numbers have a satisfying rhythm.",
+    grammar:[
+      {
+        heading:"A quick pattern",
+        body:"<p>11–19 are built from the digit + <b>-надцать</b> (the “-teen” family). And when counting, the noun after a number changes case — but that's a later lesson. For now, focus on the numbers themselves.</p>",
+        constructions:[
+          {pattern:"[number] + лет",gloss:"… years old",example:{ru:"Мне двадцать лет",en:"I'm twenty years old"}}
+        ]
+      }
+    ],
+    words:[
+      {ru:"ноль",tr:"nol'",en:"0"},{ru:"один",tr:"adín",en:"1"},{ru:"два",tr:"dva",en:"2"},
+      {ru:"три",tr:"tri",en:"3"},{ru:"четыре",tr:"chetýre",en:"4"},{ru:"пять",tr:"pyat'",en:"5"},
+      {ru:"шесть",tr:"shest'",en:"6"},{ru:"семь",tr:"sem'",en:"7"},{ru:"восемь",tr:"vósem'",en:"8"},
+      {ru:"девять",tr:"dévyat'",en:"9"},{ru:"десять",tr:"désyat'",en:"10"},
+      {ru:"одиннадцать",tr:"adínnadtsat'",en:"11"},{ru:"двенадцать",tr:"dvenádtsat'",en:"12"},
+      {ru:"двадцать",tr:"dvádtsat'",en:"20"}
+    ],
+    quiz:[
+      {q:"Which is “five”?",opts:["пять","семь","десять"],a:0,exp:"пять = 5."},
+      {q:"“десять” is:",opts:["2","10","12"],a:1,exp:"десять = 10."},
+      {q:"“-надцать” matches which English ending?",opts:["-ty","-teen","-th"],a:1,exp:"The “-teen” family: одиннадцать (11), двенадцать (12)."}
+    ]
+  },
+  {
+    id:"everyday", nav:"Everyday", type:"vocab",
+    eyebrow:"Lesson 16 · Каждый день",
+    title:"Everyday Phrases",
+    lead:"The little glue words that make you sound like a person, not a textbook. Sprinkle these into anything.",
+    words:[
+      {ru:"Да",tr:"da",en:"Yes"},{ru:"Нет",tr:"nyet",en:"No"},
+      {ru:"Конечно",tr:"konéshno",en:"Of course"},{ru:"Может быть",tr:"mózhet byt'",en:"Maybe"},
+      {ru:"Я не знаю",tr:"ya ne znáyu",en:"I don't know"},{ru:"Я не понимаю",tr:"ya ne panimáyu",en:"I don't understand"},
+      {ru:"Секунду",tr:"sekúndu",en:"One second"},{ru:"Всё хорошо",tr:"vsyo khoroshó",en:"Everything's fine"},
+      {ru:"Хорошего дня",tr:"khoróshego dnya",en:"Have a good day"},{ru:"Ты говоришь по-русски?",tr:"ty gavarísh pa-rússki?",en:"Do you speak Russian?"}
+    ],
+    tips:["<b>Конечно</b> is spelled with ч but pronounced “konéshno” — one of a few words where ч sounds like sh."],
+    quiz:[
+      {q:"You didn't catch what someone said. You say:",opts:["Конечно","Я не понимаю","Всё хорошо"],a:1,exp:"Я не понимаю = I don't understand."},
+      {q:"“Может быть” means:",opts:["Of course","Maybe","Never"],a:1,exp:"Может быть = maybe / perhaps."}
+    ]
+  },
+  {
+    id:"love", nav:"Sweet Talk ♥", type:"vocab",
+    eyebrow:"Lesson 17 · Нежные слова",
+    title:"Terms of Endearment",
+    lead:"The reason you're here — and now you'll see the grammar living inside each phrase. Say them slowly and mean them; a perfect accent matters far less than that. (Adjectives here are the form for speaking to a woman.)",
+    grammar:[
+      {
+        heading:"The cases hiding in your love phrases",
+        body:"<p>You already know the machinery behind these — here's each phrase decoded:</p>",
+        table:{cols:["Phrase","The grammar"],rows:[
+          ["Я тебя люблю","тебя = accusative (object of love)"],
+          ["Я скучаю по тебе","по + dative (тебе)"],
+          ["Я думаю о тебе","о + prepositional (тебе)"],
+          ["Я хочу быть с тобой","с + instrumental (тобой)"],
+          ["Ты моя любовь","моя agrees with feminine любовь"],
+          ["Ты красивая","adjective agrees with a woman (-ая)"]
+        ]}
+      }
+    ],
+    words:[
+      {ru:"Я тебя люблю",tr:"ya tebyá lyublyú",en:"I love you"},
+      {ru:"Я скучаю по тебе",tr:"ya skucháyu pa tebé",en:"I miss you"},
+      {ru:"Ты красивая",tr:"ty krasívaya",en:"You're beautiful"},
+      {ru:"Ты мне нравишься",tr:"ty mne nrávishsya",en:"I like you"},
+      {ru:"Моя любовь",tr:"mayá lyubóv'",en:"My love"},
+      {ru:"Дорогая",tr:"daragáya",en:"Darling / Dear"},
+      {ru:"Ты моё солнце",tr:"ty mayó sóntse",en:"You're my sunshine"},
+      {ru:"Я думаю о тебе",tr:"ya dúmayu a tebé",en:"I'm thinking about you"},
+      {ru:"Ты для меня всё",tr:"ty dlya menyá vsyo",en:"You're everything to me"},
+      {ru:"Целую",tr:"tselúyu",en:"Kisses (sign-off)"},
+      {ru:"Обнимаю",tr:"abnimáyu",en:"Hugs (sign-off)"}
+    ],
+    tips:["“Я тебя люблю” and “Я люблю тебя” are both correct — Russian word order is flexible.","End a message with <b>Целую</b> or <b>Обнимаю</b> — the Russian equivalent of “xx / hugs”."],
+    quiz:[
+      {q:"Which case is “тебя” in “Я тебя люблю”?",opts:["Accusative (object)","Dative","Genitive"],a:0,exp:"тебя is the direct object of люблю → accusative."},
+      {q:"“Я скучаю по тебе” — по takes which case?",opts:["Accusative","Dative","Instrumental"],a:1,exp:"по + dative (тебе)."},
+      {q:"To sign off warmly you'd write:",opts:["Целую","Секунду","Конечно"],a:0,exp:"Целую (“kisses”) is the classic warm sign-off."}
+    ]
+  },
+  {
+    id:"cafe", nav:"Café & Food", type:"vocab",
+    eyebrow:"Lesson 18 · Кафе",
+    title:"Café & Ordering",
+    lead:"Order a coffee, get the bill, say it was tasty — and watch the instrumental case (“с молоком”) show up on a real menu.",
+    grammar:[
+      {
+        heading:"“Дайте, пожалуйста…” — the polite order",
+        body:"<p><b>Дайте</b> is the polite command “give” (to вы). Add <b>пожалуйста</b> and any noun and you can order anything. Informally, to your girlfriend, it's <b>дай</b>.</p>",
+        constructions:[
+          {pattern:"Дайте, пожалуйста, + [thing]",gloss:"Please give me …",example:{ru:"Дайте, пожалуйста, меню",en:"The menu, please"}},
+          {pattern:"[drink] с + [instrumental]",gloss:"[drink] with …",example:{ru:"кофе с молоком",en:"coffee with milk"}}
+        ]
+      }
+    ],
+    words:[
+      {ru:"вода",tr:"vadá",en:"water"},{ru:"чай",tr:"chay",en:"tea"},{ru:"кофе",tr:"kófe",en:"coffee"},
+      {ru:"хлеб",tr:"khleb",en:"bread"},{ru:"молоко",tr:"malakó",en:"milk"},{ru:"сахар",tr:"sákhar",en:"sugar"},
+      {ru:"меню",tr:"menyú",en:"menu"},{ru:"счёт",tr:"shchyot",en:"the bill"},{ru:"вкусно",tr:"vkúsno",en:"tasty"},
+      {ru:"Я хочу кофе",tr:"ya khachú kófe",en:"I want a coffee"},
+      {ru:"Сколько это стоит?",tr:"skól'ka eta stóit?",en:"How much is it?"}
+    ],
+    tips:["<b>Дайте, пожалуйста…</b> + any noun is your all-purpose polite way to ask for anything."],
+    quiz:[
+      {q:"“coffee with milk” is:",opts:["кофе с молоко","кофе с молоком","кофе о молоке"],a:1,exp:"с + instrumental: молоко → молоком."},
+      {q:"How do you ask the price?",opts:["Сколько это стоит?","Я не знаю","Вкусно"],a:0,exp:"Сколько это стоит? = How much does this cost?"},
+      {q:"“вкусно” means:",opts:["expensive","tasty","cold"],a:1,exp:"вкусно = delicious/tasty."}
+    ]
+  },
+  {
+    id:"around", nav:"Getting Around", type:"vocab",
+    eyebrow:"Lesson 19 · В городе",
+    title:"Questions & Getting Around",
+    lead:"Question words are the keys to the city. Stack one with a noun and you've got a full question — and you'll reuse the prepositional case for locations.",
+    grammar:[
+      {
+        heading:"Build a question from a question word",
+        body:"<p>Russian question words go straight in front — no “do/does” helper needed.</p>",
+        table:{cols:["Word","Meaning"],rows:[
+          ["Где?","Where?"],["Когда?","When?"],["Почему?","Why?"],["Сколько?","How much / many?"],["Кто?","Who?"],["Что?","What?"]
+        ]},
+        constructions:[
+          {pattern:"Где + [noun]?",gloss:"Where is [noun]?",example:{ru:"Где вокзал?",en:"Where's the station?"}},
+          {pattern:"Где + [place in prepositional]?",gloss:"asking about location",example:{ru:"Где туалет?",en:"Where's the toilet?"}}
+        ]
+      }
+    ],
+    words:[
+      {ru:"Где?",tr:"gde?",en:"Where?"},{ru:"Когда?",tr:"kagdá?",en:"When?"},{ru:"Почему?",tr:"pachemú?",en:"Why?"},
+      {ru:"Сколько?",tr:"skól'ka?",en:"How much / many?"},{ru:"здесь",tr:"zdes'",en:"here"},{ru:"там",tr:"tam",en:"there"},
+      {ru:"туалет",tr:"tualét",en:"toilet"},{ru:"Помогите!",tr:"pamagíte!",en:"Help!"},
+      {ru:"Где туалет?",tr:"gde tualét?",en:"Where is the toilet?"},
+      {ru:"Вы говорите по-английски?",tr:"vy gavaríte pa-anglíyski?",en:"Do you speak English?"}
+    ],
+    quiz:[
+      {q:"Lost and need a bathroom. You ask:",opts:["Где туалет?","Сколько это стоит?","Помогите!"],a:0,exp:"Где туалет? = Where is the toilet?"},
+      {q:"Which word means “Why?”",opts:["Когда?","Почему?","Где?"],a:1,exp:"Почему? = Why?"},
+      {q:"To ask “Where's the station?” you'd start with:",opts:["Где","Когда","Сколько"],a:0,exp:"Где = where; Где вокзал?"}
+    ]
+  },
+  {
+    id:"past", nav:"Past Tense", unit:"A2 · Building", type:"vocab",
+    eyebrow:"Lesson 20 · Прошедшее время",
+    title:"The Past Tense",
+    lead:"A relief after the present: the past tense ignores person entirely and only cares about the subject's gender and number. One small set of endings covers every verb.",
+    grammar:[
+      {
+        heading:"Drop -ть, add the gender ending",
+        body:"<p>Take the infinitive, remove <b>-ть</b>, and add: <b>-л</b> (he), <b>-ла</b> (she), <b>-ло</b> (it), <b>-ли</b> (we/you/they). It agrees with <b>who did it</b>, not with “I/you/he”.</p>",
+        table:{cols:["Subject","читать → ","быть → "],rows:[
+          ["он (m)","читал","был"],["она (f)","читала","была"],
+          ["оно (n)","читало","было"],["мы / вы / они","читали","были"]
+        ]}
+      },
+      {
+        heading:"It works for “I” and “you” too",
+        body:"<p>“I” and “you” take the ending that matches <b>your own</b> gender: a man says <b>я читал</b>, a woman says <b>я читала</b>.</p>",
+        examples:[
+          {ru:"Я читала книгу",tr:"ya chitála knígu",en:"I was reading a book (woman speaking)"},
+          {ru:"Он жил в Москве",tr:"on zhil v Maskvé",en:"He lived in Moscow"},
+          {ru:"Мы были дома",tr:"my býli dóma",en:"We were home"},
+          {ru:"Она много работала",tr:"aná mnóga rabótala",en:"She worked a lot"}
+        ],
+        constructions:[
+          {pattern:"[subject] + [verb-л/ла/ли]",gloss:"past tense, agreeing with the subject",example:{ru:"Ты был там?",en:"Were you there? (to a man)"}}
+        ]
+      },
+      {
+        heading:"A few to memorise",
+        body:"<p>Some common verbs are irregular in the past. Worth knowing early:</p>",
+        table:{cols:["Verb","m / f / pl"],rows:[
+          ["идти (to go, foot)","шёл / шла / шли"],
+          ["мочь (to be able)","мог / могла / могли"]
+        ]}
+      }
+    ],
+    quiz:[
+      {q:"A woman says “I was home.”",opts:["Я был дома","Я была дома","Я были дома"],a:1,exp:"Past agrees with the speaker's gender: была."},
+      {q:"“They lived here” (жить):",opts:["Они жил здесь","Они жили здесь","Они жила здесь"],a:1,exp:"Plural subject → -ли: жили."},
+      {q:"Past of идти for “he” is:",opts:["идил","шёл","ходил"],a:1,exp:"идти is irregular in the past: шёл (m)."}
+    ]
+  },
+  {
+    id:"future", nav:"Future Tense", unit:"A2 · Building", type:"vocab",
+    eyebrow:"Lesson 21 · Будущее время",
+    title:"The Future Tense",
+    lead:"Russian has two futures, and which one you use depends on aspect (next lesson). Here's the mechanics; the choice becomes natural once aspect clicks.",
+    grammar:[
+      {
+        heading:"Compound future: буду + infinitive",
+        body:"<p>For an ongoing or repeated future action, conjugate <b>быть</b> and add an <b>imperfective</b> infinitive.</p>",
+        table:{cols:["Subject","быть (will)","Example"],rows:[
+          ["я","буду","Я буду читать"],["ты","будешь","Ты будешь читать"],
+          ["он/она","будет","Она будет читать"],["мы","будем","Мы будем читать"],
+          ["вы","будете","Вы будете читать"],["они","будут","Они будут читать"]
+        ]}
+      },
+      {
+        heading:"Simple future = a perfective verb in present endings",
+        body:"<p>A <b>perfective</b> verb has no present tense, so its present-tense endings point to the <b>future</b> — a single, completed action. <b>прочитаю</b> = “I will read (and finish)”. More on this next lesson.</p>",
+        examples:[
+          {ru:"Завтра я буду работать",tr:"záftra ya búdu rabótat'",en:"Tomorrow I'll be working (process)"},
+          {ru:"Мы будем жить здесь",tr:"my búdem zhit' zdes'",en:"We'll live here"},
+          {ru:"Я прочитаю эту книгу",tr:"ya prachitáyu étu knígu",en:"I'll read this book (and finish it)"}
+        ],
+        constructions:[
+          {pattern:"буду / будешь… + [imperfective infinitive]",gloss:"will be doing (process / habit)",example:{ru:"Я буду скучать по тебе",en:"I'll miss you"}}
+        ]
+      }
+    ],
+    quiz:[
+      {q:"“Tomorrow I'll be working” uses:",opts:["Я работал","Я буду работать","Я работаю"],a:1,exp:"Compound future: буду + imperfective infinitive."},
+      {q:"Which form of быть goes with “мы”?",opts:["будет","будем","будут"],a:1,exp:"мы → будем."},
+      {q:"“Я прочитаю книгу” means:",opts:["I'm reading a book","I'll read (and finish) a book","I read a book yesterday"],a:1,exp:"A perfective verb in present endings = a completed future action."}
+    ]
+  },
+  {
+    id:"aspect", nav:"Verbal Aspect ★", unit:"A2 · Building", type:"vocab",
+    eyebrow:"Lesson 22 · Вид глагола",
+    title:"Verbal Aspect — the Big One",
+    lead:"The single most important idea in Russian verbs. Almost every verb comes as a PAIR: one member views an action as a process, the other as a completed whole. Master this and Russian verbs finally make sense.",
+    grammar:[
+      {
+        heading:"Two lenses on the same action",
+        body:"<p><b>Imperfective (НСВ)</b> — process, repetition, or a general fact: “was doing / does / will be doing”.<br><b>Perfective (СВ)</b> — one complete action with a result: “did and finished / will do and finish”.</p><p>Perfective is often the imperfective plus a prefix (<b>про-, на-, с-, по-</b>), or a different root.</p>",
+        table:{cols:["Imperfective","Perfective","Meaning"],rows:[
+          ["читать","прочитать","to read"],
+          ["писать","написать","to write"],
+          ["делать","сделать","to do / make"],
+          ["смотреть","посмотреть","to watch"],
+          ["говорить","сказать","to say / tell"]
+        ]}
+      },
+      {
+        heading:"Which tenses each one has",
+        body:"<p>A completed action can't be happening “right now”, so <b>perfective verbs have no present tense</b> — only past and future.</p>",
+        table:{cols:["","Past","Present","Future"],rows:[
+          ["Imperfective","читал","читаю","буду читать"],
+          ["Perfective","прочитал","— (none)","прочитаю"]
+        ]}
+      },
+      {
+        heading:"How to choose",
+        body:"<p>Reach for <b>imperfective</b> with process/habit words: <b>часто, обычно, каждый день, долго, всегда</b>. Reach for <b>perfective</b> for a single finished result: <b>вчера / завтра</b> (one time), <b>уже</b>, “and then…”.</p>",
+        examples:[
+          {ru:"Каждый день я читаю",tr:"kázhdy den' ya chitáyu",en:"Every day I read (habit → imperfective)"},
+          {ru:"Вчера я прочитал книгу",tr:"vcherá ya prachitál knígu",en:"Yesterday I read (finished) the book (→ perfective)"},
+          {ru:"Я долго писал письмо",tr:"ya dólga pisál pis'mó",en:"I was writing the letter for a long time (process)"},
+          {ru:"Я уже написал письмо",tr:"ya uzhé napisál pis'mó",en:"I've already written the letter (result)"}
+        ],
+        constructions:[
+          {pattern:"process / habit → imperfective",gloss:"ongoing or repeated",example:{ru:"Я часто смотрю фильмы",en:"I often watch films"}},
+          {pattern:"one finished result → perfective",gloss:"done, with an outcome",example:{ru:"Я посмотрел фильм",en:"I watched the film (all of it)"}}
+        ]
+      }
+    ],
+    quiz:[
+      {q:"“Every day I write letters” (habit) needs:",opts:["imperfective (пишу)","perfective (напишу)","past tense"],a:0,exp:"Habits/repetition → imperfective."},
+      {q:"“I finished the book yesterday” needs:",opts:["читал","прочитал","читаю"],a:1,exp:"A completed one-time result → perfective past прочитал."},
+      {q:"Why is there no present tense «я прочитаю» meaning “now”?",opts:["It's a typo","Perfective has no present — completed can't be ongoing","It's only for questions"],a:1,exp:"Perfective verbs have only past and future."},
+      {q:"The perfective partner of “делать” is:",opts:["сделать","делаю","поделать"],a:0,exp:"делать / сделать is the standard pair."}
+    ]
+  },
+  {
+    id:"plural-cases", nav:"Plural of Cases", unit:"A2 · Building", type:"vocab",
+    eyebrow:"Lesson 23 · Множественное число падежей",
+    title:"Plural of the Cases",
+    lead:"You know the singular of all six cases. Now the plural — and here's the gift: three of the plural cases are almost perfectly regular. The genitive plural is the one to work at.",
+    grammar:[
+      {
+        heading:"The easy three: dative / instrumental / prepositional",
+        body:"<p>Across all genders, plural takes: <b>-ам</b> (dative), <b>-ами</b> (instrumental), <b>-ах</b> (prepositional) — soft variants <b>-ям / -ями / -ях</b>. Learn this rhythm and you own half the plural system.</p>",
+        table:{cols:["Case","Ending","Example (книга → )"],rows:[
+          ["Dative pl","-ам / -ям","книгам (to the books)"],
+          ["Instrumental pl","-ами / -ями","с книгами (with the books)"],
+          ["Prepositional pl","-ах / -ях","о книгах (about the books)"]
+        ]}
+      },
+      {
+        heading:"The genitive plural (the tricky one)",
+        body:"<p>Main patterns:</p>",
+        table:{cols:["Type","Ending","Example"],rows:[
+          ["Masc consonant","-ов","стол → столов"],
+          ["Masc -й","-ев / -ёв","музей → музеев"],
+          ["Fem -а","zero ending","книга → книг, мама → мам"],
+          ["Neut -о","zero ending","окно → окон"],
+          ["Neut -е / Masc -ь","-ей","море → морей, день → дней"]
+        ]}
+      },
+      {
+        heading:"One noun, fully declined (plural)",
+        body:"<p>Here is <b>книга</b> across all six plural cases:</p>",
+        table:{cols:["Case","Form"],rows:[
+          ["Nominative","книги"],["Accusative","книги"],["Genitive","книг"],
+          ["Dative","книгам"],["Instrumental","книгами"],["Prepositional","о книгах"]
+        ]},
+        examples:[
+          {ru:"Я говорю с друзьями",tr:"ya gavaryú s druz'yámi",en:"I'm talking with friends (instrumental pl)"},
+          {ru:"У меня много книг",tr:"u menyá mnóga knig",en:"I have many books (genitive pl)"},
+          {ru:"Мы были в разных городах",tr:"my býli v ráznykh garadákh",en:"We were in different cities (prepositional pl)"}
+        ]
+      }
+    ],
+    quiz:[
+      {q:"“with the books” (instrumental plural of книга):",opts:["с книгам","с книгами","с книгах"],a:1,exp:"Instrumental plural = -ами: книгами."},
+      {q:"Genitive plural of “стол” is:",opts:["столы","столов","столам"],a:1,exp:"Masc consonant → -ов: столов."},
+      {q:"Genitive plural of “книга” is:",opts:["книг","книги","книгов"],a:0,exp:"Feminine -а drops to a zero ending: книг."},
+      {q:"Dative, instrumental and prepositional plural endings are:",opts:["-ов / -ей / zero","-ам / -ами / -ах","-ы / -и / -а"],a:1,exp:"The regular trio: -ам, -ами, -ах."}
+    ]
+  },
+  {
+    id:"adj-decl", nav:"Adjective Declension", unit:"A2 · Building", type:"vocab",
+    eyebrow:"Lesson 24 · Склонение прилагательных",
+    title:"Adjectives & Pronouns Across Cases",
+    lead:"Adjectives don't just agree in gender — they take a case ending too, matching their noun. Learn the pattern of one model adjective (новый) and it transfers to nearly all of them.",
+    grammar:[
+      {
+        heading:"новый (new) — masculine / neuter & feminine singular",
+        table:{cols:["Case","Masc / Neut","Feminine"],rows:[
+          ["Nominative","новый / новое","новая"],
+          ["Accusative","= nom. or gen.","новую"],
+          ["Genitive","нового","новой"],
+          ["Dative","новому","новой"],
+          ["Instrumental","новым","новой"],
+          ["Prepositional","о новом","о новой"]
+        ]}
+      },
+      {
+        heading:"Plural (all genders)",
+        table:{cols:["Case","Ending","Example"],rows:[
+          ["Nominative","-ые / -ие","новые"],
+          ["Genitive / Prep.","-ых / -их","новых"],
+          ["Dative","-ым / -им","новым"],
+          ["Instrumental","-ыми / -ими","новыми"]
+        ]}
+      },
+      {
+        heading:"In real sentences",
+        examples:[
+          {ru:"Я живу в новом доме",tr:"ya zhivú v nóvam dóme",en:"I live in a new house (prepositional m)"},
+          {ru:"У меня нет новой машины",tr:"u menyá net nóvay mashíny",en:"I don't have a new car (genitive f)"},
+          {ru:"Я иду с новым другом",tr:"ya idú s nóvym drúgam",en:"I'm going with a new friend (instrumental m)"},
+          {ru:"Я вижу новую машину",tr:"ya vízhu nóvuyu mashínu",en:"I see a/the new car (accusative f)"}
+        ],
+        constructions:[
+          {pattern:"[preposition] + [adjective + noun, both in the case]",gloss:"the adjective copies the noun's case",example:{ru:"в красивом городе",en:"in a beautiful city"}}
+        ]
+      }
+    ],
+    quiz:[
+      {q:"“in a new house” (prepositional): «в ___ доме»",opts:["новый","новом","нового"],a:1,exp:"Masc prepositional adjective → -ом: новом."},
+      {q:"“with a new friend” (instrumental): «с ___ другом»",opts:["новым","новом","новый"],a:0,exp:"Masc instrumental → -ым: новым."},
+      {q:"“I see a new car” (accusative f): «Я вижу ___ машину»",opts:["новая","новой","новую"],a:2,exp:"Feminine accusative → -ую: новую."},
+      {q:"Genitive plural of adjectives ends in:",opts:["-ых / -их","-ым","-ые"],a:0,exp:"новых (matches gen/prep plural)."}
+    ]
+  },
+  {
+    id:"motion", nav:"Verbs of Motion", unit:"A2 · Building", type:"vocab",
+    eyebrow:"Lesson 25 · Глаголы движения",
+    title:"Verbs of Motion",
+    lead:"Russian splits “to go” by two things: on foot vs by vehicle, and one-direction-now vs regularly/round-trip. Four verbs cover most of daily life.",
+    grammar:[
+      {
+        heading:"The core four",
+        table:{cols:["","One direction, now","Regularly / round trip"],rows:[
+          ["On foot","идти","ходить"],
+          ["By vehicle","ехать","ездить"]
+        ]}
+      },
+      {
+        heading:"Conjugations",
+        table:{cols:["","идти","ехать","ходить","ездить"],rows:[
+          ["я","иду","еду","хожу","езжу"],
+          ["ты","идёшь","едешь","ходишь","ездишь"],
+          ["он/она","идёт","едет","ходит","ездит"],
+          ["мы","идём","едем","ходим","ездим"],
+          ["они","идут","едут","ходят","ездят"]
+        ]}
+      },
+      {
+        heading:"Choosing the right one",
+        examples:[
+          {ru:"Я иду домой",tr:"ya idú damóy",en:"I'm walking home (now, one direction)"},
+          {ru:"Я хожу в спортзал",tr:"ya khazhú v sportzál",en:"I go to the gym (regularly)"},
+          {ru:"Мы едем в Москву",tr:"my yédem v Maskvú",en:"We're travelling to Moscow (now, by vehicle)"},
+          {ru:"Я езжу на работу на метро",tr:"ya yézzhu na rabótu na metró",en:"I commute to work by metro (regularly)"}
+        ],
+        constructions:[
+          {pattern:"идти / ехать = happening now, one way",gloss:"a single trip in progress",example:{ru:"Куда ты идёшь?",en:"Where are you going?"}},
+          {pattern:"ходить / ездить = habit or round trip",gloss:"regularly, there and back",example:{ru:"Я часто езжу к тебе",en:"I often travel to you"}}
+        ]
+      }
+    ],
+    quiz:[
+      {q:"“I'm walking home right now”:",opts:["Я хожу домой","Я иду домой","Я езжу домой"],a:1,exp:"One direction, now, on foot → иду."},
+      {q:"“I go to the gym every week”:",opts:["Я иду в спортзал","Я хожу в спортзал","Я еду в спортзал"],a:1,exp:"Regular/repeated on foot → хожу."},
+      {q:"“We're driving to Moscow now”:",opts:["Мы ездим в Москву","Мы едем в Москву","Мы ходим в Москву"],a:1,exp:"Now, by vehicle, one direction → едем."}
+    ]
+  },
+  {
+    id:"counting", nav:"Numbers & Time", unit:"A2 · Building", type:"vocab",
+    eyebrow:"Lesson 26 · Числа и время",
+    title:"Counting, Dates & Time",
+    lead:"Bigger numbers, the rule that trips up every learner (what case comes after a number), and how to talk about days and time.",
+    grammar:[
+      {
+        heading:"Tens and hundred",
+        table:{cols:["Russian","Number"],rows:[
+          ["тридцать","30"],["сорок","40"],["пятьдесят","50"],["шестьдесят","60"],
+          ["семьдесят","70"],["восемьдесят","80"],["девяносто","90"],["сто","100"]
+        ]}
+      },
+      {
+        heading:"What case follows a number",
+        body:"<p>The counted noun changes with the number:</p>",
+        table:{cols:["Number ends in","Noun case","Example"],rows:[
+          ["1 (один/одна)","nominative singular","одна книга"],
+          ["2, 3, 4","genitive singular","две книги, три стола"],
+          ["5–20 (and 0)","genitive plural","пять книг, десять столов"]
+        ]}
+      },
+      {
+        heading:"Days & time words",
+        table:{cols:["Russian","English"],rows:[
+          ["сегодня / завтра / вчера","today / tomorrow / yesterday"],
+          ["утром / днём / вечером / ночью","in the morning / afternoon / evening / at night"],
+          ["понедельник … воскресенье","Monday … Sunday"],
+          ["в понедельник","on Monday"],
+          ["Сколько времени?","What time is it?"]
+        ]},
+        examples:[
+          {ru:"Сейчас два часа",tr:"seychás dva chasá",en:"It's two o'clock"},
+          {ru:"В субботу я отдыхаю",tr:"v subbótu ya atdykháyu",en:"On Saturday I relax"},
+          {ru:"У меня три брата",tr:"u menyá tri bráta",en:"I have three brothers (три + genitive singular)"}
+        ]
+      }
+    ],
+    quiz:[
+      {q:"After “две”, книга becomes:",opts:["книга","книги","книг"],a:1,exp:"2, 3, 4 → genitive singular: две книги."},
+      {q:"After “пять”, стол becomes:",opts:["стол","стола","столов"],a:2,exp:"5+ → genitive plural: пять столов."},
+      {q:"“on Monday” is:",opts:["в понедельник","понедельник","о понедельнике"],a:0,exp:"в + accusative day: в понедельник."},
+      {q:"“девяносто” is:",opts:["19","90","900"],a:1,exp:"девяносто = 90."}
+    ]
+  },
+  {
+    id:"family", nav:"Family & People", unit:"A2 · Building", type:"vocab",
+    eyebrow:"Lesson 27 · Семья",
+    title:"Family & People",
+    lead:"A core vocabulary set you'll use constantly — and great for talking about the people in your life.",
+    words:[
+      {ru:"мама",tr:"máma",en:"mum"},{ru:"папа",tr:"pápa",en:"dad"},
+      {ru:"брат",tr:"brat",en:"brother"},{ru:"сестра",tr:"sestrá",en:"sister"},
+      {ru:"сын",tr:"syn",en:"son"},{ru:"дочь",tr:"doch'",en:"daughter"},
+      {ru:"муж",tr:"muzh",en:"husband"},{ru:"жена",tr:"zhená",en:"wife"},
+      {ru:"друг",tr:"drug",en:"friend (m)"},{ru:"подруга",tr:"padrúga",en:"friend (f) / girlfriend"},
+      {ru:"родители",tr:"radíteli",en:"parents"},{ru:"ребёнок",tr:"rebyónak",en:"child"},
+      {ru:"семья",tr:"sem'yá",en:"family"}
+    ],
+    quiz:[
+      {q:"“сестра” means:",opts:["brother","sister","daughter"],a:1,exp:"сестра = sister."},
+      {q:"“родители” means:",opts:["relatives","parents","children"],a:1,exp:"родители = parents."}
+    ]
+  },
+  {
+    id:"feelings", nav:"Feelings & States", unit:"A2 · Building", type:"vocab",
+    eyebrow:"Lesson 28 · Чувства",
+    title:"Feelings & States",
+    lead:"How to say how you (and she) feel. Where a form differs for a man vs a woman, both are shown.",
+    words:[
+      {ru:"рад / рада",tr:"rad / ráda",en:"glad (m/f)"},
+      {ru:"счастливый",tr:"schastlívy",en:"happy"},
+      {ru:"грустный",tr:"grústny",en:"sad"},
+      {ru:"устал / устала",tr:"ustál / ustála",en:"tired (m/f)"},
+      {ru:"голодный",tr:"galódny",en:"hungry"},
+      {ru:"занят / занята",tr:"zányat / zanyatá",en:"busy (m/f)"},
+      {ru:"свободен / свободна",tr:"svabóden / svabódna",en:"free (m/f)"},
+      {ru:"влюблён / влюблена",tr:"vlyublyón / vlyublená",en:"in love (m/f)"},
+      {ru:"Мне скучно",tr:"mne skúchna",en:"I'm bored"},
+      {ru:"Всё хорошо",tr:"vsyo kharashó",en:"Everything's fine"}
+    ],
+    tips:["Many feeling-words are short adjectives that agree with you: a man says «Я устал», a woman «Я устала»."],
+    quiz:[
+      {q:"A woman says “I'm tired”:",opts:["Я устал","Я устала","Я устали"],a:1,exp:"Feminine short form → устала."},
+      {q:"“влюблён / влюблена” means:",opts:["angry","in love","hungry"],a:1,exp:"влюблён/влюблена = in love."}
+    ]
+  },
+  {
+    id:"connectors", nav:"Connectors & Clauses", unit:"B1 · Putting it together", type:"vocab",
+    eyebrow:"Lesson 29 · Союзы и придаточные",
+    title:"Connectors & Subordinate Clauses",
+    lead:"This is what turns simple sentences into real speech: linking ideas with because, so, if, when, that, and which. It's the doorway from A2 to B1.",
+    grammar:[
+      {
+        heading:"The essential connectors",
+        table:{cols:["Russian","English","Use"],rows:[
+          ["что","that","reporting: I think that…"],
+          ["потому что","because","reason"],
+          ["поэтому","so / therefore","result"],
+          ["если","if","condition"],
+          ["когда","when","time"],
+          ["который","which / who","describes a noun (declines!)"],
+          ["чтобы","in order to","purpose"],
+          ["хотя","although","concession"]
+        ]}
+      },
+      {
+        heading:"Seeing them work",
+        body:"<p>Russian puts a <b>comma</b> before these linking words. <b>который</b> agrees in gender/number with the noun it describes, but takes its case from its own clause.</p>",
+        examples:[
+          {ru:"Я думаю, что ты прав",tr:"ya dúmayu, shto ty prav",en:"I think that you're right"},
+          {ru:"Я учу русский, потому что люблю тебя",tr:"ya uchú rússky, patamú shto lyublyú tebyá",en:"I'm learning Russian because I love you"},
+          {ru:"Было поздно, поэтому я остался дома",tr:"býla pózna, paétamu ya astálsya dóma",en:"It was late, so I stayed home"},
+          {ru:"Если хочешь, позвони мне",tr:"yésli khóchesh, pazvaní mne",en:"If you want, call me"},
+          {ru:"Девушка, которая живёт здесь",tr:"dévushka, katóraya zhivyót zdes'",en:"the girl who lives here"}
+        ],
+        constructions:[
+          {pattern:"…, чтобы + [infinitive]",gloss:"in order to …",example:{ru:"Я учу русский, чтобы говорить с тобой",en:"I'm learning Russian to talk with you"}},
+          {pattern:"[clause], потому что [clause]",gloss:"…, because …",example:{ru:"Я рад, потому что ты здесь",en:"I'm glad because you're here"}}
+        ]
+      }
+    ],
+    quiz:[
+      {q:"“I'm learning Russian ___ talk with you.” (purpose)",opts:["потому что","чтобы","поэтому"],a:1,exp:"чтобы + infinitive = in order to."},
+      {q:"“It was cold, ___ I stayed home.” (result)",opts:["потому что","поэтому","если"],a:1,exp:"поэтому = so / therefore."},
+      {q:"“I know ___ you're right.”",opts:["что","который","хотя"],a:0,exp:"что introduces a reported clause."},
+      {q:"“the girl ___ lives here” uses:",opts:["что","которая","когда"],a:1,exp:"который/которая = who/which, agreeing with девушка (f)."}
+    ]
+  },
+  {
+    id:"read-a2", nav:"Reading · Daily Life", unit:"B1 · Putting it together", type:"vocab",
+    eyebrow:"Lesson 30 · Чтение (A2)",
+    title:"Reading: A Day in the Life",
+    lead:"Your first connected text. Read it with English hidden first, tap to hear each line, then check your comprehension.",
+    reading:{
+      title:"Мой день",
+      intro:"Anna describes her daily routine. Present tense, everyday vocabulary.",
+      sentences:[
+        {ru:"Меня зовут Анна, и я живу в Москве.",en:"My name is Anna, and I live in Moscow."},
+        {ru:"Каждый день я хожу на работу.",en:"Every day I go to work."},
+        {ru:"Утром я пью кофе и читаю новости.",en:"In the morning I drink coffee and read the news."},
+        {ru:"Вечером я встречаюсь с друзьями или смотрю фильм.",en:"In the evening I meet with friends or watch a film."},
+        {ru:"По выходным я люблю гулять в парке.",en:"On weekends I like to walk in the park."}
+      ],
+      questions:[
+        {q:"Где живёт Анна?",opts:["в Петербурге","в Москве","в парке"],a:1,exp:"«я живу в Москве» — in Moscow."},
+        {q:"Что она делает утром?",opts:["смотрит фильм","пьёт кофе и читает новости","гуляет в парке"],a:1,exp:"«Утром я пью кофе и читаю новости»."},
+        {q:"Когда она гуляет в парке?",opts:["каждое утро","по выходным","вечером"],a:1,exp:"«По выходным…» — on weekends."}
+      ]
+    }
+  },
+  {
+    id:"read-b1", nav:"Reading · Exam Day", unit:"B1 · Putting it together", type:"vocab",
+    eyebrow:"Lesson 31 · Чтение (B1)",
+    title:"Reading: Before the Exam",
+    lead:"A B1-level text that puts it all together — past and future, aspect, and connectors. See how much you can follow with English hidden.",
+    reading:{
+      title:"Перед экзаменом",
+      intro:"Uses perfective/imperfective aspect (готовился, прочитал, написал, сдам, поеду) and connectors (потому что, если, что, хотя).",
+      sentences:[
+        {ru:"Вчера я весь день готовился к экзамену, потому что завтра у меня важный тест.",en:"Yesterday I prepared for the exam all day, because tomorrow I have an important test."},
+        {ru:"Сначала я прочитал все тексты, а потом написал небольшое сочинение.",en:"First I read all the texts, and then I wrote a short essay."},
+        {ru:"Если я сдам экзамен, я поеду отдыхать на море.",en:"If I pass the exam, I'll go to rest at the seaside."},
+        {ru:"Я очень надеюсь, что всё будет хорошо, хотя я немного волнуюсь.",en:"I really hope that everything will be fine, although I'm a little nervous."}
+      ],
+      questions:[
+        {q:"Почему он готовился весь день?",opts:["потому что любит читать","потому что завтра важный тест","потому что был свободен"],a:1,exp:"«…потому что завтра у меня важный тест»."},
+        {q:"Что он сделает, если сдаст экзамен?",opts:["напишет сочинение","поедет на море","останется дома"],a:1,exp:"«Если я сдам экзамен, я поеду… на море»."},
+        {q:"Какое время у глагола «поеду»?",opts:["прошедшее (past)","будущее (future)","настоящее (present)"],a:1,exp:"поеду is a perfective verb in present endings → future meaning."},
+        {q:"Как он себя чувствует?",opts:["совершенно спокоен","немного волнуется","очень устал"],a:1,exp:"«…хотя я немного волнуюсь» — a little nervous."}
+      ]
+    }
+  },
+  {
+    id:"vocab-food", nav:"Food & Meals", unit:"Vocabulary · Themed Sets", type:"vocab",
+    eyebrow:"Vocabulary · Food",
+    title:"Food & Meals",
+    lead:"Everything for the table — meals, ingredients, and the words you need to cook or order.",
+    words:[
+      {ru:"завтрак",tr:"záftrak",en:"breakfast"},
+      {ru:"обед",tr:"abéd",en:"lunch"},
+      {ru:"ужин",tr:"úzhin",en:"dinner"},
+      {ru:"еда",tr:"yedá",en:"food"},
+      {ru:"мясо",tr:"myása",en:"meat"},
+      {ru:"рыба",tr:"rýba",en:"fish"},
+      {ru:"курица",tr:"kúritsa",en:"chicken"},
+      {ru:"овощи",tr:"óvashchi",en:"vegetables"},
+      {ru:"фрукты",tr:"frúkty",en:"fruit"},
+      {ru:"яблоко",tr:"yáblaka",en:"apple"},
+      {ru:"картошка",tr:"kartóshka",en:"potato"},
+      {ru:"помидор",tr:"pamidór",en:"tomato"},
+      {ru:"сыр",tr:"syr",en:"cheese"},
+      {ru:"яйцо",tr:"yaytsó",en:"egg"},
+      {ru:"масло",tr:"másla",en:"butter / oil"},
+      {ru:"соль",tr:"sol'",en:"salt"},
+      {ru:"суп",tr:"sup",en:"soup"},
+      {ru:"хлеб",tr:"khleb",en:"bread"},
+      {ru:"сахар",tr:"sákhar",en:"sugar"},
+      {ru:"вкусный",tr:"vkúsny",en:"tasty"}
+    ],
+    quiz:[
+      {q:"“яблоко” means:",opts:["bread","apple","cheese"],a:1,exp:"яблоко = apple."},
+      {q:"Which word is “breakfast”?",opts:["завтрак","ужин","обед"],a:0,exp:"завтрак = breakfast."},
+      {q:"“рыба” is:",opts:["meat","fish","chicken"],a:1,exp:"рыба = fish."}
+    ]
+  },
+  {
+    id:"vocab-home", nav:"Home & Furniture", unit:"Vocabulary · Themed Sets", type:"vocab",
+    eyebrow:"Vocabulary · Home",
+    title:"Home & Furniture",
+    lead:"Rooms and the things inside them — for describing where you live.",
+    words:[
+      {ru:"квартира",tr:"kvartíra",en:"apartment"},
+      {ru:"комната",tr:"kómnata",en:"room"},
+      {ru:"кухня",tr:"kúkhnya",en:"kitchen"},
+      {ru:"спальня",tr:"spál'nya",en:"bedroom"},
+      {ru:"ванная",tr:"vánnaya",en:"bathroom"},
+      {ru:"дверь",tr:"dver'",en:"door"},
+      {ru:"окно",tr:"aknó",en:"window"},
+      {ru:"стол",tr:"stol",en:"table"},
+      {ru:"стул",tr:"stul",en:"chair"},
+      {ru:"кровать",tr:"kravát'",en:"bed"},
+      {ru:"диван",tr:"diván",en:"sofa"},
+      {ru:"шкаф",tr:"shkaf",en:"wardrobe"},
+      {ru:"лампа",tr:"lámpa",en:"lamp"},
+      {ru:"ковёр",tr:"kavyór",en:"carpet"},
+      {ru:"зеркало",tr:"zérkala",en:"mirror"},
+      {ru:"стена",tr:"stená",en:"wall"},
+      {ru:"пол",tr:"pol",en:"floor"},
+      {ru:"потолок",tr:"patalók",en:"ceiling"},
+      {ru:"ключ",tr:"klyuch",en:"key"},
+      {ru:"холодильник",tr:"khaladíl'nik",en:"fridge"}
+    ],
+    quiz:[
+      {q:"“кухня” is the:",opts:["bedroom","kitchen","bathroom"],a:1,exp:"кухня = kitchen."},
+      {q:"Which word means “bed”?",opts:["стул","кровать","дверь"],a:1,exp:"кровать = bed."},
+      {q:"“ключ” means:",opts:["key","wall","lamp"],a:0,exp:"ключ = key."}
+    ]
+  },
+  {
+    id:"vocab-city", nav:"City & Places", unit:"Vocabulary · Themed Sets", type:"vocab",
+    eyebrow:"Vocabulary · City",
+    title:"City & Places",
+    lead:"Getting around town — the places you'll name, ask for, and head to.",
+    words:[
+      {ru:"город",tr:"górat",en:"city"},
+      {ru:"улица",tr:"úlitsa",en:"street"},
+      {ru:"площадь",tr:"plóshchad'",en:"square"},
+      {ru:"магазин",tr:"magazín",en:"shop"},
+      {ru:"рынок",tr:"rýnak",en:"market"},
+      {ru:"банк",tr:"bank",en:"bank"},
+      {ru:"аптека",tr:"aptéka",en:"pharmacy"},
+      {ru:"больница",tr:"bal'nítsa",en:"hospital"},
+      {ru:"школа",tr:"shkóla",en:"school"},
+      {ru:"университет",tr:"universitét",en:"university"},
+      {ru:"ресторан",tr:"restarán",en:"restaurant"},
+      {ru:"парк",tr:"park",en:"park"},
+      {ru:"музей",tr:"muzéy",en:"museum"},
+      {ru:"театр",tr:"teátr",en:"theatre"},
+      {ru:"вокзал",tr:"vakzál",en:"train station"},
+      {ru:"аэропорт",tr:"aeropórt",en:"airport"},
+      {ru:"почта",tr:"póchta",en:"post office"},
+      {ru:"центр",tr:"tsentr",en:"centre"},
+      {ru:"мост",tr:"most",en:"bridge"},
+      {ru:"дом",tr:"dom",en:"house"}
+    ],
+    quiz:[
+      {q:"Where do you buy medicine?",opts:["аптека","банк","музей"],a:0,exp:"аптека = pharmacy."},
+      {q:"“вокзал” is the:",opts:["airport","train station","market"],a:1,exp:"вокзал = train station."},
+      {q:"“улица” means:",opts:["square","street","bridge"],a:1,exp:"улица = street."}
+    ]
+  },
+  {
+    id:"vocab-work", nav:"Work & Study", unit:"Vocabulary · Themed Sets", type:"vocab",
+    eyebrow:"Vocabulary · Work",
+    title:"Work & Study",
+    lead:"The vocabulary of jobs, study, and money.",
+    words:[
+      {ru:"работа",tr:"rabóta",en:"work"},
+      {ru:"профессия",tr:"praféssiya",en:"profession"},
+      {ru:"офис",tr:"ófis",en:"office"},
+      {ru:"начальник",tr:"nachál'nik",en:"boss"},
+      {ru:"коллега",tr:"kalléga",en:"colleague"},
+      {ru:"встреча",tr:"vstrécha",en:"meeting"},
+      {ru:"проект",tr:"praékt",en:"project"},
+      {ru:"деньги",tr:"dén'gi",en:"money"},
+      {ru:"зарплата",tr:"zarpláta",en:"salary"},
+      {ru:"компания",tr:"kampániya",en:"company"},
+      {ru:"учитель",tr:"uchítel'",en:"teacher"},
+      {ru:"врач",tr:"vrach",en:"doctor"},
+      {ru:"инженер",tr:"inzhenér",en:"engineer"},
+      {ru:"программист",tr:"pragramíst",en:"programmer"},
+      {ru:"студент",tr:"studént",en:"student"},
+      {ru:"урок",tr:"urók",en:"lesson"},
+      {ru:"экзамен",tr:"ekzámen",en:"exam"},
+      {ru:"опыт",tr:"ópyt",en:"experience"},
+      {ru:"книга",tr:"kníga",en:"book"},
+      {ru:"ручка",tr:"rúchka",en:"pen"}
+    ],
+    quiz:[
+      {q:"“деньги” means:",opts:["meeting","money","office"],a:1,exp:"деньги = money."},
+      {q:"A “врач” is a:",opts:["teacher","doctor","boss"],a:1,exp:"врач = doctor."},
+      {q:"“экзамен” is an:",opts:["exam","office","experience"],a:0,exp:"экзамен = exam."}
+    ]
+  },
+  {
+    id:"vocab-travel", nav:"Travel & Transport", unit:"Vocabulary · Themed Sets", type:"vocab",
+    eyebrow:"Vocabulary · Travel",
+    title:"Travel & Transport",
+    lead:"Trains, tickets, directions — everything for getting from A to B.",
+    words:[
+      {ru:"путешествие",tr:"puteshéstviye",en:"trip / travel"},
+      {ru:"поезд",tr:"póyezt",en:"train"},
+      {ru:"самолёт",tr:"samalyót",en:"plane"},
+      {ru:"автобус",tr:"aftóbus",en:"bus"},
+      {ru:"машина",tr:"mashína",en:"car"},
+      {ru:"такси",tr:"taksí",en:"taxi"},
+      {ru:"метро",tr:"metró",en:"metro"},
+      {ru:"билет",tr:"bilét",en:"ticket"},
+      {ru:"паспорт",tr:"páspart",en:"passport"},
+      {ru:"багаж",tr:"bagásh",en:"luggage"},
+      {ru:"гостиница",tr:"gastínitsa",en:"hotel"},
+      {ru:"карта",tr:"kárta",en:"map"},
+      {ru:"дорога",tr:"daróga",en:"road"},
+      {ru:"остановка",tr:"astanófka",en:"stop"},
+      {ru:"направо",tr:"napráva",en:"(to the) right"},
+      {ru:"налево",tr:"naléva",en:"(to the) left"},
+      {ru:"прямо",tr:"pryáma",en:"straight ahead"},
+      {ru:"далеко",tr:"dalekó",en:"far"},
+      {ru:"близко",tr:"blíska",en:"near"},
+      {ru:"быстро",tr:"býstra",en:"quickly"}
+    ],
+    quiz:[
+      {q:"“поезд” is a:",opts:["plane","train","car"],a:1,exp:"поезд = train."},
+      {q:"Turn left =",opts:["направо","налево","прямо"],a:1,exp:"налево = to the left."},
+      {q:"“билет” means:",opts:["ticket","luggage","map"],a:0,exp:"билет = ticket."}
+    ]
+  },
+  {
+    id:"vocab-health", nav:"Health & Body", unit:"Vocabulary · Themed Sets", type:"vocab",
+    eyebrow:"Vocabulary · Health",
+    title:"Health & Body",
+    lead:"The body and basic health words — useful at the doctor and every day.",
+    words:[
+      {ru:"здоровье",tr:"zdaróv'ye",en:"health"},
+      {ru:"тело",tr:"téla",en:"body"},
+      {ru:"голова",tr:"galavá",en:"head"},
+      {ru:"рука",tr:"ruká",en:"hand / arm"},
+      {ru:"нога",tr:"nagá",en:"leg / foot"},
+      {ru:"глаз",tr:"glas",en:"eye"},
+      {ru:"ухо",tr:"úkha",en:"ear"},
+      {ru:"нос",tr:"nos",en:"nose"},
+      {ru:"рот",tr:"rot",en:"mouth"},
+      {ru:"зуб",tr:"zup",en:"tooth"},
+      {ru:"сердце",tr:"sértse",en:"heart"},
+      {ru:"живот",tr:"zhivót",en:"stomach"},
+      {ru:"спина",tr:"spiná",en:"back"},
+      {ru:"боль",tr:"bol'",en:"pain"},
+      {ru:"врач",tr:"vrach",en:"doctor"},
+      {ru:"лекарство",tr:"lekárstva",en:"medicine"},
+      {ru:"температура",tr:"temperatúra",en:"temperature"},
+      {ru:"больной",tr:"bal'nóy",en:"sick"},
+      {ru:"здоровый",tr:"zdaróvy",en:"healthy"},
+      {ru:"аптека",tr:"aptéka",en:"pharmacy"}
+    ],
+    quiz:[
+      {q:"“голова” is the:",opts:["hand","head","heart"],a:1,exp:"голова = head."},
+      {q:"“лекарство” means:",opts:["pain","medicine","doctor"],a:1,exp:"лекарство = medicine."},
+      {q:"“сердце” is the:",opts:["stomach","heart","back"],a:1,exp:"сердце = heart."}
+    ]
+  },
+  {
+    id:"vocab-clothes", nav:"Clothing & Shopping", unit:"Vocabulary · Themed Sets", type:"vocab",
+    eyebrow:"Vocabulary · Clothes",
+    title:"Clothing & Shopping",
+    lead:"What to wear and how to shop for it.",
+    words:[
+      {ru:"одежда",tr:"adézhda",en:"clothes"},
+      {ru:"рубашка",tr:"rubáshka",en:"shirt"},
+      {ru:"футболка",tr:"futbólka",en:"t-shirt"},
+      {ru:"брюки",tr:"bryúki",en:"trousers"},
+      {ru:"джинсы",tr:"dzhínsy",en:"jeans"},
+      {ru:"платье",tr:"plát'ye",en:"dress"},
+      {ru:"юбка",tr:"yúpka",en:"skirt"},
+      {ru:"куртка",tr:"kúrtka",en:"jacket"},
+      {ru:"пальто",tr:"pal'tó",en:"coat"},
+      {ru:"свитер",tr:"svíter",en:"sweater"},
+      {ru:"обувь",tr:"óbuf'",en:"footwear"},
+      {ru:"туфли",tr:"túfli",en:"shoes"},
+      {ru:"ботинки",tr:"batínki",en:"boots"},
+      {ru:"носки",tr:"naskí",en:"socks"},
+      {ru:"шапка",tr:"shápka",en:"hat"},
+      {ru:"шарф",tr:"sharf",en:"scarf"},
+      {ru:"сумка",tr:"súmka",en:"bag"},
+      {ru:"очки",tr:"achkí",en:"glasses"},
+      {ru:"размер",tr:"razmér",en:"size"},
+      {ru:"цвет",tr:"tsvet",en:"colour"}
+    ],
+    quiz:[
+      {q:"“платье” is a:",opts:["dress","hat","bag"],a:0,exp:"платье = dress."},
+      {q:"“обувь” means:",opts:["clothes","footwear","size"],a:1,exp:"обувь = footwear."},
+      {q:"“размер” means:",opts:["colour","size","scarf"],a:1,exp:"размер = size."}
+    ]
+  },
+  {
+    id:"vocab-nature", nav:"Nature & Weather", unit:"Vocabulary · Themed Sets", type:"vocab",
+    eyebrow:"Vocabulary · Nature",
+    title:"Nature & Weather",
+    lead:"The natural world and everyday weather talk.",
+    words:[
+      {ru:"природа",tr:"priróda",en:"nature"},
+      {ru:"погода",tr:"pagóda",en:"weather"},
+      {ru:"солнце",tr:"sóntse",en:"sun"},
+      {ru:"дождь",tr:"dozhd'",en:"rain"},
+      {ru:"снег",tr:"snek",en:"snow"},
+      {ru:"ветер",tr:"véter",en:"wind"},
+      {ru:"облако",tr:"óblaka",en:"cloud"},
+      {ru:"небо",tr:"néba",en:"sky"},
+      {ru:"земля",tr:"zemlyá",en:"earth / ground"},
+      {ru:"огонь",tr:"agón'",en:"fire"},
+      {ru:"дерево",tr:"déreva",en:"tree"},
+      {ru:"цветок",tr:"tsvetók",en:"flower"},
+      {ru:"лес",tr:"les",en:"forest"},
+      {ru:"река",tr:"reká",en:"river"},
+      {ru:"море",tr:"móre",en:"sea"},
+      {ru:"гора",tr:"gará",en:"mountain"},
+      {ru:"холодно",tr:"khóladna",en:"(it's) cold"},
+      {ru:"тепло",tr:"tepló",en:"(it's) warm"},
+      {ru:"жарко",tr:"zhárka",en:"(it's) hot"},
+      {ru:"вода",tr:"vadá",en:"water"}
+    ],
+    quiz:[
+      {q:"“дождь” means:",opts:["snow","rain","wind"],a:1,exp:"дождь = rain."},
+      {q:"It's hot =",opts:["холодно","тепло","жарко"],a:2,exp:"жарко = (it's) hot."},
+      {q:"“море” is the:",opts:["river","sea","mountain"],a:1,exp:"море = sea."}
+    ]
+  },
+  {
+    id:"vocab-time", nav:"Time & Calendar", unit:"Vocabulary · Themed Sets", type:"vocab",
+    eyebrow:"Vocabulary · Time",
+    title:"Time & Calendar",
+    lead:"Times, days, seasons — the framework for scheduling anything.",
+    words:[
+      {ru:"время",tr:"vrémya",en:"time"},
+      {ru:"год",tr:"got",en:"year"},
+      {ru:"месяц",tr:"mésyats",en:"month"},
+      {ru:"неделя",tr:"nedélya",en:"week"},
+      {ru:"день",tr:"den'",en:"day"},
+      {ru:"час",tr:"chas",en:"hour"},
+      {ru:"минута",tr:"minúta",en:"minute"},
+      {ru:"сегодня",tr:"sevódnya",en:"today"},
+      {ru:"завтра",tr:"záftra",en:"tomorrow"},
+      {ru:"вчера",tr:"vcherá",en:"yesterday"},
+      {ru:"сейчас",tr:"seychás",en:"now"},
+      {ru:"потом",tr:"patóm",en:"later"},
+      {ru:"рано",tr:"rána",en:"early"},
+      {ru:"поздно",tr:"pózna",en:"late"},
+      {ru:"утро",tr:"útra",en:"morning"},
+      {ru:"вечер",tr:"vécher",en:"evening"},
+      {ru:"весна",tr:"vesná",en:"spring"},
+      {ru:"лето",tr:"léta",en:"summer"},
+      {ru:"осень",tr:"ósen'",en:"autumn"},
+      {ru:"зима",tr:"zimá",en:"winter"}
+    ],
+    quiz:[
+      {q:"“неделя” means:",opts:["year","week","hour"],a:1,exp:"неделя = week."},
+      {q:"“завтра” means:",opts:["today","tomorrow","yesterday"],a:1,exp:"завтра = tomorrow."},
+      {q:"“зима” is which season?",opts:["summer","autumn","winter"],a:2,exp:"зима = winter."}
+    ]
+  },
+  {
+    id:"vocab-verbs2", nav:"Everyday Verbs", unit:"Vocabulary · Themed Sets", type:"vocab",
+    eyebrow:"Vocabulary · Verbs",
+    title:"Everyday Verbs",
+    lead:"A batch of high-frequency verbs (imperfective) to widen what you can say.",
+    words:[
+      {ru:"делать",tr:"délat'",en:"to do / make"},
+      {ru:"брать",tr:"brat'",en:"to take"},
+      {ru:"давать",tr:"davát'",en:"to give"},
+      {ru:"видеть",tr:"vídet'",en:"to see"},
+      {ru:"слышать",tr:"slýshat'",en:"to hear"},
+      {ru:"думать",tr:"dúmat'",en:"to think"},
+      {ru:"понимать",tr:"panimát'",en:"to understand"},
+      {ru:"помнить",tr:"pómnit'",en:"to remember"},
+      {ru:"забывать",tr:"zabyvát'",en:"to forget"},
+      {ru:"спрашивать",tr:"spráshivat'",en:"to ask"},
+      {ru:"отвечать",tr:"atvechát'",en:"to answer"},
+      {ru:"помогать",tr:"pamagát'",en:"to help"},
+      {ru:"покупать",tr:"pakupát'",en:"to buy"},
+      {ru:"открывать",tr:"atkryvát'",en:"to open"},
+      {ru:"закрывать",tr:"zakryvát'",en:"to close"},
+      {ru:"начинать",tr:"nachinát'",en:"to begin"},
+      {ru:"искать",tr:"iskát'",en:"to look for"},
+      {ru:"находить",tr:"nakhadít'",en:"to find"},
+      {ru:"ждать",tr:"zhdat'",en:"to wait"},
+      {ru:"работать",tr:"rabótat'",en:"to work"}
+    ],
+    quiz:[
+      {q:"“покупать” means:",opts:["to sell","to buy","to open"],a:1,exp:"покупать = to buy."},
+      {q:"“понимать” means:",opts:["to hear","to understand","to forget"],a:1,exp:"понимать = to understand."},
+      {q:"“ждать” means:",opts:["to wait","to give","to ask"],a:0,exp:"ждать = to wait."}
+    ]
+  },
+  {
+    id:"vocab-adj2", nav:"Describing Things", unit:"Vocabulary · Themed Sets", type:"vocab",
+    eyebrow:"Vocabulary · Adjectives",
+    title:"Describing Things",
+    lead:"Common adjectives, mostly in opposite pairs — the fastest way to double useful vocabulary.",
+    words:[
+      {ru:"большой",tr:"bal'shóy",en:"big"},
+      {ru:"маленький",tr:"málen'ky",en:"small"},
+      {ru:"хороший",tr:"kharóshy",en:"good"},
+      {ru:"плохой",tr:"plakhóy",en:"bad"},
+      {ru:"новый",tr:"nóvy",en:"new"},
+      {ru:"старый",tr:"stáry",en:"old"},
+      {ru:"молодой",tr:"maladóy",en:"young"},
+      {ru:"длинный",tr:"dlínny",en:"long"},
+      {ru:"короткий",tr:"karótky",en:"short"},
+      {ru:"высокий",tr:"vysóky",en:"tall / high"},
+      {ru:"низкий",tr:"nízky",en:"low"},
+      {ru:"быстрый",tr:"býstry",en:"fast"},
+      {ru:"медленный",tr:"médlenny",en:"slow"},
+      {ru:"лёгкий",tr:"lyókhky",en:"easy / light"},
+      {ru:"трудный",tr:"trúdny",en:"difficult"},
+      {ru:"дорогой",tr:"daragóy",en:"expensive / dear"},
+      {ru:"дешёвый",tr:"deshóvy",en:"cheap"},
+      {ru:"чистый",tr:"chísty",en:"clean"},
+      {ru:"грязный",tr:"gryázny",en:"dirty"},
+      {ru:"важный",tr:"vázhny",en:"important"}
+    ],
+    quiz:[
+      {q:"Opposite of “большой” is:",opts:["маленький","новый","чистый"],a:0,exp:"маленький = small."},
+      {q:"“дорогой” means:",opts:["cheap","expensive / dear","clean"],a:1,exp:"дорогой = expensive (also “dear”)."},
+      {q:"“быстрый” means:",opts:["slow","fast","old"],a:1,exp:"быстрый = fast."}
+    ]
+  },
+  {
+    id:"vocab-tech", nav:"Tech & Communication", unit:"Vocabulary · Themed Sets", type:"vocab",
+    eyebrow:"Vocabulary · Tech",
+    title:"Tech & Communication",
+    lead:"Phones, the internet, and staying in touch.",
+    words:[
+      {ru:"телефон",tr:"telefón",en:"phone"},
+      {ru:"компьютер",tr:"kampyúter",en:"computer"},
+      {ru:"интернет",tr:"internét",en:"internet"},
+      {ru:"сайт",tr:"sayt",en:"website"},
+      {ru:"почта",tr:"póchta",en:"email / mail"},
+      {ru:"сообщение",tr:"saapshchéniye",en:"message"},
+      {ru:"звонок",tr:"zvanók",en:"call"},
+      {ru:"номер",tr:"nómer",en:"number"},
+      {ru:"пароль",tr:"paról'",en:"password"},
+      {ru:"экран",tr:"ekrán",en:"screen"},
+      {ru:"файл",tr:"fayl",en:"file"},
+      {ru:"фото",tr:"fóta",en:"photo"},
+      {ru:"видео",tr:"vídeo",en:"video"},
+      {ru:"музыка",tr:"múzyka",en:"music"},
+      {ru:"новости",tr:"nóvasti",en:"news"},
+      {ru:"приложение",tr:"prilazhéniye",en:"app"},
+      {ru:"онлайн",tr:"anláyn",en:"online"},
+      {ru:"связь",tr:"svyaz'",en:"connection"},
+      {ru:"камера",tr:"kámera",en:"camera"},
+      {ru:"зарядка",tr:"zaryátka",en:"charger"}
+    ],
+    quiz:[
+      {q:"“сообщение” means:",opts:["call","message","number"],a:1,exp:"сообщение = message."},
+      {q:"“пароль” means:",opts:["screen","password","file"],a:1,exp:"пароль = password."},
+      {q:"“новости” means:",opts:["news","music","photo"],a:0,exp:"новости = news."}
+    ]
+  }
+];
+
+/* ============================================================
+   SPEECH — uses the browser's Russian voice if available.
+   ============================================================ */
+let ruVoice=null;
+function pickVoice(){
+  const vs=speechSynthesis.getVoices();
+  ruVoice=vs.find(v=>/ru(-|_)?RU/i.test(v.lang)) || vs.find(v=>/^ru/i.test(v.lang)) || null;
+}
+if('speechSynthesis' in window){
+  pickVoice();
+  speechSynthesis.onvoiceschanged=pickVoice;
+}
+function say(text,btn){
+  if(!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang='ru-RU'; if(ruVoice) u.voice=ruVoice; u.rate=.85;
+  if(btn){btn.classList.add('playing'); u.onend=u.onerror=()=>btn.classList.remove('playing');}
+  speechSynthesis.speak(u);
+}
+
+/* ============================================================
+   PROGRESS — saved locally, degrades gracefully if blocked.
+   ============================================================ */
+const KEY='ru_course_done_v1';
+function loadDone(){ try{return new Set(JSON.parse(localStorage.getItem(KEY)||'[]'));}catch(e){return new Set();} }
+function saveDone(s){ try{localStorage.setItem(KEY,JSON.stringify([...s]));}catch(e){} }
+let done=loadDone();
+
+function updateProgress(){
+  const total=LESSONS.length, n=[...done].filter(id=>LESSONS.some(l=>l.id===id)).length;
+  document.getElementById('progBar').style.width=(total?100*n/total:0)+'%';
+  document.getElementById('progText').textContent=n+'/'+total;
+  document.querySelectorAll('#lessonNav button').forEach(b=>{
+    b.classList.toggle('done',done.has(b.dataset.id));
+  });
+}
+
+/* ============================================================
+   RENDER
+   ============================================================ */
+function esc(s){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+
+function buildNav(){
+  const ol=document.getElementById('lessonNav');
+  let out='',lastUnit=null;
+  LESSONS.forEach(l=>{
+    if(l.unit&&l.unit!==lastUnit){out+=`<li class="nav-unit">${l.unit}</li>`;lastUnit=l.unit;}
+    out+=`<li><button data-id="${l.id}" onclick="go('${l.id}')">${l.nav}</button></li>`;
+  });
+  ol.innerHTML=out;
+}
+
+function vocabRows(words){
+  return `<div class="vocab">`+words.map(w=>`
+    <div class="vrow">
+      <span class="ru cyr">${esc(w.ru)}</span>
+      <span class="tr">${esc(w.tr)}</span>
+      <span class="en">${esc(w.en)}</span>
+      <button class="say" title="Hear it" aria-label="Hear ${esc(w.ru)}" onclick="say('${w.ru.replace(/'/g,"\\'")}',this)">🔊</button>
+    </div>`).join('')+`</div>`;
+}
+
+function tipsHTML(tips){
+  if(!tips||!tips.length) return '';
+  return tips.map(t=>`<div class="note">${t}</div>`).join('');
+}
+
+function alphabetHTML(){
+  const grid=ALPHABET.map((a,i)=>`
+    <button class="letter" data-i="${i}" onclick="selectLetter(${i},this)" aria-label="Letter ${a.u}, said ${a.name}">
+      <span class="corner">${String(i+1).padStart(2,'0')}</span>
+      <span class="big">${a.u}${a.l}</span>
+      <span class="lower">${a.name}</span>
+    </button>`).join('');
+  return `
+    <div class="card">
+      <h3><span class="tag">Tap · Listen</span> The 33 letters</h3>
+      <div class="alpha-grid">${grid}</div>
+      <div class="letter-detail" id="letterDetail"></div>
+    </div>`;
+}
+
+const QUIZREG={};
+function quizHTML(quiz,qid,title){
+  if(!quiz||!quiz.length) return '';
+  QUIZREG[qid]=quiz;
+  const items=quiz.map((q,qi)=>`
+    <div class="quiz-item" data-q="${qi}">
+      <p class="q"><span class="qn">${qi+1}.</span>${esc(q.q)}</p>
+      <div class="opts">
+        ${q.opts.map((o,oi)=>`<button class="opt" onclick="answer('${qid}',${qi},${oi},this)">${esc(o)}</button>`).join('')}
+      </div>
+      <div class="explain">${esc(q.exp)}</div>
+    </div>`).join('');
+  return `<div class="card quiz" data-quiz="${qid}">
+    <h3><span class="tag">Check yourself</span> ${title||'Quick quiz'}</h3>
+    ${items}
+    <div class="quiz-score" id="score-${qid}"></div>
+  </div>`;
+}
+function readingHTML(r,lid){
+  if(!r) return '';
+  const sents=r.sentences.map(s=>`
+    <div class="rd-line">${sayBtn(s.ru)}
+      <div><span class="rd-ru cyr">${esc(s.ru)}</span><span class="rd-en">${esc(s.en)}</span></div>
+    </div>`).join('');
+  return `<div class="card reading">
+    <h3><span class="tag">Reading</span> ${esc(r.title||'Text')}</h3>
+    ${r.intro?`<div class="gbody">${esc(r.intro)}</div>`:''}
+    <div class="rd-controls">
+      <button class="btn sm-btn" onclick="toggleEn('${lid}')">Show / hide English</button>
+      <button class="btn sm-btn red" onclick="playReading('${lid}')">▶ Play all</button>
+    </div>
+    <div class="rd-text" id="rd-${lid}">${sents}</div>
+  </div>`+quizHTML(r.questions,lid+'__read','Comprehension');
+}
+function toggleEn(lid){const el=document.getElementById('rd-'+lid);if(el)el.classList.toggle('show-en');}
+function playReading(lid){
+  const l=LESSONS.find(x=>x.id===lid); if(!l||!l.reading||!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  l.reading.sentences.forEach(s=>{const u=new SpeechSynthesisUtterance(s.ru);u.lang='ru-RU';if(ruVoice)u.voice=ruVoice;u.rate=.85;speechSynthesis.speak(u);});
+}
+
+function flashHTML(words,lid){
+  if(!words||!words.length) return '';
+  return `<div class="card">
+    <h3><span class="tag">Drill</span> Flashcards</h3>
+    <div class="fc-stage" data-fc="${lid}">
+      <div class="flashcard" onclick="flip(this)">
+        <div class="fc-inner">
+          <div class="fc-face fc-front"><div><div class="ru cyr" data-role="ru"></div><div class="hint">Tap to reveal</div></div></div>
+          <div class="fc-face fc-back"><div><div class="tr" data-role="tr"></div><div class="en" data-role="en"></div></div></div>
+        </div>
+      </div>
+      <div class="fc-controls">
+        <button class="btn" onclick="fcNav('${lid}',-1)">‹ Prev</button>
+        <button class="btn red" onclick="fcSpeak('${lid}')">🔊 Say it</button>
+        <button class="btn" onclick="fcNav('${lid}',1)">Next ›</button>
+        <span class="fc-count" data-role="count"></span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function tableHTML(t){
+  if(!t) return '';
+  return `<div class="tbl-wrap"><table class="gtbl">
+    <thead><tr>${t.cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead>
+    <tbody>${t.rows.map(r=>`<tr>${r.map((c,i)=>`<td class="${i===0?'rh':'cyr'}">${c}</td>`).join('')}</tr>`).join('')}</tbody>
+  </table></div>`;
+}
+function sayBtn(text){
+  return `<button class="say sm" aria-label="Hear it" onclick="say('${String(text).replace(/'/g,"\\'")}',this)">🔊</button>`;
+}
+function exListHTML(exs){
+  if(!exs||!exs.length) return '';
+  return `<div class="exlist">`+exs.map(e=>`
+    <div class="exrow">${sayBtn(e.ru)}
+      <div><span class="ex-ru cyr">${esc(e.ru)}</span> <span class="ex-tr">${esc(e.tr||'')}</span><br><span class="ex-en">${esc(e.en)}</span></div>
+    </div>`).join('')+`</div>`;
+}
+function constrHTML(cs){
+  if(!cs||!cs.length) return '';
+  return `<div class="constr">`+cs.map(c=>`
+    <div class="constr-row">
+      <div class="pat">${esc(c.pattern)}</div>
+      <div class="gloss">${esc(c.gloss)}</div>
+      ${c.example?`<div class="cex">${sayBtn(c.example.ru)}<span class="cyr">${esc(c.example.ru)}</span> — ${esc(c.example.en)}</div>`:''}
+    </div>`).join('')+`</div>`;
+}
+function grammarHTML(grammar){
+  if(!grammar||!grammar.length) return '';
+  return grammar.map(g=>`
+    <div class="card grammar">
+      <h3><span class="tag">Grammar</span> ${esc(g.heading)}</h3>
+      ${g.body?`<div class="gbody">${g.body}</div>`:''}
+      ${tableHTML(g.table)}
+      ${g.examples?`<div class="sublabel">Examples</div>${exListHTML(g.examples)}`:''}
+      ${g.constructions?`<div class="sublabel">Key constructions</div>${constrHTML(g.constructions)}`:''}
+    </div>`).join('');
+}
+const drillState={};
+function normRU(s){return (s||'').trim().toLowerCase().replace(/ё/g,'е').replace(/[.,!?;:«»"'`—-]/g,'').replace(/\s+/g,' ').trim();}
+function drillsHTML(drills,lid){
+  if(!drills||!drills.length) return '';
+  const items=drills.map((d,i)=>`
+    <div class="drill-item" data-d="${i}">
+      <div class="drill-q"><span class="dn">${i+1}.</span> ${d.prompt}</div>
+      <div class="drill-in">
+        <input class="drill-input cyr" type="text" autocomplete="off" autocapitalize="off" spellcheck="false"
+          placeholder="type in Russian…" aria-label="Your answer for item ${i+1}"
+          onkeydown="if(event.key==='Enter'){event.preventDefault();checkDrill('${lid}',${i},this);}">
+        <button class="btn sm-btn" onclick="checkDrill('${lid}',${i},this)">Check</button>
+      </div>
+      <div class="drill-fb"></div>
+    </div>`).join('');
+  return `<div class="card drills">
+    <h3><span class="tag">Practice</span> Fill in the ending</h3>
+    <p class="gbody" style="margin:-4px 0 4px">Type the correct form and press Enter. Ё/е and capital letters don't matter.</p>
+    ${items}
+    <div class="drill-score" id="dscore-${lid}"></div>
+  </div>`;
+}
+function checkDrill(lid,i,el){
+  const d=(DRILLS[lid]||[])[i]; if(!d) return;
+  const item=el.closest('.drill-item');
+  const inp=item.querySelector('.drill-input');
+  const fb=item.querySelector('.drill-fb');
+  const answers=[d.answer].concat(d.accept||[]).map(normRU);
+  const ok=answers.includes(normRU(inp.value));
+  item.classList.remove('right','wrong');
+  item.classList.add(ok?'right':'wrong');
+  fb.classList.add('show');
+  fb.innerHTML = ok ? `✓ Верно!${d.exp?' — '+d.exp:''}` : `✗ Answer: <b>${d.answer}</b>${d.exp?' — '+d.exp:''}`;
+  drillState[lid]=drillState[lid]||{};
+  drillState[lid][i]=ok?'ok':'no';
+  if(ok) inp.disabled=true;
+  const total=(DRILLS[lid]||[]).length;
+  const good=Object.values(drillState[lid]).filter(v=>v==='ok').length;
+  const sc=document.getElementById('dscore-'+lid);
+  if(sc) sc.textContent=`Solved: ${good} / ${total}`+(good===total?'  — молодец! 🎯':'');
+}
+function renderLesson(l){
+  let body=`
+    <div class="eyebrow">${esc(l.eyebrow)}</div>
+    <h2>${esc(l.title)}</h2>
+    <p class="lead">${esc(l.lead)}</p>`;
+  if(l.type==='alphabet'){
+    body+=alphabetHTML()+tipsHTML(l.tips);
+  }else{
+    body+=grammarHTML(l.grammar);
+    if(l.words&&l.words.length){body+=`<div class="card"><h3><span class="tag">Vocabulary</span> Words & phrases</h3>${vocabRows(l.words)}</div>`;}
+    body+=tipsHTML(l.tips);
+    body+=readingHTML(l.reading,l.id);
+    body+=flashHTML(l.words,l.id);
+    body+=quizHTML(l.quiz,l.id);
+    body+=drillsHTML(DRILLS[l.id],l.id);
+  }
+  const isDone=done.has(l.id);
+  body+=`<div class="lesson-foot">
+    <button class="btn" onclick="prevNext(-1)">‹ Previous</button>
+    <button class="mark-done ${isDone?'is-done':''}" onclick="toggleDone('${l.id}',this)">${isDone?'✓ Completed':'Mark complete'}</button>
+    <button class="btn red" onclick="prevNext(1)">Next ›</button>
+  </div>`;
+  return `<section class="lesson" id="lesson-${l.id}">${body}</section>`;
+}
+
+function renderAll(){
+  document.getElementById('content').innerHTML=LESSONS.map(renderLesson).join('');
+}
+
+/* ---------- Interactions ---------- */
+let current=LESSONS[0].id;
+const fcState={}; // lid -> index
+
+function go(id){
+  const l=LESSONS.find(x=>x.id===id); if(!l) return;
+  current=id;
+  document.querySelectorAll('.lesson').forEach(s=>s.classList.remove('show'));
+  document.getElementById('lesson-'+id).classList.add('show');
+  document.querySelectorAll('#lessonNav button').forEach(b=>b.classList.toggle('active',b.dataset.id===id));
+  if(l.type!=='alphabet'){ fcState[id]=0; renderFC(id); }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function prevNext(dir){
+  const i=LESSONS.findIndex(l=>l.id===current);
+  const ni=Math.min(LESSONS.length-1,Math.max(0,i+dir));
+  go(LESSONS[ni].id);
+}
+
+function selectLetter(i,el){
+  document.querySelectorAll('.letter').forEach(x=>x.classList.remove('sel'));
+  el.classList.add('sel');
+  const a=ALPHABET[i];
+  const d=document.getElementById('letterDetail');
+  d.className='letter-detail show';
+  d.innerHTML=`
+    <div class="glyph">${a.u}${a.l}</div>
+    <div class="info">
+      <div><b>Called:</b> “${a.name}”</div>
+      <div style="margin-top:6px"><b>Sounds:</b> ${a.sound}</div>
+      <div style="margin-top:6px"><b>Transliteration:</b> ${a.tr}</div>
+      <div class="ex" style="margin-top:6px">${a.ex} — <span style="font-weight:400;color:#e7ddc8">${a.exen}</span></div>
+    </div>
+    <button class="btn red" onclick="say('${a.ex}',this)">🔊 Hear “${a.ex}”</button>`;
+  say(a.u,el);
+}
+
+/* flashcards */
+function renderFC(lid){
+  const l=LESSONS.find(x=>x.id===lid); if(!l||!l.words) return;
+  const stage=document.querySelector(`.fc-stage[data-fc="${lid}"]`); if(!stage) return;
+  const idx=fcState[lid]||0; const w=l.words[idx];
+  stage.querySelector('.flashcard').classList.remove('flip');
+  stage.querySelector('[data-role=ru]').textContent=w.ru;
+  stage.querySelector('[data-role=tr]').textContent=w.tr;
+  stage.querySelector('[data-role=en]').textContent=w.en;
+  stage.querySelector('[data-role=count]').textContent=`${idx+1} / ${l.words.length}`;
+}
+function fcNav(lid,dir){
+  const l=LESSONS.find(x=>x.id===lid);
+  let idx=(fcState[lid]||0)+dir;
+  if(idx<0) idx=l.words.length-1; if(idx>=l.words.length) idx=0;
+  fcState[lid]=idx; renderFC(lid);
+}
+function fcSpeak(lid){
+  const l=LESSONS.find(x=>x.id===lid); const w=l.words[fcState[lid]||0];
+  say(w.ru);
+}
+function flip(card){ card.classList.toggle('flip'); }
+
+/* quiz */
+const quizProgress={};
+function answer(qid,qi,oi,btn){
+  const quiz=QUIZREG[qid]; if(!quiz) return; const q=quiz[qi];
+  const item=btn.closest('.quiz-item');
+  if(item.dataset.answered) return;
+  item.dataset.answered='1';
+  item.querySelectorAll('.opt').forEach((b,i)=>{
+    b.disabled=true;
+    if(i===q.a) b.classList.add('correct');
+    else if(i===oi) b.classList.add('wrong');
+  });
+  item.querySelector('.explain').classList.add('show');
+  quizProgress[qid]=quizProgress[qid]||{correct:0,total:quiz.length,seen:0};
+  quizProgress[qid].seen++;
+  if(oi===q.a) quizProgress[qid].correct++;
+  const p=quizProgress[qid];
+  if(p.seen===p.total){
+    document.getElementById('score-'+qid).textContent=`Score: ${p.correct} / ${p.total}`+(p.correct===p.total?'  — отлично! 🎉':'');
+  }
+}
+
+/* completion */
+function toggleDone(id,btn){
+  if(done.has(id)){done.delete(id);btn.classList.remove('is-done');btn.textContent='Mark complete';}
+  else{done.add(id);btn.classList.add('is-done');btn.textContent='✓ Completed';}
+  saveDone(done); updateProgress();
+}
+
+/* ---------- Boot ---------- */
+LESSONS.forEach(l=>{ if(!l.unit) l.unit='A1 · Foundations'; });
+buildNav();
+renderAll();
+updateProgress();
+go(LESSONS[0].id);
+</script>
+</body>
+</html>
