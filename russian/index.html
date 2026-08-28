@@ -248,6 +248,33 @@
   nav.side li.nav-unit{counter-increment:none;list-style:none;font-family:'Oswald';text-transform:uppercase;letter-spacing:.12em;font-size:11px;color:var(--paper);background:var(--red-deep);padding:5px 10px;margin:12px 0 4px;font-weight:600}
   nav.side li.nav-unit:first-child{margin-top:0}
   @media(max-width:860px){ nav.side li.nav-unit{flex-basis:100%;width:100%;text-align:center} }
+
+  /* ---------- Games ---------- */
+  .card.game{background:var(--card)}
+  .game-score{font-family:'Oswald';font-size:15px;letter-spacing:.05em;margin-top:12px;color:var(--ok)}
+  .match-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-top:8px}
+  .mt{border:2px solid var(--ink);background:var(--paper);padding:12px 10px;cursor:pointer;font-family:inherit;font-size:16px;min-height:52px;transition:transform .08s,background .1s}
+  .mt:hover{background:var(--paper-2)}
+  .mt.active{background:var(--gold);border-color:var(--gold)}
+  .mt.bad{background:var(--err-bg);border-color:var(--err)}
+  .mt.done{background:var(--ok-bg);border-color:var(--ok);visibility:hidden}
+  .scr-clue{font-size:16px;margin:6px 0}
+  .scr-prog{color:var(--ink-soft);font-size:13px}
+  .scr-answer{min-height:46px;border:2px dashed var(--line-strong);background:var(--paper);padding:8px 10px;font-size:26px;font-weight:700;letter-spacing:3px;margin:8px 0}
+  .scr-pool{display:flex;flex-wrap:wrap;gap:6px}
+  .scr-chip{border:2px solid var(--ink);background:var(--paper);width:46px;height:50px;font-size:24px;font-weight:700;cursor:pointer;font-family:inherit}
+  .scr-chip:hover:not(:disabled){background:var(--red);color:#fff;border-color:var(--red)}
+  .scr-chip:disabled{opacity:.22;cursor:default}
+  .scr-controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+  .scr-fb{margin-top:10px;font-size:15px}
+  .scr-fb.ok{color:#1c5334;font-weight:700}
+  .scr-fb.no{color:#7a251d}
+
+  .top-inner{flex-wrap:wrap}
+  .tools{display:flex;gap:6px;align-items:center}
+  .tbtn{font-family:'Oswald';text-transform:uppercase;letter-spacing:.05em;font-size:11px;color:var(--paper);background:transparent;border:1px solid rgba(255,255,255,.35);padding:6px 9px;cursor:pointer}
+  .tbtn:hover{background:var(--red);border-color:var(--red)}
+  .tbtn input{display:none}
 </style>
 </head>
 <body>
@@ -260,6 +287,11 @@
       <span class="lbl">Progress</span>
       <span class="bar"><i id="progBar"></i></span>
       <span id="progText" class="mono">0/0</span>
+    </div>
+    <div class="tools">
+      <button class="tbtn" onclick="exportProgress()" title="Save your progress to a file">⭳ Export</button>
+      <label class="tbtn" title="Load progress from a file">⭱ Import<input type="file" accept="application/json,.json" onchange="importProgress(this)"></label>
+      <button class="tbtn" onclick="resetProgress()" title="Clear progress on this device">Reset</button>
     </div>
   </div>
 </header>
@@ -580,7 +612,15 @@ const LESSONS = [
         body:"<p>Most consonants come in two flavours: <b>hard</b> and <b>soft</b> (palatalised, with a slight “y” glide). A consonant becomes soft when followed by <b>Ь</b> or by the soft vowels <b>Е, Ё, И, Ю, Я</b>.</p><p>You do not need to master this on day one — just know that <b>день</b> (day) is softer than <b>дом</b> (house), and your ear will tune in fast.</p>"
       }
     ],
-    tips:["Don't stress about stress at first — copy the audio, exaggerate the strong syllable, and mumble the rest. That's exactly what natives do."]
+    tips:["Don't stress about stress at first — copy the audio, exaggerate the strong syllable, and mumble the rest. That's exactly what natives do."],
+    quiz:[
+      {q:"How many stressed syllables does a Russian word have?",opts:["One","Two","It varies"],a:0,exp:"Exactly one stressed syllable per word."},
+      {q:"An unstressed «о» is pronounced like:",opts:["a short “a”","a long “o”","“u”"],a:0,exp:"Unstressed о reduces to an “a” sound."},
+      {q:"In «молоко», which о is a true “o”?",opts:["the first","the second","the last (stressed)"],a:2,exp:"Only the stressed final о keeps the “o” sound."},
+      {q:"A consonant becomes soft before:",opts:["а, о, у","е ё и ю я or ь","hard consonants"],a:1,exp:"Soft vowels (е ё и ю я) and ь soften the consonant."},
+      {q:"«день» compared with «дом» is:",opts:["harder","softer","the same"],a:1,exp:"день has a soft д; дом is hard."},
+      {q:"Is Russian stress marked in normal writing?",opts:["Yes, always","No — you learn it per word","Only on capitals"],a:1,exp:"Stress isn't normally marked; it's learned per word."}
+    ]
   },
   {
     id:"greetings", nav:"Greetings", type:"vocab",
@@ -816,7 +856,15 @@ const LESSONS = [
         ]
       }
     ],
-    tips:["Don't try to memorise all six at once. The next lessons take them one at a time, easiest first, each with the patterns you'll actually use."]
+    tips:["Don't try to memorise all six at once. The next lessons take them one at a time, easiest first, each with the patterns you'll actually use."],
+    quiz:[
+      {q:"Which case marks the subject of a sentence?",opts:["Nominative","Accusative","Dative"],a:0,exp:"Nominative = the subject (кто/что)."},
+      {q:"“I see the table” — «стол» is the object, so which case?",opts:["Genitive","Accusative","Prepositional"],a:1,exp:"The direct object takes the accusative."},
+      {q:"Which case does «нет» (there is no…) trigger?",opts:["Genitive","Dative","Instrumental"],a:0,exp:"нет + genitive."},
+      {q:"“with a friend” (с) uses which case?",opts:["Instrumental","Accusative","Dative"],a:0,exp:"с + instrumental."},
+      {q:"Location after в/на/о uses which case?",opts:["Prepositional","Genitive","Nominative"],a:0,exp:"в/на/о + prepositional."},
+      {q:"How many cases does Russian have?",opts:["Four","Six","Ten"],a:1,exp:"Russian has six cases."}
+    ]
   },
   {
     id:"prepositional", nav:"Case: Location", type:"vocab",
@@ -2121,6 +2169,41 @@ const LESSONS = [
       {q:"“пароль” means:",opts:["screen","password","file"],a:1,exp:"пароль = password."},
       {q:"“новости” means:",opts:["news","music","photo"],a:0,exp:"новости = news."}
     ]
+  },
+  {
+    id:"vocab-core", nav:"Core High-Frequency", unit:"Vocabulary · Themed Sets", type:"vocab",
+    eyebrow:"Vocabulary · Core Words",
+    title:"Core High-Frequency Words",
+    lead:"The workhorses of everyday Russian — drawn from frequency lists. These short words appear in almost every sentence, so they punch far above their weight.",
+    words:[
+      {ru:"человек",tr:"chelavék",en:"person"},
+      {ru:"жизнь",tr:"zhizn'",en:"life"},
+      {ru:"дело",tr:"déla",en:"matter / affair"},
+      {ru:"место",tr:"mésta",en:"place"},
+      {ru:"вопрос",tr:"vaprós",en:"question"},
+      {ru:"ответ",tr:"atvét",en:"answer"},
+      {ru:"слово",tr:"slóva",en:"word"},
+      {ru:"имя",tr:"ímya",en:"name"},
+      {ru:"очень",tr:"óchen'",en:"very"},
+      {ru:"тоже",tr:"tózhe",en:"also / too"},
+      {ru:"уже",tr:"uzhé",en:"already"},
+      {ru:"ещё",tr:"yeshchó",en:"still / more"},
+      {ru:"всегда",tr:"vsegdá",en:"always"},
+      {ru:"никогда",tr:"nikagdá",en:"never"},
+      {ru:"иногда",tr:"inagdá",en:"sometimes"},
+      {ru:"можно",tr:"mózhna",en:"one may / can"},
+      {ru:"надо",tr:"náda",en:"need to"},
+      {ru:"нужно",tr:"núzhna",en:"necessary"},
+      {ru:"правда",tr:"právda",en:"truth / really"},
+      {ru:"например",tr:"naprimér",en:"for example"},
+      {ru:"каждый",tr:"kázhdy",en:"each / every"},
+      {ru:"другой",tr:"drugóy",en:"other / another"}
+    ],
+    quiz:[
+      {q:"“всегда” means:",opts:["never","always","sometimes"],a:1,exp:"всегда = always."},
+      {q:"“можно” means:",opts:["one may / can","must not","already"],a:0,exp:"можно = one may / it's allowed."},
+      {q:"“вопрос” means:",opts:["answer","question","word"],a:1,exp:"вопрос = question."}
+    ]
   }
 ];
 
@@ -2310,6 +2393,7 @@ const drillState={};
 function normRU(s){return (s||'').trim().toLowerCase().replace(/ё/g,'е').replace(/[.,!?;:«»"'`—-]/g,'').replace(/\s+/g,' ').trim();}
 function drillsHTML(drills,lid){
   if(!drills||!drills.length) return '';
+  DRILLREG[lid]=drills;
   const items=drills.map((d,i)=>`
     <div class="drill-item" data-d="${i}">
       <div class="drill-q"><span class="dn">${i+1}.</span> ${d.prompt}</div>
@@ -2329,7 +2413,7 @@ function drillsHTML(drills,lid){
   </div>`;
 }
 function checkDrill(lid,i,el){
-  const d=(DRILLS[lid]||[])[i]; if(!d) return;
+  const d=(DRILLREG[lid]||[])[i]; if(!d) return;
   const item=el.closest('.drill-item');
   const inp=item.querySelector('.drill-input');
   const fb=item.querySelector('.drill-fb');
@@ -2342,10 +2426,241 @@ function checkDrill(lid,i,el){
   drillState[lid]=drillState[lid]||{};
   drillState[lid][i]=ok?'ok':'no';
   if(ok) inp.disabled=true;
-  const total=(DRILLS[lid]||[]).length;
+  const total=(DRILLREG[lid]||[]).length;
   const good=Object.values(drillState[lid]).filter(v=>v==='ok').length;
   const sc=document.getElementById('dscore-'+lid);
   if(sc) sc.textContent=`Solved: ${good} / ${total}`+(good===total?'  — молодец! 🎯':'');
+}
+/* ============================================================
+   PRACTICE GAMES — auto-generated from each lesson's data.
+   ============================================================ */
+const GAMES={};
+const WORDPOOL=[], SENTPOOL=[];
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]];}return a;}
+function buildPools(){
+  LESSONS.forEach(l=>{
+    (l.words||[]).forEach(w=>{ (/\s/.test(w.ru)?SENTPOOL:WORDPOOL).push({ru:w.ru,en:w.en}); });
+    (l.grammar||[]).forEach(g=>(g.examples||[]).forEach(e=>SENTPOOL.push({ru:e.ru,en:e.en})));
+  });
+}
+function pickDistractors(correctEn,ru,pool,n){
+  const cand=shuffle(pool.filter(x=>x.en!==correctEn&&x.ru!==ru).slice());
+  const out=[],seen=new Set([correctEn]);
+  for(const x of cand){ if(!seen.has(x.en)){out.push(x.en);seen.add(x.en);} if(out.length>=n)break; }
+  return out;
+}
+function quizPool(l){
+  const out=[],seen=new Set();
+  (l.words||[]).forEach(w=>{ if(!seen.has(w.ru)){seen.add(w.ru);out.push({ru:w.ru,en:w.en,s:/\s/.test(w.ru)});} });
+  (l.grammar||[]).forEach(g=>(g.examples||[]).forEach(e=>{ if(!seen.has(e.ru)){seen.add(e.ru);out.push({ru:e.ru,en:e.en,s:true});} }));
+  return out;
+}
+function autoQuizHTML(l){
+  const items=quizPool(l); if(items.length<3) return '';
+  const pooled=shuffle(items.slice()).slice(0,8);
+  const quiz=pooled.map(it=>{
+    const distr=pickDistractors(it.en,it.ru,it.s?SENTPOOL:WORDPOOL,3);
+    if(distr.length<2) return null;
+    const opts=shuffle([it.en,...distr]);
+    return {q:`What does «${it.ru}» mean?`,opts,a:opts.indexOf(it.en),exp:`«${it.ru}» = ${it.en}`};
+  }).filter(Boolean);
+  if(quiz.length<3) return '';
+  return quizHTML(quiz,l.id+'__auto','Rapid quiz — translate');
+}
+function matchHTML(l){
+  const pairs=(l.words||[]).filter(w=>!/\s/.test(w.ru)).map(w=>({ru:w.ru,en:w.en}));
+  if(pairs.length<3) return '';
+  const use=shuffle(pairs.slice()).slice(0,10);
+  GAMES[l.id]=GAMES[l.id]||{}; GAMES[l.id].match={n:use.length,sel:null,matched:0};
+  const tiles=[]; use.forEach((p,i)=>{tiles.push({i,side:'ru',t:p.ru});tiles.push({i,side:'en',t:p.en});});
+  shuffle(tiles);
+  const cells=tiles.map(t=>`<button class="mt" onclick="matchPick('${l.id}',${t.i},'${t.side}',this)">${esc(t.t)}</button>`).join('');
+  return `<div class="card game">
+    <h3><span class="tag">Game</span> Match the pairs</h3>
+    <p class="gbody" style="margin:-4px 0 6px">Tap a Russian word, then its English meaning.</p>
+    <div class="match-grid">${cells}</div>
+    <div class="game-score" id="mscore-${l.id}"></div>
+  </div>`;
+}
+function matchPick(lid,pi,side,el){
+  const g=GAMES[lid].match; if(el.classList.contains('done'))return;
+  if(!g.sel){ g.sel={pi,side,el}; el.classList.add('active'); return; }
+  if(g.sel.el===el){ el.classList.remove('active'); g.sel=null; return; }
+  if(g.sel.side===side){ g.sel.el.classList.remove('active'); el.classList.add('active'); g.sel={pi,side,el}; return; }
+  if(g.sel.pi===pi){
+    el.classList.add('done'); g.sel.el.classList.add('done'); el.classList.remove('active'); g.sel=null; g.matched++;
+    if(g.matched===g.n){ const sc=document.getElementById('mscore-'+lid); if(sc) sc.textContent='All matched — молодец! 🎯'; }
+  } else {
+    const prev=g.sel.el; el.classList.add('bad'); prev.classList.add('bad'); g.sel=null;
+    setTimeout(()=>{el.classList.remove('bad');prev.classList.remove('bad','active');},550);
+  }
+}
+function scrambleHTML(l){
+  const pool=(l.words||[]).filter(w=>{const r=w.ru.replace(/[^А-Яа-яЁё]/g,'');return !/\s/.test(w.ru)&&r.length>=3&&r.length<=11;}).map(w=>({ru:w.ru,en:w.en}));
+  if(pool.length<3) return '';
+  GAMES[l.id]=GAMES[l.id]||{}; GAMES[l.id].scr={list:shuffle(pool.slice()).slice(0,10),idx:0,built:''};
+  return `<div class="card game">
+    <h3><span class="tag">Game</span> Unscramble the word</h3>
+    <div class="scr-stage" id="scr-${l.id}"></div>
+  </div>`;
+}
+function renderScramble(lid){
+  const g=GAMES[lid].scr, stage=document.getElementById('scr-'+lid); if(!stage)return;
+  if(g.idx>=g.list.length){ stage.innerHTML=`<div class="game-score">Done — all ${g.list.length} words! 🎯</div>`; return; }
+  const w=g.list[g.idx]; let letters=w.ru.split('');
+  do{ shuffle(letters); }while(letters.join('')===w.ru && w.ru.length>1);
+  g.built='';
+  const chips=letters.map(ch=>`<button class="scr-chip" onclick="scrPick('${lid}','${ch}',this)">${esc(ch)}</button>`).join('');
+  stage.innerHTML=`
+    <div class="scr-clue">Clue: <b>${esc(w.en)}</b> <span class="scr-prog">(${g.idx+1}/${g.list.length})</span></div>
+    <div class="scr-answer" id="scrans-${lid}"></div>
+    <div class="scr-pool">${chips}</div>
+    <div class="scr-controls">
+      <button class="btn sm-btn" onclick="scrClear('${lid}')">Clear</button>
+      <button class="btn sm-btn red" onclick="scrCheck('${lid}')">Check</button>
+      <button class="btn sm-btn" onclick="scrSkip('${lid}')">Reveal →</button>
+    </div>
+    <div class="scr-fb" id="scrfb-${lid}"></div>`;
+}
+function scrPick(lid,ch,el){ if(el.disabled)return; const g=GAMES[lid].scr; el.disabled=true; g.built+=ch; const s=document.getElementById('scrans-'+lid); if(s)s.textContent=g.built; }
+function scrClear(lid){ const g=GAMES[lid].scr; g.built=''; const s=document.getElementById('scrans-'+lid); if(s)s.textContent=''; document.querySelectorAll('#scr-'+lid+' .scr-chip').forEach(c=>c.disabled=false); const fb=document.getElementById('scrfb-'+lid); if(fb){fb.textContent='';fb.className='scr-fb';} }
+function scrCheck(lid){ const g=GAMES[lid].scr, w=g.list[g.idx], fb=document.getElementById('scrfb-'+lid);
+  if(normRU(g.built)===normRU(w.ru)){ fb.className='scr-fb ok'; fb.innerHTML='✓ Верно!'; setTimeout(()=>{g.idx++;renderScramble(lid);},700); }
+  else { fb.className='scr-fb no'; fb.innerHTML='✗ Not yet — Clear and try again'; } }
+function scrSkip(lid){ const g=GAMES[lid].scr, w=g.list[g.idx], fb=document.getElementById('scrfb-'+lid); fb.className='scr-fb no'; fb.innerHTML='Answer: <b>'+esc(w.ru)+'</b>'; setTimeout(()=>{g.idx++;renderScramble(lid);},1000); }
+const DRILLREG={};
+const EXTRA_DRILLS={
+  pronouns:[
+    {prompt:"he → ___",answer:"он"},{prompt:"she → ___",answer:"она"},
+    {prompt:"they → ___",answer:"они"},{prompt:"we → ___",answer:"мы"},
+    {prompt:"you (formal/plural) → ___",answer:"вы"},{prompt:"you (informal) → ___",answer:"ты"},
+    {prompt:"A man says “I was glad”: «Я ___ рад» (past of быть)",answer:"был"}
+  ],
+  cases:[
+    {prompt:"The subject (кто/что) is in which case? (English name)",answer:"nominative",accept:["nom"]},
+    {prompt:"The direct object (кого/что) → which case?",answer:"accusative",accept:["acc"]},
+    {prompt:"“of / possession / after нет” → which case?",answer:"genitive",accept:["gen"]},
+    {prompt:"The receiver “to whom” → which case?",answer:"dative",accept:["dat"]},
+    {prompt:"“with / by” (after с) → which case?",answer:"instrumental",accept:["instr"]},
+    {prompt:"Location, after в/на/о → which case?",answer:"prepositional",accept:["prep"]},
+    {prompt:"«Я вижу стол» — стол is in which case?",answer:"accusative",accept:["acc"]},
+    {prompt:"«на столе» — столе is in which case?",answer:"prepositional",accept:["prep"]}
+  ],
+  past:[
+    {prompt:"работать (a woman): «Я ___»",answer:"работала"},
+    {prompt:"знать (he): «Он ___»",answer:"знал"},
+    {prompt:"быть (she): «Она ___ дома»",answer:"была"},
+    {prompt:"понимать (they): «Они не ___»",answer:"понимали"},
+    {prompt:"мочь (she, irregular): «Она не ___»",answer:"могла"}
+  ],
+  future:[
+    {prompt:"«Она ___ читать» (will, process)",answer:"будет"},
+    {prompt:"«Вы ___ читать?»",answer:"будете"},
+    {prompt:"perfective future: «Я ___ письмо» (написать)",answer:"напишу"},
+    {prompt:"perfective future: «Я ___ книгу» (прочитать)",answer:"прочитаю"},
+    {prompt:"perfective future: «Я всё ___» (сделать)",answer:"сделаю"},
+    {prompt:"perfective future: «Я ___ на море» (поехать)",answer:"поеду"}
+  ],
+  aspect:[
+    {prompt:"habit (I): «Я часто ___ фильмы» (смотреть)",answer:"смотрю"},
+    {prompt:"done once (man): «Я ___ фильм» (посмотреть, past)",answer:"посмотрел"},
+    {prompt:"process (man): «Я ___ уроки весь день» (делать)",answer:"делал"},
+    {prompt:"result (man): «Я уже ___ уроки» (сделать)",answer:"сделал"},
+    {prompt:"perfective infinitive of “читать”:",answer:"прочитать"},
+    {prompt:"perfective infinitive of “писать”:",answer:"написать"}
+  ],
+  "plural-cases":[
+    {prompt:"Prepositional pl: город → «в ___»",answer:"городах"},
+    {prompt:"Dative pl: друг → «к ___» (friends)",answer:"друзьям"},
+    {prompt:"Instrumental pl: друг → «с ___» (friends)",answer:"друзьями"},
+    {prompt:"Genitive pl: окно → «пять ___»",answer:"окон"},
+    {prompt:"Genitive pl: студент → «много ___»",answer:"студентов"}
+  ],
+  "adj-decl":[
+    {prompt:"gen m: «нет ___ дома» (новый)",answer:"нового"},
+    {prompt:"nom pl: «___ дома» (новый → plural)",answer:"новые"},
+    {prompt:"gen pl: «нет ___ домов» (новый)",answer:"новых"},
+    {prompt:"instr pl: «с ___ друзьями» (новый)",answer:"новыми"},
+    {prompt:"acc m animate: «Я знаю ___ студента» (новый)",answer:"нового"}
+  ],
+  motion:[
+    {prompt:"on foot, now (she): «Она ___ домой»",answer:"идёт",accept:["идет"]},
+    {prompt:"by vehicle, now (I): «Я ___ в центр»",answer:"еду"},
+    {prompt:"regularly on foot (they): «Они ___ в школу»",answer:"ходят"},
+    {prompt:"regularly by vehicle (we): «Мы ___ на дачу»",answer:"ездим"},
+    {prompt:"now on foot (you): «Куда ты ___?»",answer:"идёшь",accept:["идешь"]},
+    {prompt:"“let's go” (perfective): «___!»",answer:"пойдём",accept:["пойдем"]}
+  ],
+  counting:[
+    {prompt:"after 4: «четыре ___» (стол)",answer:"стола"},
+    {prompt:"after 6: «шесть ___» (книга)",answer:"книг"},
+    {prompt:"90 → ___ (in Russian)",answer:"девяносто"},
+    {prompt:"40 → ___ (in Russian)",answer:"сорок"},
+    {prompt:"100 → ___ (in Russian)",answer:"сто"},
+    {prompt:"“on Saturday”: «___ субботу»",answer:"в"}
+  ],
+  connectors:[
+    {prompt:"when: «___ я приеду, я напишу»",answer:"когда"},
+    {prompt:"although: «Я рад, ___ устал»",answer:"хотя"},
+    {prompt:"which/who (f): «девушка, ___ здесь живёт»",answer:"которая"},
+    {prompt:"but: «Я хочу, ___ не могу»",answer:"но"},
+    {prompt:"or: «чай ___ кофе?»",answer:"или"}
+  ]
+};
+function autoRecall(l){
+  return (l.words||[]).filter(w=>{const r=w.ru.replace(/[^А-Яа-яЁё-]/g,'');return !/\s/.test(w.ru)&&r.length>=2;})
+    .map(w=>({prompt:`${w.en} → ___ (in Russian)`,answer:w.ru}));
+}
+function fullDrills(l){
+  const hand=(DRILLS[l.id]||[]).slice();
+  const have=new Set(hand.map(d=>normRU(d.answer)));
+  const recall=shuffle(autoRecall(l).filter(d=>!have.has(normRU(d.answer))));
+  return hand.concat(recall.slice(0,Math.max(12-hand.length,0)));
+}
+function fullQuiz(l){
+  const hand=(l.quiz||[]).slice();
+  const gen=[], pool=shuffle(quizPool(l).slice());
+  for(const it of pool){
+    if(hand.length+gen.length>=12) break;
+    const distr=pickDistractors(it.en,it.ru,it.s?SENTPOOL:WORDPOOL,3);
+    if(distr.length<2) continue;
+    const opts=shuffle([it.en,...distr]);
+    gen.push({q:`What does «${it.ru}» mean?`,opts,a:opts.indexOf(it.en),exp:`«${it.ru}» = ${it.en}`});
+  }
+  return hand.concat(gen);
+}
+/* ---- Progress export / import / reset ---- */
+function exportProgress(){
+  try{
+    const data=JSON.stringify({app:'ru-course',v:1,done:[...done]});
+    const blob=new Blob([data],{type:'application/json'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+    a.download='russian-progress.json'; document.body.appendChild(a); a.click();
+    a.remove(); URL.revokeObjectURL(a.href);
+  }catch(e){ alert('Could not export progress.'); }
+}
+function importProgress(input){
+  const f=input.files&&input.files[0]; if(!f) return;
+  const r=new FileReader();
+  r.onload=()=>{
+    try{
+      const d=JSON.parse(r.result);
+      if(d&&Array.isArray(d.done)){
+        d.done.forEach(id=>done.add(id)); saveDone(done);
+        renderAll(); LESSONS.forEach(l=>{ if(GAMES[l.id]&&GAMES[l.id].scr) renderScramble(l.id); });
+        updateProgress(); go(current);
+        alert('Progress imported — '+d.done.length+' lessons merged.');
+      } else { alert('That file does not look like a progress file.'); }
+    }catch(e){ alert('Could not read that file.'); }
+    input.value='';
+  };
+  r.readAsText(f);
+}
+function resetProgress(){
+  if(confirm('Reset progress? This clears completed lessons on this device only.')){
+    done=new Set(); saveDone(done); updateProgress();
+    document.querySelectorAll('.mark-done').forEach(b=>{b.classList.remove('is-done');b.textContent='Mark complete';});
+  }
 }
 function renderLesson(l){
   let body=`
@@ -2360,8 +2675,10 @@ function renderLesson(l){
     body+=tipsHTML(l.tips);
     body+=readingHTML(l.reading,l.id);
     body+=flashHTML(l.words,l.id);
-    body+=quizHTML(l.quiz,l.id);
-    body+=drillsHTML(DRILLS[l.id],l.id);
+    body+=quizHTML(fullQuiz(l),l.id);
+    body+=drillsHTML(fullDrills(l),l.id);
+    body+=matchHTML(l);
+    body+=scrambleHTML(l);
   }
   const isDone=done.has(l.id);
   body+=`<div class="lesson-foot">
@@ -2466,9 +2783,12 @@ function toggleDone(id,btn){
 }
 
 /* ---------- Boot ---------- */
+Object.keys(EXTRA_DRILLS).forEach(k=>{ DRILLS[k]=(DRILLS[k]||[]).concat(EXTRA_DRILLS[k]); });
 LESSONS.forEach(l=>{ if(!l.unit) l.unit='A1 · Foundations'; });
+buildPools();
 buildNav();
 renderAll();
+LESSONS.forEach(l=>{ if(GAMES[l.id]&&GAMES[l.id].scr) renderScramble(l.id); });
 updateProgress();
 go(LESSONS[0].id);
 </script>
