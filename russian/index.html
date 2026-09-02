@@ -575,6 +575,321 @@ const DRILLS = {
   ]
 };
 
+const READINGS={
+  greetings:{title:"Знакомство (Meeting)",sentences:[
+    {ru:"— Привет! Меня зовут Максим.",en:"— Hi! My name is Maksim."},
+    {ru:"— Здравствуйте! Я Анна. Как дела?",en:"— Hello! I'm Anna. How are you?"},
+    {ru:"— Хорошо, спасибо. А ты?",en:"— Good, thanks. And you?"},
+    {ru:"— Тоже хорошо. Пока!",en:"— Also good. Bye!"}],
+    questions:[
+    {q:"Как зовут девушку?",opts:["Анна","Максим","Мария"],a:0,exp:"«Я Анна»."},
+    {q:"«Хорошо, спасибо» is an answer to:",opts:["Как дела?","Пока","Спасибо"],a:0,exp:"It answers «Как дела?»."}]},
+  nouns:{title:"Дом (The house)",sentences:[
+    {ru:"Это дом. Дом большой.",en:"This is a house. The house is big."},
+    {ru:"В доме книга и окно.",en:"In the house there's a book and a window."},
+    {ru:"Книга — она, окно — оно, дом — он.",en:"“Book” is she, “window” is it, “house” is he."},
+    {ru:"Мама тоже дома.",en:"Mum is home too."}],
+    questions:[
+    {q:"«книга» is which gender?",opts:["masculine","feminine","neuter"],a:1,exp:"-а ending → feminine."},
+    {q:"«окно» is which gender?",opts:["masculine","feminine","neuter"],a:2,exp:"-о ending → neuter."}]},
+  pronouns:{title:"Кто есть кто (Who's who)",sentences:[
+    {ru:"Я студент. Она врач.",en:"I'm a student. She's a doctor."},
+    {ru:"Мы друзья.",en:"We're friends."},
+    {ru:"Он дома, а я нет.",en:"He's home, but I'm not."},
+    {ru:"Это моя семья.",en:"This is my family."}],
+    questions:[
+    {q:"«Она врач» means:",opts:["She is a doctor","He is a doctor","We are doctors"],a:0,exp:"она = she; no verb “is”."},
+    {q:"Does Russian use a word for “is” here?",opts:["yes","no"],a:1,exp:"Present-tense “to be” is dropped."}]},
+  verbs:{title:"Каждый день (Every day)",sentences:[
+    {ru:"Я читаю книгу.",en:"I read a book."},
+    {ru:"Ты говоришь по-русски.",en:"You speak Russian."},
+    {ru:"Она работает в офисе.",en:"She works in an office."},
+    {ru:"Мы живём в Москве.",en:"We live in Moscow."}],
+    questions:[
+    {q:"Where does she work?",opts:["в офисе","дома","в Москве"],a:0,exp:"«Она работает в офисе»."},
+    {q:"«Мы живём» means:",opts:["we live","we read","we work"],a:0,exp:"жить = to live."}]},
+  prepositional:{title:"Где все? (Where is everyone?)",sentences:[
+    {ru:"Я в Москве.",en:"I'm in Moscow."},
+    {ru:"Анна на работе.",en:"Anna is at work."},
+    {ru:"Книга на столе.",en:"The book is on the table."},
+    {ru:"Вечером я думаю о тебе.",en:"In the evening I think about you."}],
+    questions:[
+    {q:"Where is Anna?",opts:["на работе","в Москве","дома"],a:0,exp:"«Анна на работе»."},
+    {q:"«о тебе» means:",opts:["about you","with you","to you"],a:0,exp:"о + prepositional."}]},
+  accusative:{title:"Что я люблю (What I love)",sentences:[
+    {ru:"Я люблю музыку.",en:"I love music."},
+    {ru:"Ты любишь кофе.",en:"You like coffee."},
+    {ru:"Я вижу маму и брата.",en:"I see mum and my brother."},
+    {ru:"Я хочу тебя видеть.",en:"I want to see you."}],
+    questions:[
+    {q:"«Я люблю музыку» — the object form is:",opts:["музыка","музыку","музыке"],a:1,exp:"fem -а → -у."},
+    {q:"«Я хочу тебя видеть» means:",opts:["I want to see you","I see you","I love you"],a:0,exp:"тебя = you (object)."}]},
+  genitive:{title:"Что у меня есть (What I have)",sentences:[
+    {ru:"У меня есть кот.",en:"I have a cat."},
+    {ru:"У тебя есть время?",en:"Do you have time?"},
+    {ru:"Здесь нет молока.",en:"There's no milk here."},
+    {ru:"Это книга брата.",en:"This is my brother's book."}],
+    questions:[
+    {q:"«У меня есть кот» means:",opts:["I have a cat","I want a cat","There's no cat"],a:0,exp:"У + gen + есть = have."},
+    {q:"«нет молока» means:",opts:["there's no milk","there's milk","I like milk"],a:0,exp:"нет + genitive."}]},
+  dative:{title:"Что мне нравится (What I like)",sentences:[
+    {ru:"Мне нравится кофе.",en:"I like coffee."},
+    {ru:"Ты мне нравишься.",en:"I like you."},
+    {ru:"Дай мне воду, пожалуйста.",en:"Give me water, please."},
+    {ru:"Мне двадцать лет.",en:"I'm twenty."}],
+    questions:[
+    {q:"«Ты мне нравишься» means:",opts:["I like you","You like me","I love you"],a:0,exp:"“you are pleasing to me”."},
+    {q:"«Мне двадцать лет» means:",opts:["I'm twenty","It's twenty","I have twenty"],a:0,exp:"age uses the dative."}]},
+  instrumental:{title:"С кем и с чем (With whom/what)",sentences:[
+    {ru:"Я пью кофе с молоком.",en:"I drink coffee with milk."},
+    {ru:"Чай с сахаром, пожалуйста.",en:"Tea with sugar, please."},
+    {ru:"Я иду с другом.",en:"I'm going with a friend."},
+    {ru:"Я хочу быть с тобой.",en:"I want to be with you."}],
+    questions:[
+    {q:"«кофе с молоком» means:",opts:["coffee with milk","coffee and milk","milky"],a:0,exp:"с + instrumental."},
+    {q:"«с тобой» means:",opts:["with you","about you","to you"],a:0,exp:"instrumental of ты."}]},
+  adjectives:{title:"Какой? Какая? (What kind?)",sentences:[
+    {ru:"У меня новый телефон.",en:"I have a new phone."},
+    {ru:"Это красивая девушка.",en:"This is a beautiful girl."},
+    {ru:"Какое красивое место!",en:"What a beautiful place!"},
+    {ru:"Ты очень умная.",en:"You're very smart."}],
+    questions:[
+    {q:"«красивая девушка» — the adjective is:",opts:["masculine","feminine","neuter"],a:1,exp:"-ая → feminine."},
+    {q:"«Ты очень умная» is said to:",opts:["a man","a woman","a group"],a:1,exp:"-ая form → to a woman."}]},
+  possessives:{title:"Моё и твоё (Mine and yours)",sentences:[
+    {ru:"Это мой дом.",en:"This is my house."},
+    {ru:"Моя семья здесь.",en:"My family is here."},
+    {ru:"Твоё имя красивое.",en:"Your name is beautiful."},
+    {ru:"Ты — моя любовь.",en:"You are my love."}],
+    questions:[
+    {q:"«моя семья» — моя is used because семья is:",opts:["feminine","masculine","neuter"],a:0,exp:"семья is feminine → моя."},
+    {q:"«Ты — моя любовь» means:",opts:["You are my love","This is my house","My name"],a:0,exp:"любовь is feminine → моя."}]},
+  numbers:{title:"Числа вокруг (Numbers around us)",sentences:[
+    {ru:"У меня два брата.",en:"I have two brothers."},
+    {ru:"Кофе стоит пять рублей.",en:"The coffee costs five roubles."},
+    {ru:"Мне двадцать лет.",en:"I'm twenty."},
+    {ru:"Сейчас три часа.",en:"It's three o'clock now."}],
+    questions:[
+    {q:"How many brothers?",opts:["one","two","five"],a:1,exp:"«два брата» = two."},
+    {q:"«три часа» means:",opts:["three o'clock","three brothers","thirty"],a:0,exp:"час = hour/o'clock."}]},
+  everyday:{title:"Короткий разговор (Small talk)",sentences:[
+    {ru:"— Ты говоришь по-русски?",en:"— Do you speak Russian?"},
+    {ru:"— Да, немного.",en:"— Yes, a little."},
+    {ru:"— Может быть, кофе?",en:"— Maybe some coffee?"},
+    {ru:"— Конечно, спасибо!",en:"— Of course, thanks!"}],
+    questions:[
+    {q:"«немного» means:",opts:["a little","a lot","never"],a:0,exp:"немного = a little."},
+    {q:"«Конечно» means:",opts:["maybe","of course","no"],a:1,exp:"конечно = of course."}]},
+  love:{title:"Сообщение (A message)",sentences:[
+    {ru:"Привет, дорогая!",en:"Hi, darling!"},
+    {ru:"Я скучаю по тебе.",en:"I miss you."},
+    {ru:"Ты моё солнце.",en:"You're my sunshine."},
+    {ru:"Целую, до завтра.",en:"Kisses, see you tomorrow."}],
+    questions:[
+    {q:"«Я скучаю по тебе» means:",opts:["I miss you","I love you","I see you"],a:0,exp:"скучать по + dative."},
+    {q:"«Целую» at the end means:",opts:["kisses","hugs","bye"],a:0,exp:"a warm sign-off."}]},
+  cafe:{title:"В кафе (At the café)",sentences:[
+    {ru:"— Здравствуйте! Меню, пожалуйста.",en:"— Hello! The menu, please."},
+    {ru:"— Что вы хотите?",en:"— What would you like?"},
+    {ru:"— Кофе с молоком и хлеб.",en:"— Coffee with milk and bread."},
+    {ru:"— Хорошо. Счёт потом.",en:"— Alright. The bill later."}],
+    questions:[
+    {q:"What does the customer order?",opts:["кофе с молоком и хлеб","чай","суп"],a:0,exp:"«Кофе с молоком и хлеб»."},
+    {q:"«Меню, пожалуйста» means:",opts:["the menu please","the bill please","water please"],a:0,exp:"меню = menu."}]},
+  around:{title:"На улице (On the street)",sentences:[
+    {ru:"— Извините, где вокзал?",en:"— Excuse me, where's the station?"},
+    {ru:"— Идите прямо, потом направо.",en:"— Go straight, then right."},
+    {ru:"— Это далеко?",en:"— Is it far?"},
+    {ru:"— Нет, близко.",en:"— No, it's near."}],
+    questions:[
+    {q:"What is the person looking for?",opts:["вокзал","аптека","кафе"],a:0,exp:"«где вокзал?»."},
+    {q:"«близко» means:",opts:["near","far","left"],a:0,exp:"близко = near."}]},
+  past:{title:"Вчера (Yesterday)",sentences:[
+    {ru:"Вчера я был дома.",en:"Yesterday I was home."},
+    {ru:"Утром я читал книгу.",en:"In the morning I was reading a book."},
+    {ru:"Потом мы гуляли в парке.",en:"Then we walked in the park."},
+    {ru:"Вечером она смотрела фильм.",en:"In the evening she watched a film."}],
+    questions:[
+    {q:"When was he home?",opts:["yesterday","today","tomorrow"],a:0,exp:"вчера = yesterday."},
+    {q:"«она смотрела» — who watched?",opts:["she","he","we"],a:0,exp:"-ла ending → she."}]},
+  future:{title:"Планы (Plans)",sentences:[
+    {ru:"Завтра я буду работать.",en:"Tomorrow I'll be working."},
+    {ru:"Вечером мы будем дома.",en:"In the evening we'll be home."},
+    {ru:"Я прочитаю эту книгу.",en:"I'll read this book (finish it)."},
+    {ru:"Потом я позвоню тебе.",en:"Then I'll call you."}],
+    questions:[
+    {q:"When will he work?",opts:["tomorrow","yesterday","now"],a:0,exp:"завтра = tomorrow."},
+    {q:"«Я прочитаю книгу» means:",opts:["I'll read (finish) the book","I'm reading","I read yesterday"],a:0,exp:"perfective future."}]},
+  aspect:{title:"Процесс и результат (Process & result)",sentences:[
+    {ru:"Каждый день я читаю.",en:"Every day I read."},
+    {ru:"Вчера я прочитал книгу.",en:"Yesterday I read (finished) a book."},
+    {ru:"Я долго писал письмо.",en:"I was writing a letter for a long time."},
+    {ru:"Наконец я написал его.",en:"Finally I wrote it."}],
+    questions:[
+    {q:"«прочитал» shows the action was:",opts:["finished","ongoing","habitual"],a:0,exp:"perfective = completed."},
+    {q:"«Каждый день я читаю» is:",opts:["a habit","one-time","finished"],a:0,exp:"imperfective = habit."}]},
+  "plural-cases":{title:"Много всего (Lots of things)",sentences:[
+    {ru:"У меня много книг.",en:"I have many books."},
+    {ru:"Я говорю с друзьями.",en:"I talk with friends."},
+    {ru:"Мы были в разных городах.",en:"We were in different cities."},
+    {ru:"Я люблю эти книги.",en:"I love these books."}],
+    questions:[
+    {q:"«много книг» is in the:",opts:["genitive plural","nominative","dative"],a:0,exp:"много + genitive plural."},
+    {q:"«с друзьями» means:",opts:["with friends","to friends","about friends"],a:0,exp:"instrumental plural."}]},
+  "adj-decl":{title:"Новый дом (A new house)",sentences:[
+    {ru:"Я живу в новом доме.",en:"I live in a new house."},
+    {ru:"У меня нет новой машины.",en:"I don't have a new car."},
+    {ru:"Я иду с новым другом.",en:"I'm going with a new friend."},
+    {ru:"Мне нравится этот красивый город.",en:"I like this beautiful city."}],
+    questions:[
+    {q:"«в новом доме» — the adjective's case is:",opts:["prepositional","nominative","accusative"],a:0,exp:"в + prepositional → новом."},
+    {q:"«с новым другом» means:",opts:["with a new friend","about a friend","to a friend"],a:0,exp:"с + instrumental."}]},
+  motion:{title:"Туда и обратно (There and back)",sentences:[
+    {ru:"Сейчас я иду домой.",en:"Right now I'm walking home."},
+    {ru:"Каждый день я хожу на работу.",en:"Every day I go to work."},
+    {ru:"Завтра мы едем в Москву.",en:"Tomorrow we're travelling to Moscow."},
+    {ru:"Я часто езжу к тебе.",en:"I often travel to you."}],
+    questions:[
+    {q:"«я хожу на работу» — how often?",opts:["regularly","once, now","never"],a:0,exp:"ходить = regular/round trip."},
+    {q:"«мы едем в Москву» — travelling by:",opts:["vehicle","foot","staying"],a:0,exp:"ехать = by vehicle."}]},
+  counting:{title:"Даты и время (Dates & time)",sentences:[
+    {ru:"Сегодня пятое мая.",en:"Today is the 5th of May."},
+    {ru:"У меня три брата и две сестры.",en:"I have three brothers and two sisters."},
+    {ru:"В субботу я отдыхаю.",en:"On Saturday I relax."},
+    {ru:"Мне двадцать пять лет.",en:"I'm twenty-five."}],
+    questions:[
+    {q:"«пятое мая» means:",opts:["the 5th of May","five days","May only"],a:0,exp:"neuter ordinal + genitive month."},
+    {q:"How many brothers?",opts:["three","two","five"],a:0,exp:"«три брата» = three."}]},
+  family:{title:"Моя семья (My family)",sentences:[
+    {ru:"Это моя семья.",en:"This is my family."},
+    {ru:"Мой папа — врач, мама — учитель.",en:"My dad is a doctor, mum is a teacher."},
+    {ru:"У меня есть брат и сестра.",en:"I have a brother and a sister."},
+    {ru:"Мы любим друг друга.",en:"We love each other."}],
+    questions:[
+    {q:"What is dad's job?",opts:["врач","учитель","студент"],a:0,exp:"«папа — врач»."},
+    {q:"«брат и сестра» means:",opts:["brother and sister","mum and dad","son and daughter"],a:0,exp:"брат = brother, сестра = sister."}]},
+  feelings:{title:"Как ты? (How are you?)",sentences:[
+    {ru:"Сегодня я очень рад.",en:"Today I'm very glad."},
+    {ru:"Ты счастлива?",en:"Are you happy?"},
+    {ru:"Я немного устал.",en:"I'm a little tired."},
+    {ru:"Но всё хорошо!",en:"But everything's fine!"}],
+    questions:[
+    {q:"«я немного устал» means:",opts:["a little tired","very happy","sad"],a:0,exp:"устал = tired."},
+    {q:"«Ты счастлива?» is said to:",opts:["a woman","a man","a group"],a:0,exp:"-а form → to a woman."}]},
+  connectors:{title:"Почему и если (Because & if)",sentences:[
+    {ru:"Я учу русский, потому что люблю тебя.",en:"I'm learning Russian because I love you."},
+    {ru:"Если хочешь, позвони мне.",en:"If you want, call me."},
+    {ru:"Было поздно, поэтому я остался дома.",en:"It was late, so I stayed home."},
+    {ru:"Я думаю, что всё будет хорошо.",en:"I think that everything will be fine."}],
+    questions:[
+    {q:"«потому что» means:",opts:["because","so","if"],a:0,exp:"потому что = because."},
+    {q:"«поэтому» means:",opts:["therefore / so","because","although"],a:0,exp:"поэтому = so."}]},
+  reflexives:{title:"Мой день (My day)",sentences:[
+    {ru:"Я учусь в университете.",en:"I study at university."},
+    {ru:"Каждый день я занимаюсь русским.",en:"Every day I study Russian."},
+    {ru:"Вечером мы встречаемся с друзьями.",en:"In the evening we meet with friends."},
+    {ru:"Я надеюсь, что сдам экзамен.",en:"I hope I'll pass the exam."}],
+    questions:[
+    {q:"«Я учусь» means:",opts:["I study","I teach","I read"],a:0,exp:"учиться = to study."},
+    {q:"«мы встречаемся» means:",opts:["we meet","we work","we return"],a:0,exp:"встречаться = to meet."}]},
+  imperative:{title:"Команды (Commands)",sentences:[
+    {ru:"Слушай меня!",en:"Listen to me!"},
+    {ru:"Читай этот текст.",en:"Read this text."},
+    {ru:"Позвони мне вечером.",en:"Call me in the evening."},
+    {ru:"Не волнуйся, всё хорошо.",en:"Don't worry, everything's fine."}],
+    questions:[
+    {q:"«Позвони мне» means:",opts:["call me","listen to me","help me"],a:0,exp:"позвони = call!"},
+    {q:"«Не волнуйся» means:",opts:["don't worry","don't read","don't go"],a:0,exp:"negative command."}]},
+  comparatives:{title:"Больше и лучше (Bigger & better)",sentences:[
+    {ru:"Москва больше, чем Астана.",en:"Moscow is bigger than Astana."},
+    {ru:"Русский труднее английского.",en:"Russian is harder than English."},
+    {ru:"Ты красивее всех.",en:"You're more beautiful than everyone."},
+    {ru:"Это самый лучший день.",en:"This is the best day."}],
+    questions:[
+    {q:"«Москва больше» — Moscow is:",opts:["bigger","smaller","older"],a:0,exp:"больше = bigger."},
+    {q:"«самый лучший день» means:",opts:["the best day","a better day","the worst day"],a:0,exp:"самый лучший = the best."}]},
+  conditional:{title:"Если бы (If only)",sentences:[
+    {ru:"Я хотел бы кофе.",en:"I would like a coffee."},
+    {ru:"Если бы у меня было время, я бы пришёл.",en:"If I had time, I would come."},
+    {ru:"Мне надо работать.",en:"I need to work."},
+    {ru:"Здесь нельзя курить.",en:"You can't smoke here."}],
+    questions:[
+    {q:"«Я хотел бы» means:",opts:["I would like","I want","I wanted"],a:0,exp:"past + бы = conditional."},
+    {q:"«нельзя курить» means:",opts:["can't smoke","must smoke","may smoke"],a:0,exp:"нельзя = not allowed."}]},
+  negation:{title:"Ничего и никто (Nothing & nobody)",sentences:[
+    {ru:"Я ничего не знаю.",en:"I don't know anything."},
+    {ru:"Никто не пришёл.",en:"Nobody came."},
+    {ru:"Я никогда не был в Москве.",en:"I've never been to Moscow."},
+    {ru:"Здесь никого нет.",en:"There's nobody here."}],
+    questions:[
+    {q:"«Я ничего не знаю» means:",opts:["I don't know anything","I know everything","I know it all"],a:0,exp:"double negative."},
+    {q:"«Никто не пришёл» means:",opts:["nobody came","everybody came","someone came"],a:0,exp:"никто … не = nobody."}]},
+  indefinite:{title:"Кто-то и что-нибудь (Someone & anything)",sentences:[
+    {ru:"Кто-то звонил утром.",en:"Someone called in the morning."},
+    {ru:"Ты хочешь что-нибудь поесть?",en:"Do you want anything to eat?"},
+    {ru:"Я где-то видел это.",en:"I saw this somewhere."},
+    {ru:"Когда-нибудь я поеду в Россию.",en:"Someday I'll go to Russia."}],
+    questions:[
+    {q:"«Кто-то звонил» means:",opts:["someone called","nobody called","everyone called"],a:0,exp:"-то = someone (unknown)."},
+    {q:"«что-нибудь поесть» means:",opts:["anything to eat","nothing to eat","one thing"],a:0,exp:"-нибудь = any."}]},
+  demonstratives:{title:"Этот и тот (This and that)",sentences:[
+    {ru:"Этот дом большой, а тот маленький.",en:"This house is big, and that one is small."},
+    {ru:"Иди сюда!",en:"Come here!"},
+    {ru:"Мне здесь хорошо.",en:"I feel good here."},
+    {ru:"Он говорит очень быстро.",en:"He speaks very fast."}],
+    questions:[
+    {q:"«Иди сюда» means:",opts:["come here","go there","stay"],a:0,exp:"сюда = to here."},
+    {q:"«очень быстро» means:",opts:["very fast","very slow","very good"],a:0,exp:"быстро = quickly."}]},
+  "prefixed-motion":{title:"Пришёл и ушёл (Came & left)",sentences:[
+    {ru:"Утром я пошёл на работу.",en:"In the morning I set off to work."},
+    {ru:"В обед друг пришёл ко мне.",en:"At lunch a friend came to me."},
+    {ru:"Потом он ушёл домой.",en:"Then he left for home."},
+    {ru:"Завтра мы поедем в Москву.",en:"Tomorrow we'll set off to Moscow."}],
+    questions:[
+    {q:"«друг пришёл» means:",opts:["a friend arrived","a friend left","a friend set off"],a:0,exp:"при- = arrive."},
+    {q:"«он ушёл домой» means:",opts:["he left for home","he arrived home","he entered"],a:0,exp:"у- = leave/away."}]},
+  ordinals:{title:"Календарь (The calendar)",sentences:[
+    {ru:"Сегодня первое января.",en:"Today is the 1st of January."},
+    {ru:"Мой день рождения в мае.",en:"My birthday is in May."},
+    {ru:"Это мой второй год в России.",en:"This is my second year in Russia."},
+    {ru:"Скоро две тысячи двадцать седьмой год.",en:"Soon it will be 2027."}],
+    questions:[
+    {q:"«первое января» means:",opts:["the 1st of January","one January","first year"],a:0,exp:"neuter ordinal + genitive month."},
+    {q:"«в мае» means:",opts:["in May","on May","about May"],a:0,exp:"в + prepositional."}]},
+  shortadj:{title:"Готов ли ты? (Are you ready?)",sentences:[
+    {ru:"Я рад тебя видеть.",en:"I'm glad to see you."},
+    {ru:"Ты готова?",en:"Are you ready?"},
+    {ru:"Я немного занят сейчас.",en:"I'm a little busy now."},
+    {ru:"Не знаю, придёт ли он.",en:"I don't know whether he'll come."}],
+    questions:[
+    {q:"«Ты готова?» is said to:",opts:["a woman","a man","a group"],a:0,exp:"-а short form → to a woman."},
+    {q:"«придёт ли он» means:",opts:["whether he'll come","he came","he won't come"],a:0,exp:"ли = whether."}]},
+  participles:{title:"Причастия в тексте (Participles in a text)",sentences:[
+    {ru:"Человек, читающий книгу, — мой друг.",en:"The man reading a book is my friend."},
+    {ru:"Это письмо, написанное вчера.",en:"This is the letter written yesterday."},
+    {ru:"Прочитанная книга лежит на столе.",en:"The read (finished) book is on the table."},
+    {ru:"Мой любимый фильм — очень старый.",en:"My favourite film is very old."}],
+    questions:[
+    {q:"«читающий» describes someone who is:",opts:["reading","writing","sleeping"],a:0,exp:"active participle of читать."},
+    {q:"«написанное вчера» means:",opts:["written yesterday","reading yesterday","will write"],a:0,exp:"passive past participle."}]},
+  gerunds:{title:"Деепричастия (Verbal adverbs)",sentences:[
+    {ru:"Читая книгу, я слушаю музыку.",en:"While reading a book, I listen to music."},
+    {ru:"Прочитав письмо, он ушёл.",en:"Having read the letter, he left."},
+    {ru:"Говоря с тобой, я счастлив.",en:"Talking with you, I'm happy."},
+    {ru:"Отдыхая, мы гуляли в парке.",en:"Relaxing, we walked in the park."}],
+    questions:[
+    {q:"«Читая книгу» means:",opts:["while reading a book","having read","will read"],a:0,exp:"imperfective verbal adverb."},
+    {q:"«Прочитав письмо» means:",opts:["having read the letter","while reading","writing"],a:0,exp:"perfective verbal adverb."}]},
+  diminutives:{title:"Ласковые слова (Sweet words)",sentences:[
+    {ru:"Привет, мой котик!",en:"Hi, my kitty!"},
+    {ru:"Спасибо, мамочка.",en:"Thanks, mummy."},
+    {ru:"Ты моё солнышко.",en:"You're my little sunshine."},
+    {ru:"Подожди минутку, пожалуйста.",en:"Wait a minute, please."}],
+    questions:[
+    {q:"«солнышко» is a sweet form of:",opts:["sun","moon","star"],a:0,exp:"солнце → солнышко."},
+    {q:"«минутку» is a diminutive of:",opts:["minute","hour","day"],a:0,exp:"минута → минутка."}]}
+};
+
 const LESSONS = [
   {
     id:"alphabet", nav:"The Alphabet", type:"alphabet",
@@ -1775,6 +2090,405 @@ const LESSONS = [
     }
   },
   {
+    id:"reflexives", nav:"Reflexive Verbs", unit:"B1 · Grammar Deep-Dive", type:"vocab",
+    eyebrow:"Lesson · Возвратные глаголы",
+    title:"Reflexive Verbs (-ся)",
+    lead:"Verbs ending in -ся (or -сь after a vowel) turn the action back on the subject, make it reciprocal (“each other”), or simply exist only in this form. You've already met one: нравиться.",
+    grammar:[
+      {heading:"How they conjugate — учиться (to study)",
+       body:"<p>Conjugate as normal, then add <b>-ся</b> after a consonant and <b>-сь</b> after a vowel.</p>",
+       table:{cols:["Pronoun","Form"],rows:[["я","учусь"],["ты","учишься"],["он/она","учится"],["мы","учимся"],["вы","учитесь"],["они","учатся"]]}},
+      {heading:"What the -ся does",
+       body:"<p>Three common jobs: <b>reflexive</b> (одеваться — to dress oneself), <b>reciprocal</b> (встречаться — to meet each other), and <b>intransitive-only</b> (нравиться, находиться, надеяться).</p>",
+       examples:[
+         {ru:"Я занимаюсь спортом",tr:"ya zanimáyus spórtam",en:"I do sport / I'm busy with sport"},
+         {ru:"Мы встречаемся вечером",tr:"my vstrecháemsya vécheram",en:"We're meeting this evening"},
+         {ru:"Я надеюсь, что всё хорошо",tr:"ya nadéyus shto vsyo kharashó",en:"I hope everything's fine"},
+         {ru:"Я влюбился в тебя",tr:"ya vlyubílsya v tebyá",en:"I fell in love with you (man)"}
+       ],
+       constructions:[{pattern:"заниматься + [instrumental]",gloss:"to be busy with / study",example:{ru:"Я занимаюсь русским",en:"I'm studying Russian"}}]}
+    ],
+    words:[
+      {ru:"учиться",tr:"uchítsa",en:"to study"},{ru:"заниматься",tr:"zanimátsa",en:"to be busy with"},
+      {ru:"встречаться",tr:"vstrechátsa",en:"to meet"},{ru:"находиться",tr:"nakhadítsa",en:"to be located"},
+      {ru:"надеяться",tr:"nadéyatsa",en:"to hope"},{ru:"смеяться",tr:"smiyátsa",en:"to laugh"},
+      {ru:"возвращаться",tr:"vazvrashchátsa",en:"to return"},{ru:"познакомиться",tr:"paznakómitsa",en:"to get acquainted"},
+      {ru:"одеваться",tr:"adivátsa",en:"to get dressed"},{ru:"нравиться",tr:"nrávitsa",en:"to be liked"}
+    ],
+    quiz:[
+      {q:"“I study” (учиться) is:",opts:["я учу","я учусь","я учишь"],a:1,exp:"Reflexive: add -сь after the vowel → учусь."},
+      {q:"“We meet each other” uses:",opts:["встречать","встречаемся","встречаю"],a:1,exp:"встречаться is reciprocal → мы встречаемся."},
+      {q:"Which verb only exists with -ся?",opts:["читать","надеяться","хотеть"],a:1,exp:"надеяться (to hope) has no non-reflexive form."}
+    ]
+  },
+  {
+    id:"imperative", nav:"The Imperative", unit:"B1 · Grammar Deep-Dive", type:"vocab",
+    eyebrow:"Lesson · Повелительное наклонение",
+    title:"The Imperative — Commands & Requests",
+    lead:"How to tell someone to do something — from «слушай!» to your girlfriend to a polite «позвоните, пожалуйста». Built from the verb's present-tense stem.",
+    grammar:[
+      {heading:"Forming it",
+       body:"<p>Take the <b>они</b>-form, drop the ending for the stem, then: vowel stem → add <b>-й</b>; consonant stem → add <b>-и</b> (or <b>-ь</b> if the stress isn't final). Add <b>-те</b> for polite/plural.</p>",
+       table:{cols:["Verb","Informal (ты)","Polite (вы)"],rows:[
+         ["читать","читай","читайте"],["говорить","говори","говорите"],["слушать","слушай","слушайте"],
+         ["дать","дай","дайте"],["сказать","скажи","скажите"],["идти","иди","идите"]]}},
+      {heading:"Positive vs negative",
+       body:"<p>A negative command normally uses the <b>imperfective</b>: «Не читай это!» (don't read that).</p>",
+       examples:[
+         {ru:"Слушай меня!",tr:"slúshay menyá",en:"Listen to me!"},
+         {ru:"Позвони мне вечером",tr:"pazvaní mne vécheram",en:"Call me tonight"},
+         {ru:"Не волнуйся!",tr:"ne valnúysya",en:"Don't worry!"},
+         {ru:"Приходи ко мне",tr:"prikhadí ka mne",en:"Come over to me"}
+       ],
+       constructions:[{pattern:"[imperative], пожалуйста",gloss:"polite request",example:{ru:"Помогите, пожалуйста",en:"Help, please"}}]}
+    ],
+    words:[
+      {ru:"читай",tr:"chitáy",en:"read! (informal)"},{ru:"говори",tr:"gavarí",en:"speak!"},
+      {ru:"слушай",tr:"slúshay",en:"listen!"},{ru:"смотри",tr:"smatrí",en:"look!"},
+      {ru:"иди",tr:"idí",en:"go! (on foot)"},{ru:"дай",tr:"day",en:"give!"},
+      {ru:"скажи",tr:"skazhí",en:"say / tell!"},{ru:"помоги",tr:"pamagí",en:"help!"},
+      {ru:"извини",tr:"izviní",en:"sorry! (informal)"},{ru:"подожди",tr:"padazhdí",en:"wait!"}
+    ],
+    quiz:[
+      {q:"Informal “listen!” (слушать) is:",opts:["слушай","слушать","слушаешь"],a:0,exp:"Vowel stem + -й → слушай."},
+      {q:"Polite/plural commands add:",opts:["-и","-те","-ешь"],a:1,exp:"Add -те: скажите, помогите."},
+      {q:"A negative command usually uses which aspect?",opts:["perfective","imperfective","future"],a:1,exp:"«Не читай!» — imperfective for negatives."}
+    ]
+  },
+  {
+    id:"comparatives", nav:"Comparatives", unit:"B1 · Grammar Deep-Dive", type:"vocab",
+    eyebrow:"Lesson · Сравнительная степень",
+    title:"Comparatives & Superlatives",
+    lead:"“Bigger, better, the best.” Russian comparatives are often a single word ending in -ее, with a handful of common irregulars worth memorising.",
+    grammar:[
+      {heading:"Comparative: usually -ее",
+       body:"<p>Most adjectives → stem + <b>-ее</b>. “Than” is <b>чем</b> (or the genitive). Irregulars are marked *.</p>",
+       table:{cols:["Adjective","Comparative"],rows:[
+         ["быстрый (fast)","быстрее"],["красивый","красивее"],["интересный","интереснее"],
+         ["хороший (good)","лучше *"],["плохой (bad)","хуже *"],["большой (big)","больше *"],["маленький","меньше *"],["старый","старше *"]]}},
+      {heading:"Superlative: самый + adjective",
+       examples:[
+         {ru:"Москва больше, чем Астана",tr:"Maskvá ból'she chem Astaná",en:"Moscow is bigger than Astana"},
+         {ru:"Ты красивее всех",tr:"ty krasíveye vsekh",en:"You're more beautiful than everyone"},
+         {ru:"Это самый лучший день",tr:"eta sámy lúchshy den'",en:"This is the best day"},
+         {ru:"Русский труднее английского",tr:"rússky trudnéye anglíyskava",en:"Russian is harder than English"}
+       ],
+       constructions:[{pattern:"[comparative] + чем + [nominative]",gloss:"…-er than …",example:{ru:"Он старше, чем я",en:"He's older than me"}}]}
+    ],
+    words:[
+      {ru:"больше",tr:"ból'she",en:"more / bigger"},{ru:"меньше",tr:"mén'she",en:"less / smaller"},
+      {ru:"лучше",tr:"lúchshe",en:"better"},{ru:"хуже",tr:"khúzhe",en:"worse"},
+      {ru:"быстрее",tr:"bystréye",en:"faster"},{ru:"старше",tr:"stárshe",en:"older"},
+      {ru:"моложе",tr:"malózhe",en:"younger"},{ru:"дороже",tr:"darózhe",en:"more expensive"},
+      {ru:"самый",tr:"sámy",en:"the most"},{ru:"чем",tr:"chem",en:"than"}
+    ],
+    quiz:[
+      {q:"Comparative of “быстрый”:",opts:["быстрее","быстрый","самый быстрый"],a:0,exp:"Most adjectives add -ее: быстрее."},
+      {q:"“better” is:",opts:["хуже","лучше","больше"],a:1,exp:"хороший → лучше (irregular)."},
+      {q:"“the best day” =",opts:["лучше день","самый лучший день","день лучше"],a:1,exp:"Superlative: самый + adjective."}
+    ]
+  },
+  {
+    id:"conditional", nav:"Conditional & Must", unit:"B1 · Grammar Deep-Dive", type:"vocab",
+    eyebrow:"Lesson · Условное наклонение",
+    title:"Conditional & Obligation",
+    lead:"“I would…”, “if I had…”, “I must”, “you can't”. Two small tools — the particle бы and the words должен / надо / можно / нельзя — unlock a huge amount of everyday speech.",
+    grammar:[
+      {heading:"The conditional: past + бы",
+       body:"<p>Take the <b>past tense</b> and add <b>бы</b>. For “if”, use <b>если бы</b> in the condition and past + бы in the result.</p>",
+       examples:[
+         {ru:"Я хотел бы кофе",tr:"ya khatél by kófe",en:"I would like a coffee (man)"},
+         {ru:"Я хотела бы поехать",tr:"ya khatéla by paékhat'",en:"I would like to go (woman)"},
+         {ru:"Если бы у меня было время, я бы пришёл",tr:"yésli by u menyá býla vrémya, ya by prishól",en:"If I had time, I would come"}
+       ]},
+      {heading:"Obligation & permission",
+       table:{cols:["Word","Meaning","Example"],rows:[
+         ["должен / должна","must (m/f)","Я должен идти"],
+         ["надо / нужно + dat.","need to","Мне надо работать"],
+         ["можно","one may / can","Можно войти?"],
+         ["нельзя","must not / can't","Здесь нельзя курить"]]},
+       constructions:[{pattern:"[dative] + надо/нужно + [infinitive]",gloss:"… needs to …",example:{ru:"Тебе нужно отдохнуть",en:"You need to rest"}}]}
+    ],
+    words:[
+      {ru:"должен",tr:"dólzhen",en:"must (m)"},{ru:"должна",tr:"dalzhná",en:"must (f)"},
+      {ru:"надо",tr:"náda",en:"need to"},{ru:"нужно",tr:"núzhna",en:"necessary"},
+      {ru:"можно",tr:"mózhna",en:"one may / can"},{ru:"нельзя",tr:"nel'zyá",en:"must not"},
+      {ru:"бы",tr:"by",en:"would (particle)"},{ru:"если",tr:"yésli",en:"if"},
+      {ru:"хотел",tr:"khatél",en:"wanted (m)"},{ru:"конечно",tr:"kanéshna",en:"of course"}
+    ],
+    quiz:[
+      {q:"“I would like” (man) is:",opts:["Я хочу","Я хотел бы","Я хотел"],a:1,exp:"Conditional = past + бы: хотел бы."},
+      {q:"“You can't smoke here” uses:",opts:["можно","нельзя","надо"],a:1,exp:"нельзя = it's not allowed."},
+      {q:"“I need to work” — «Мне ___ работать»",opts:["надо","должен","можно"],a:0,exp:"надо/нужно + dative + infinitive."}
+    ]
+  },
+  {
+    id:"negation", nav:"Negation", unit:"B1 · Grammar Deep-Dive", type:"vocab",
+    eyebrow:"Lesson · Отрицание",
+    title:"Negation & Negative Pronouns",
+    lead:"Russian uses a double negative — and it's required, not a mistake. «Я ничего не знаю» is literally “I nothing don't know”.",
+    grammar:[
+      {heading:"The ни-words, always with не",
+       body:"<p>Negative words start with <b>ни-</b>, and the verb still takes <b>не</b>.</p>",
+       table:{cols:["Word","Meaning"],rows:[
+         ["никто","nobody"],["ничто / ничего","nothing"],["никогда","never"],
+         ["нигде","nowhere"],["никуда","(to) nowhere"],["никак","in no way"]]}},
+      {heading:"In sentences",
+       examples:[
+         {ru:"Я ничего не знаю",tr:"ya nichevó ne znáyu",en:"I don't know anything"},
+         {ru:"Никто не пришёл",tr:"niktó ne prishól",en:"Nobody came"},
+         {ru:"Я никогда не был в Москве",tr:"ya nikagdá ne byl v Maskvé",en:"I've never been to Moscow"},
+         {ru:"Здесь никого нет",tr:"zdes' nikavó net",en:"There's nobody here"}
+       ],
+       constructions:[{pattern:"[ни-word] + не + [verb]",gloss:"double negative (required)",example:{ru:"Я никуда не иду",en:"I'm not going anywhere"}}]}
+    ],
+    words:[
+      {ru:"никто",tr:"niktó",en:"nobody"},{ru:"ничего",tr:"nichevó",en:"nothing"},
+      {ru:"никогда",tr:"nikagdá",en:"never"},{ru:"нигде",tr:"nigdé",en:"nowhere"},
+      {ru:"никуда",tr:"nikudá",en:"to nowhere"},{ru:"никак",tr:"nikák",en:"in no way"},
+      {ru:"ничей",tr:"nichéy",en:"nobody's"},{ru:"нисколько",tr:"nizkól'ka",en:"not at all"}
+    ],
+    quiz:[
+      {q:"“I don't know anything” is:",opts:["Я знаю ничего","Я ничего не знаю","Я не ничего знаю"],a:1,exp:"Double negative: ничего … не знаю."},
+      {q:"Russian negation with ни-words is:",opts:["single","double (ни… + не)","optional"],a:1,exp:"The не is required as well."},
+      {q:"“never” is:",opts:["нигде","никогда","никто"],a:1,exp:"никогда = never."}
+    ]
+  },
+  {
+    id:"indefinite", nav:"Someone / Anyone", unit:"B1 · Grammar Deep-Dive", type:"vocab",
+    eyebrow:"Lesson · Неопределённые местоимения",
+    title:"Indefinite Pronouns (-то / -нибудь)",
+    lead:"“Someone called” vs “ask anyone”. Russian splits the idea with two endings: -то for a specific-but-unknown thing, -нибудь for any one at all.",
+    grammar:[
+      {heading:"-то vs -нибудь",
+       body:"<p><b>-то</b> = a definite person/thing you just don't know (it happened). <b>-нибудь</b> = any one, no particular one (often with questions, futures, requests).</p>",
+       table:{cols:["-то (specific)","-нибудь (any)"],rows:[
+         ["кто-то (someone)","кто-нибудь (anyone)"],["что-то (something)","что-нибудь (anything)"],
+         ["где-то (somewhere)","где-нибудь (anywhere)"],["когда-то (once)","когда-нибудь (ever)"]]}},
+      {heading:"Feel the difference",
+       examples:[
+         {ru:"Кто-то звонил",tr:"któ-ta zvaníl",en:"Someone called (a real person, unknown)"},
+         {ru:"Хочешь что-нибудь поесть?",tr:"khóchesh shtó-nibud' paést'",en:"Do you want anything to eat?"},
+         {ru:"Я где-то видел это",tr:"ya gdé-ta vídel eta",en:"I saw this somewhere"},
+         {ru:"Ты был когда-нибудь в России?",tr:"ty byl kagdá-nibud' v Rassíi",en:"Have you ever been to Russia?"}
+       ]}
+    ],
+    words:[
+      {ru:"кто-то",tr:"któ-ta",en:"someone"},{ru:"что-то",tr:"shtó-ta",en:"something"},
+      {ru:"кто-нибудь",tr:"któ-nibud'",en:"anyone"},{ru:"что-нибудь",tr:"shtó-nibud'",en:"anything"},
+      {ru:"где-то",tr:"gdé-ta",en:"somewhere"},{ru:"где-нибудь",tr:"gdé-nibud'",en:"anywhere"},
+      {ru:"когда-нибудь",tr:"kagdá-nibud'",en:"ever / someday"},{ru:"какой-то",tr:"kakóy-ta",en:"some (kind of)"}
+    ],
+    quiz:[
+      {q:"“Someone called” (a real, unknown person):",opts:["кто-нибудь звонил","кто-то звонил","никто звонил"],a:1,exp:"-то = specific but unknown."},
+      {q:"“Do you want anything?” uses:",opts:["что-то","что-нибудь","ничего"],a:1,exp:"-нибудь = any, common in questions."},
+      {q:"“Have you ever…?” uses:",opts:["когда-то","когда-нибудь","никогда"],a:1,exp:"когда-нибудь = ever."}
+    ]
+  },
+  {
+    id:"demonstratives", nav:"This / That / Here", unit:"B1 · Grammar Deep-Dive", type:"vocab",
+    eyebrow:"Lesson · Указательные слова",
+    title:"Demonstratives & Adverbs",
+    lead:"этот vs тот, here vs there, and how to turn an adjective into an adverb. Small words that make speech precise.",
+    grammar:[
+      {heading:"этот (this) and тот (that)",
+       body:"<p>They agree with the noun like adjectives.</p>",
+       table:{cols:["","this (этот)","that (тот)"],rows:[
+         ["Masc","этот","тот"],["Fem","эта","та"],["Neut","это","то"],["Plural","эти","те"]]}},
+      {heading:"Place words & making adverbs",
+       body:"<p>Location vs direction: <b>здесь/там</b> (here/there) vs <b>сюда/туда</b> (to here/there) vs <b>отсюда/оттуда</b> (from here/there). Turn an adjective into an adverb with <b>-о</b>: быстрый → быстро.</p>",
+       examples:[
+         {ru:"Иди сюда!",tr:"idí syudá",en:"Come here!"},
+         {ru:"Этот дом красивый",tr:"état dom krasívy",en:"This house is beautiful"},
+         {ru:"Он говорит быстро",tr:"on gavarít býstra",en:"He speaks quickly"},
+         {ru:"Мне здесь хорошо",tr:"mne zdes' kharashó",en:"I feel good here"}
+       ]}
+    ],
+    words:[
+      {ru:"этот",tr:"état",en:"this (m)"},{ru:"эта",tr:"éta",en:"this (f)"},{ru:"эти",tr:"éti",en:"these"},
+      {ru:"тот",tr:"tot",en:"that (m)"},{ru:"здесь",tr:"zdes'",en:"here"},{ru:"там",tr:"tam",en:"there"},
+      {ru:"сюда",tr:"syudá",en:"to here"},{ru:"туда",tr:"tudá",en:"to there"},
+      {ru:"быстро",tr:"býstra",en:"quickly"},{ru:"хорошо",tr:"kharashó",en:"well"}
+    ],
+    quiz:[
+      {q:"“this book” (книга is f):",opts:["этот книга","эта книга","эти книга"],a:1,exp:"Feminine → эта."},
+      {q:"“Come here!” uses:",opts:["здесь","сюда","отсюда"],a:1,exp:"Direction “to here” → сюда."},
+      {q:"Adverb of “быстрый” is:",opts:["быстрее","быстро","быстрый"],a:1,exp:"Adjective → adverb with -о: быстро."}
+    ]
+  },
+  {
+    id:"prefixed-motion", nav:"Motion + Prefixes", unit:"B1 · Grammar Deep-Dive", type:"vocab",
+    eyebrow:"Lesson · Приставки движения",
+    title:"Prefixed Verbs of Motion",
+    lead:"Add a prefix to идти/ехать and you get precise, perfective motion: set off, arrive, leave, enter, exit. This is how Russians actually say “I'll come over” or “she left”.",
+    grammar:[
+      {heading:"The key prefixes",
+       table:{cols:["Prefix","Meaning","Foot / vehicle"],rows:[
+         ["по-","set off","пойти / поехать"],["при-","arrive","прийти / приехать"],
+         ["у-","leave (away)","уйти / уехать"],["в- (во-)","enter","войти / въехать"],
+         ["вы-","exit","выйти / выехать"],["под-","approach","подойти / подъехать"]]}},
+      {heading:"In use",
+       examples:[
+         {ru:"Я пойду домой",tr:"ya paydú damóy",en:"I'll set off home"},
+         {ru:"Он пришёл вовремя",tr:"on prishól vóvremya",en:"He arrived on time"},
+         {ru:"Она уже ушла",tr:"aná uzhé ushlá",en:"She's already left"},
+         {ru:"Мы приехали в Москву",tr:"my priékhali v Maskvú",en:"We arrived in Moscow"}
+       ],
+       constructions:[{pattern:"при- = arrive, у- = leave",gloss:"opposite directions",example:{ru:"Я приду к тебе",en:"I'll come to you"}}]}
+    ],
+    words:[
+      {ru:"пойти",tr:"paytí",en:"to set off (foot)"},{ru:"прийти",tr:"priytí",en:"to arrive (foot)"},
+      {ru:"уйти",tr:"uytí",en:"to leave (foot)"},{ru:"приехать",tr:"priékhat'",en:"to arrive (vehicle)"},
+      {ru:"уехать",tr:"uékhat'",en:"to leave (vehicle)"},{ru:"войти",tr:"vaytí",en:"to enter"},
+      {ru:"выйти",tr:"výyti",en:"to exit"},{ru:"подойти",tr:"padaytí",en:"to approach"}
+    ],
+    quiz:[
+      {q:"“He arrived” (on foot) is:",opts:["он ушёл","он пришёл","он пошёл"],a:1,exp:"при- = arrive → пришёл."},
+      {q:"“She left” (on foot) is:",opts:["она ушла","она пришла","она вышла"],a:0,exp:"у- = leave/away → ушла."},
+      {q:"Prefix meaning “set off”:",opts:["при-","у-","по-"],a:2,exp:"по- = set off (пойти, поехать)."}
+    ]
+  },
+  {
+    id:"ordinals", nav:"Dates & Ordinals", unit:"B1 · Grammar Deep-Dive", type:"vocab",
+    eyebrow:"Lesson · Порядковые числа и даты",
+    title:"Ordinals, Months & Dates",
+    lead:"“First, second, the 5th of May, in 2026.” Ordinals behave like adjectives, and dates follow a fixed pattern.",
+    grammar:[
+      {heading:"Ordinals (decline like adjectives)",
+       table:{cols:["#","Ordinal"],rows:[
+         ["1st","первый"],["2nd","второй"],["3rd","третий"],["4th","четвёртый"],["5th","пятый"],["10th","десятый"]]}},
+      {heading:"Months & dates",
+       body:"<p>Months are masculine. “In May” = <b>в мае</b> (prepositional). A date uses a <b>neuter ordinal</b> + the month in the <b>genitive</b>: «пятое мая» (the 5th of May).</p>",
+       examples:[
+         {ru:"Какое сегодня число?",tr:"kakóye sevódnya chisló",en:"What's the date today?"},
+         {ru:"Сегодня пятое мая",tr:"sevódnya pyátaye máya",en:"Today is the 5th of May"},
+         {ru:"Мой день рождения в июле",tr:"moy den' razhdéniya v iyúle",en:"My birthday is in July"},
+         {ru:"В две тысячи двадцать шестом году",tr:"v dve týsyachi dvádtsat' shestóm gadú",en:"In 2026"}
+       ]}
+    ],
+    words:[
+      {ru:"первый",tr:"pérvy",en:"first"},{ru:"второй",tr:"vtaróy",en:"second"},
+      {ru:"третий",tr:"tréty",en:"third"},{ru:"четвёртый",tr:"chetvyórty",en:"fourth"},
+      {ru:"пятый",tr:"pyáty",en:"fifth"},{ru:"январь",tr:"yanvár'",en:"January"},
+      {ru:"май",tr:"may",en:"May"},{ru:"июль",tr:"iyúl'",en:"July"},
+      {ru:"число",tr:"chisló",en:"date / number"},{ru:"год",tr:"got",en:"year"}
+    ],
+    quiz:[
+      {q:"“third” is:",opts:["третий","третья","три"],a:0,exp:"третий = 3rd (ordinal)."},
+      {q:"“in May” is:",opts:["в мае","май","о мае"],a:0,exp:"в + prepositional → в мае."},
+      {q:"A date's day is which form of the ordinal?",opts:["masculine","neuter","plural"],a:1,exp:"Neuter: «пятое мая»."}
+    ]
+  },
+  {
+    id:"shortadj", nav:"Short Adj. & «ли»", unit:"B1 · Grammar Deep-Dive", type:"vocab",
+    eyebrow:"Lesson · Краткие прилагательные",
+    title:"Short Adjectives & «ли»",
+    lead:"Short-form adjectives describe a temporary state (рад, занят, готов), and the particle ли turns a statement into an indirect yes/no question.",
+    grammar:[
+      {heading:"Short-form adjectives",
+       body:"<p>Used as predicates for states, they agree with the subject: <b>-∅</b> (m), <b>-а</b> (f), <b>-ы</b> (pl).</p>",
+       table:{cols:["Meaning","m / f / pl"],rows:[
+         ["glad","рад / рада / рады"],["busy","занят / занята / заняты"],
+         ["ready","готов / готова / готовы"],["free","свободен / свободна / свободны"],["sure","уверен / уверена / уверены"]]}},
+      {heading:"The particle ли (whether / yes-no)",
+       body:"<p><b>ли</b> asks an indirect yes/no question; it follows the word in focus.</p>",
+       examples:[
+         {ru:"Я не знаю, придёт ли он",tr:"ya ne znáyu pridyót li on",en:"I don't know whether he'll come"},
+         {ru:"Ты готова?",tr:"ty gatóva",en:"Are you ready? (to a woman)"},
+         {ru:"Я рад тебя видеть",tr:"ya rad tebyá vídet'",en:"I'm glad to see you"},
+         {ru:"Он спросил, люблю ли я его",tr:"on sprasíl lyublyú li ya yevó",en:"He asked whether I love him"}
+       ]}
+    ],
+    words:[
+      {ru:"рад",tr:"rad",en:"glad (m)"},{ru:"рада",tr:"ráda",en:"glad (f)"},
+      {ru:"готов",tr:"gatóf",en:"ready (m)"},{ru:"готова",tr:"gatóva",en:"ready (f)"},
+      {ru:"занят",tr:"zányat",en:"busy (m)"},{ru:"свободен",tr:"svabóden",en:"free (m)"},
+      {ru:"уверен",tr:"uvéren",en:"sure (m)"},{ru:"согласен",tr:"saglásen",en:"agree (m)"},
+      {ru:"болен",tr:"bólen",en:"sick (m)"},{ru:"ли",tr:"li",en:"whether"}
+    ],
+    quiz:[
+      {q:"A woman says “I'm ready”:",opts:["Я готов","Я готова","Я готовы"],a:1,exp:"Feminine short form → готова."},
+      {q:"«ли» expresses:",opts:["a command","whether / yes-no","the past"],a:1,exp:"ли = whether (indirect yes/no)."},
+      {q:"Short-form “glad” for a group is:",opts:["рад","рада","рады"],a:2,exp:"Plural short form → рады."}
+    ]
+  },
+  {
+    id:"participles", nav:"Participles", unit:"B2 · Advanced", type:"vocab",
+    eyebrow:"Lesson · Причастия",
+    title:"Participles (Advanced)",
+    lead:"Participles are verbal adjectives — “the reading man”, “a written letter”. Common in written and formal Russian; recognise them first, produce them later.",
+    grammar:[
+      {heading:"Active vs passive",
+       body:"<p><b>Active present</b> (the one doing it): -ущ/-ющ/-ащ/-ящ → читающий (reading). <b>Passive past</b> (the thing done to): -нн/-т → написанный (written). They decline like adjectives.</p>",
+       examples:[
+         {ru:"человек, читающий книгу",tr:"chelavék chitáyushchy knígu",en:"the man reading a book"},
+         {ru:"письмо, написанное вчера",tr:"pis'mó napísannaye vcherá",en:"the letter written yesterday"},
+         {ru:"прочитанная книга",tr:"prachítannaya kníga",en:"a read (finished) book"}
+       ]}
+    ],
+    words:[
+      {ru:"читающий",tr:"chitáyushchy",en:"reading (active)"},{ru:"знающий",tr:"znáyushchy",en:"knowing"},
+      {ru:"написанный",tr:"napísanny",en:"written"},{ru:"прочитанный",tr:"prachítanny",en:"read (done)"},
+      {ru:"сделанный",tr:"sdélanny",en:"done / made"},{ru:"любимый",tr:"lyubímy",en:"beloved / favourite"}
+    ],
+    quiz:[
+      {q:"“written” (passive past participle) is:",opts:["пишущий","написанный","писать"],a:1,exp:"Passive past: написанный."},
+      {q:"Participles behave grammatically like:",opts:["adverbs","adjectives","nouns"],a:1,exp:"They decline and agree like adjectives."}
+    ]
+  },
+  {
+    id:"gerunds", nav:"Verbal Adverbs", unit:"B2 · Advanced", type:"vocab",
+    eyebrow:"Lesson · Деепричастия",
+    title:"Verbal Adverbs (Деепричастия)",
+    lead:"These compress “while doing X” or “having done X” into one word — «читая» (while reading), «прочитав» (having read). A hallmark of fluent, written Russian.",
+    grammar:[
+      {heading:"Imperfective (-я) vs perfective (-в)",
+       body:"<p><b>Imperfective</b> (simultaneous, “while …”): stem + <b>-я/-а</b> → читая. <b>Perfective</b> (completed first, “having …”): stem + <b>-в</b> → прочитав.</p>",
+       examples:[
+         {ru:"Читая, я слушаю музыку",tr:"chitáya ya slúshayu múzyku",en:"While reading, I listen to music"},
+         {ru:"Прочитав письмо, он ушёл",tr:"prachitáv pis'mó on ushól",en:"Having read the letter, he left"},
+         {ru:"Говоря с тобой, я счастлив",tr:"gavaryá s taboy ya schástliv",en:"Talking with you, I'm happy"}
+       ]}
+    ],
+    words:[
+      {ru:"читая",tr:"chitáya",en:"while reading"},{ru:"делая",tr:"délaya",en:"while doing"},
+      {ru:"говоря",tr:"gavaryá",en:"while speaking"},{ru:"прочитав",tr:"prachitáv",en:"having read"},
+      {ru:"сделав",tr:"sdélav",en:"having done"},{ru:"увидев",tr:"uvídev",en:"having seen"}
+    ],
+    quiz:[
+      {q:"“while reading” is:",opts:["читая","прочитав","читать"],a:0,exp:"Imperfective verbal adverb: читая."},
+      {q:"“having read (and finished)” is:",opts:["читая","прочитав","читаю"],a:1,exp:"Perfective: прочитав."}
+    ]
+  },
+  {
+    id:"diminutives", nav:"Diminutives & Politeness", unit:"B2 · Advanced", type:"vocab",
+    eyebrow:"Lesson · Уменьшительные формы",
+    title:"Diminutives & Politeness",
+    lead:"Russians add warmth with diminutive suffixes (-ик, -очка, -ушк-) and soften requests with polite formulas. Perfect for talking sweetly to someone you love.",
+    grammar:[
+      {heading:"Making things small & sweet",
+       body:"<p>Suffixes like <b>-ик, -ок, -очка, -ушка, -ышко</b> add affection or smallness: дом → домик, кот → котик, мама → мамочка, солнце → солнышко.</p>",
+       examples:[
+         {ru:"мой котик",tr:"moy kótik",en:"my kitty (affectionate)"},
+         {ru:"Спасибо, мамочка",tr:"spasíba mámachka",en:"Thanks, mummy"},
+         {ru:"Ты моё солнышко",tr:"ty mayó sólnyshka",en:"You're my little sunshine"}
+       ]},
+      {heading:"Polite softeners",
+       body:"<p>Soften a request: <b>Не могли бы вы…?</b> (could you…?), <b>Будьте добры…</b> (be so kind…), <b>Извините за беспокойство</b> (sorry to bother you).</p>",
+       constructions:[{pattern:"Не могли бы вы + [infinitive]?",gloss:"a very polite request",example:{ru:"Не могли бы вы помочь?",en:"Could you help?"}}]}
+    ],
+    words:[
+      {ru:"домик",tr:"dómik",en:"little house"},{ru:"котик",tr:"kótik",en:"kitty"},
+      {ru:"мамочка",tr:"mámachka",en:"mummy"},{ru:"солнышко",tr:"sólnyshka",en:"little sun"},
+      {ru:"книжка",tr:"knízhka",en:"little book"},{ru:"девочка",tr:"dévachka",en:"little girl"},
+      {ru:"минутка",tr:"minútka",en:"a minute (dim.)"},{ru:"чашечка",tr:"cháshechka",en:"little cup"}
+    ],
+    quiz:[
+      {q:"Diminutive of “кот” (cat) is:",opts:["котик","коты","кота"],a:0,exp:"-ик makes it affectionate: котик."},
+      {q:"A very polite “could you…?” starts:",opts:["Дай…","Не могли бы вы…?","Хочу…"],a:1,exp:"Не могли бы вы…? is the polite request."}
+    ]
+  },
+  {
     id:"vocab-food", nav:"Food & Meals", unit:"Vocabulary · Themed Sets", type:"vocab",
     eyebrow:"Vocabulary · Food",
     title:"Food & Meals",
@@ -2605,6 +3319,93 @@ const EXTRA_DRILLS={
     {prompt:"which/who (f): «девушка, ___ здесь живёт»",answer:"которая"},
     {prompt:"but: «Я хочу, ___ не могу»",answer:"но"},
     {prompt:"or: «чай ___ кофе?»",answer:"или"}
+  ],
+  reflexives:[
+    {prompt:"учиться: я → «Я ___ в университете»",answer:"учусь"},
+    {prompt:"учиться: ты → «Ты ___»",answer:"учишься"},
+    {prompt:"заниматься: я → «Я ___ спортом»",answer:"занимаюсь"},
+    {prompt:"встречаться: мы → «Мы ___ вечером»",answer:"встречаемся"},
+    {prompt:"надеяться: я → «Я ___»",answer:"надеюсь"},
+    {prompt:"“I fell in love” (man, влюбиться): «Я ___»",answer:"влюбился"}
+  ],
+  imperative:[
+    {prompt:"читать → command (informal):",answer:"читай"},
+    {prompt:"говорить → command (informal):",answer:"говори"},
+    {prompt:"сказать → command:",answer:"скажи"},
+    {prompt:"дать → command:",answer:"дай"},
+    {prompt:"звонить → command (informal):",answer:"звони"},
+    {prompt:"идти → command (informal):",answer:"иди"}
+  ],
+  comparatives:[
+    {prompt:"comparative of быстрый:",answer:"быстрее"},
+    {prompt:"comparative of хороший:",answer:"лучше"},
+    {prompt:"comparative of плохой:",answer:"хуже"},
+    {prompt:"comparative of большой:",answer:"больше"},
+    {prompt:"comparative of старый:",answer:"старше"},
+    {prompt:"“the most beautiful”: «___ красивый»",answer:"самый"}
+  ],
+  conditional:[
+    {prompt:"“I would like” (man): «Я ___ бы кофе»",answer:"хотел"},
+    {prompt:"“must” (m): «Я ___ идти»",answer:"должен"},
+    {prompt:"“must” (f): «Я ___ идти»",answer:"должна"},
+    {prompt:"“need to” (me): «Мне ___ работать»",answer:"надо",accept:["нужно"]},
+    {prompt:"“one may / can”: «___ войти?»",answer:"можно"},
+    {prompt:"“must not”: «Здесь ___ курить»",answer:"нельзя"}
+  ],
+  negation:[
+    {prompt:"“nothing”: «Я ___ не знаю»",answer:"ничего"},
+    {prompt:"“nobody”: «___ не пришёл»",answer:"никто"},
+    {prompt:"“never”: «Я ___ не был там»",answer:"никогда"},
+    {prompt:"“nowhere”: «Его ___ нет»",answer:"нигде"},
+    {prompt:"the required second negative word:",answer:"не"}
+  ],
+  indefinite:[
+    {prompt:"“someone” (specific, unknown):",answer:"кто-то"},
+    {prompt:"“anything” (any): «Хочешь ___?»",answer:"что-нибудь"},
+    {prompt:"“something”:",answer:"что-то"},
+    {prompt:"“anyone”:",answer:"кто-нибудь"},
+    {prompt:"“somewhere”:",answer:"где-то"}
+  ],
+  demonstratives:[
+    {prompt:"“this” (f): «___ книга»",answer:"эта"},
+    {prompt:"“this” (m): «___ дом»",answer:"этот"},
+    {prompt:"“these”: «___ люди»",answer:"эти"},
+    {prompt:"“come here” (direction):",answer:"сюда"},
+    {prompt:"adverb of быстрый:",answer:"быстро"},
+    {prompt:"adverb of хороший:",answer:"хорошо"}
+  ],
+  "prefixed-motion":[
+    {prompt:"“I'll set off” (пойти): «Я ___ домой»",answer:"пойду"},
+    {prompt:"“he arrived” (foot): «Он ___»",answer:"пришёл",accept:["пришел"]},
+    {prompt:"“she left” (foot): «Она ___»",answer:"ушла"},
+    {prompt:"“we arrived” (vehicle): «Мы ___»",answer:"приехали"},
+    {prompt:"“I'll leave” (vehicle): «Я ___ завтра»",answer:"уеду"}
+  ],
+  ordinals:[
+    {prompt:"“first”:",answer:"первый"},
+    {prompt:"“second”:",answer:"второй"},
+    {prompt:"“third”:",answer:"третий"},
+    {prompt:"“in May”: «___ мае»",answer:"в"},
+    {prompt:"date “the 5th” (neuter): «___ мая»",answer:"пятое"}
+  ],
+  shortadj:[
+    {prompt:"“ready” (f): «Я ___»",answer:"готова"},
+    {prompt:"“glad” (m): «Я ___»",answer:"рад"},
+    {prompt:"“busy” (m): «Я ___»",answer:"занят"},
+    {prompt:"“whether” particle:",answer:"ли"},
+    {prompt:"“sure” (m): «Я ___»",answer:"уверен"}
+  ],
+  participles:[
+    {prompt:"passive past participle of написать:",answer:"написанный"},
+    {prompt:"active participle “reading”:",answer:"читающий"}
+  ],
+  gerunds:[
+    {prompt:"“while reading”:",answer:"читая"},
+    {prompt:"“having read”:",answer:"прочитав"}
+  ],
+  diminutives:[
+    {prompt:"diminutive of кот:",answer:"котик"},
+    {prompt:"diminutive of дом:",answer:"домик"}
   ]
 };
 function autoRecall(l){
@@ -2784,6 +3585,7 @@ function toggleDone(id,btn){
 
 /* ---------- Boot ---------- */
 Object.keys(EXTRA_DRILLS).forEach(k=>{ DRILLS[k]=(DRILLS[k]||[]).concat(EXTRA_DRILLS[k]); });
+LESSONS.forEach(l=>{ if(!l.reading && READINGS[l.id]) l.reading=READINGS[l.id]; });
 LESSONS.forEach(l=>{ if(!l.unit) l.unit='A1 · Foundations'; });
 buildPools();
 buildNav();
