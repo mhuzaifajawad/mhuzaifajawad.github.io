@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Writing Marker · teacher tool</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#e8edec;--card:#fff;--ink:#0f231f;--muted:#566b66;
+  --teal:#0d6e63;--teal-soft:#dcefec;--teal-line:#a9d5ce;
+  --hi:#ffd23f;--hi-soft:#fff3c9;
+  --live:#d6413c;--live-soft:#fbe4e2;
+  --good:#12855f;--good-soft:#dcefe6;--warn:#c07a10;--warn-soft:#fdf0d5;
+  --line:#d5dedc;
+  --disp:'Bricolage Grotesque',sans-serif;--body:'Hanken Grotesk',sans-serif;--mono:'Space Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--body);background:var(--paper);color:var(--ink);line-height:1.6;font-size:16px;padding:20px clamp(12px,3vw,28px) 60px}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.wrap{max-width:960px;margin:0 auto}
+.top{display:flex;align-items:center;gap:11px;margin-bottom:6px}
+.crest{width:36px;height:36px;border-radius:9px;background:var(--ink);color:var(--hi);display:flex;align-items:center;justify-content:center;font-size:16px}
+.lz{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);font-weight:700}
+h1{font-family:var(--disp);font-weight:800;font-size:23px;line-height:1}
+.lede{color:var(--muted);font-size:14.5px;margin:10px 0 20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px clamp(14px,2.5vw,24px);margin-bottom:16px}
+h2{font-family:var(--disp);font-size:19px;margin-bottom:12px}
+label{display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:6px}
+.row{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:14px}
+.seg{font-family:var(--body);font-size:14px;font-weight:700;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:10px;padding:9px 16px;cursor:pointer}
+.seg.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+textarea,input[type=text]{width:100%;border:1px solid var(--line);border-radius:11px;padding:12px 14px;font-family:var(--body);font-size:15px;line-height:1.65;background:var(--paper);color:var(--ink);resize:vertical}
+textarea:focus,input:focus{outline:none;border-color:var(--teal);background:#fff}
+#q{min-height:80px;margin-bottom:14px}
+#essay{min-height:230px}
+.btn{font-family:var(--body);font-size:15px;font-weight:700;border:none;border-radius:11px;padding:13px 24px;cursor:pointer}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.solid{background:var(--teal);color:#fff}
+.btn.quiet{background:var(--paper);color:var(--ink);border:1px solid var(--line)}
+.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:14px}
+.wc{font-family:var(--mono);font-size:12.5px;color:var(--muted);font-weight:700;margin-left:auto}
+
+.mode{display:grid;grid-template-columns:22px 1fr;gap:11px;align-items:start;border:1px solid var(--line);border-radius:11px;padding:12px 14px;margin-bottom:8px;font-size:14.5px;line-height:1.5;background:var(--paper)}
+.mode .ic{font-family:var(--mono);font-weight:700;font-size:13px}
+.mode.live{background:var(--good-soft);border-color:#b6ddc9}
+.mode.live .ic{color:var(--good)}
+.mode.off{opacity:.62}
+.mode b{font-weight:700}
+.keyrow{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:10px}
+.keyrow input{flex:1;min-width:220px;font-family:var(--mono);font-size:13px}
+.danger{background:var(--live-soft);border:1px solid #f2c3bf;border-left:5px solid var(--live);border-radius:11px;padding:12px 15px;font-size:14px;color:#8a3733;margin-top:10px;line-height:1.55}
+.danger b{color:var(--live)}
+.note{border-radius:11px;padding:12px 15px;font-size:14px;margin:14px 0}
+.note.teal{background:var(--teal-soft);border:1px solid var(--teal-line);border-left:5px solid var(--teal)}
+.note.warn{background:var(--warn-soft);border:1px solid #ecd9a8;border-left:5px solid var(--warn);color:#6b4707}
+
+.final{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;padding:22px;border-radius:15px;background:var(--ink);color:#fff;margin-bottom:16px}
+@media(max-width:520px){.final{grid-template-columns:1fr;text-align:center;gap:12px}}
+.final .big{font-family:var(--mono);font-weight:700;font-size:52px;line-height:.9;color:var(--hi)}
+.final .sl{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8ba39e;font-weight:700;margin-bottom:5px}
+.final .sd{font-size:14px;color:#c4d5d1;line-height:1.5}
+
+.crit{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--paper);margin-bottom:11px}
+.crit .ch{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;flex-wrap:wrap}
+.crit .cn{font-family:var(--disp);font-size:15.5px;font-weight:700}
+.crit .cv{font-family:var(--mono);font-size:19px;font-weight:700;color:var(--teal);margin-left:auto}
+.crit .ev{font-size:14px;color:var(--muted);line-height:1.55}
+.crit .up{font-size:14px;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--good);border-radius:9px;padding:10px 13px;margin-top:9px}
+.crit .up b{color:var(--good)}
+.crit input[type=range]{width:100%;margin-top:10px;accent-color:var(--teal)}
+
+.err{border:1px solid #f2c3bf;background:var(--live-soft);border-radius:10px;padding:11px 14px;font-size:14.5px;margin-bottom:8px;line-height:1.55}
+.err .q{font-family:var(--mono);font-weight:700;background:#fff;border:1px solid #f2c3bf;border-radius:5px;padding:1px 6px;font-size:13.5px}
+.err .fix{color:var(--good);font-weight:700}
+.err .why{color:var(--muted);font-size:13px;display:block;margin-top:4px}
+
+.prio{display:grid;grid-template-columns:26px 1fr;gap:11px;align-items:start;border:1px solid var(--line);border-radius:11px;padding:12px 14px;background:var(--paper);margin-bottom:8px;font-size:14.5px;line-height:1.5}
+.prio .n{font-family:var(--mono);font-weight:700;font-size:12px;color:#fff;background:var(--teal);border-radius:7px;width:24px;height:24px;display:flex;align-items:center;justify-content:center}
+
+.rw{background:var(--good-soft);border:1px solid #b6ddc9;border-radius:11px;padding:13px 16px;font-size:15px;line-height:1.7;margin-top:8px}
+.was{background:var(--live-soft);border:1px solid #f2c3bf;border-radius:11px;padding:13px 16px;font-size:15px;line-height:1.7;font-style:italic;color:#8a3733;margin-bottom:8px}
+
+.spin{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;vertical-align:-2px;margin-right:8px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.status{font-size:14px;color:var(--muted);margin-top:12px}
+.fail{background:var(--live-soft);border:1px solid #f2c3bf;border-radius:11px;padding:13px 16px;font-size:14.5px;color:#8a3733;margin-top:12px}
+h3{font-family:var(--disp);font-size:17px;margin:20px 0 9px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="crest">✓</div>
+    <div>
+      <div class="lz">Teacher tool · not for students</div>
+      <h1>Writing Marker</h1>
+    </div>
+  </div>
+  <p class="lede">Paste a student's essay. Returns a band for each of the four criteria with the evidence behind it, the errors worth correcting, and what to teach next. You can override every band.</p>
+
+  <div class="card" id="conncard">
+    <h2>Connection</h2>
+    <div id="connBody"></div>
+  </div>
+
+  <div class="card">
+    <label>Task</label>
+    <div class="row">
+      <button class="seg on" data-t="1">Task 1 · 150 words</button>
+      <button class="seg" data-t="2">Task 2 · 250 words</button>
+    </div>
+    <label>The question they answered</label>
+    <textarea id="q" placeholder="Paste the task prompt here, including any table or chart data."></textarea>
+    <label>The essay</label>
+    <textarea id="essay" placeholder="Paste the student's writing exactly as they wrote it — do not fix anything first."></textarea>
+    <div class="bar">
+      <button class="btn solid" id="go">Mark it</button>
+      <button class="btn quiet" id="clr">Clear</button>
+      <span class="wc" id="wc">0 words</span>
+    </div>
+    <div class="status" id="status"></div>
+  </div>
+
+  <div id="out"></div>
+
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+let task=1, marks=null;
+
+/* ================= connection ================= */
+let apiKey="", proxyUrl="", inClaude=(location.hostname||"").indexOf("claude")>=0||location.protocol==="blob:"||location.hostname==="";
+
+function renderConn(){
+  const mode = proxyUrl?"proxy" : apiKey?"key" : inClaude?"claude" : "none";
+  $("connBody").innerHTML=`
+    <div class="mode ${mode==="claude"?"live":"off"}"><span class="ic">${mode==="claude"?"●":"○"}</span>
+      <div><b>Running inside Claude</b> — no key needed, nothing to set up. This is how the tool is meant to be used.</div></div>
+    <div class="mode ${mode==="proxy"?"live":"off"}"><span class="ic">${mode==="proxy"?"●":"○"}</span>
+      <div><b>Through your own proxy</b> — the only safe option if a student will open this page. Your key stays on the server, never in the browser.</div></div>
+    <div class="mode ${mode==="key"?"live":"off"}"><span class="ic">${mode==="key"?"●":"○"}</span>
+      <div><b>Your own key, on your own machine</b> — for local testing only. Held in memory for this tab and never saved, so you retype it each time.</div></div>
+
+    <div class="keyrow">
+      <input type="password" id="kIn" placeholder="sk-ant-… (optional, local use only)" autocomplete="off" value="${apiKey?"":""}">
+      <input type="text" id="pIn" placeholder="https://your-worker.workers.dev  (optional)" autocomplete="off" value="${proxyUrl}">
+      <button class="btn quiet" id="kSet" style="padding:10px 18px;font-size:14px">Apply</button>
+    </div>
+    ${mode==="key"?'<div class="danger"><b>Key is active in this tab.</b> Never paste it into a page you have pushed to GitHub, and never send this page to a student with a key in it. Anyone who opens the page can read the key out of the browser and spend your credit.</div>':""}
+    ${mode==="none"?'<div class="note warn">No connection configured. The structural checks and everything else on the page still work — only the marking needs one of the three above.</div>':""}
+  `;
+  $("kSet").onclick=()=>{
+    apiKey=$("kIn").value.trim();
+    proxyUrl=$("pIn").value.trim().replace(/\/+$/,"");
+    renderConn();
+    $("status").textContent = proxyUrl?"Using your proxy.":apiKey?"Key applied for this tab only.":"Cleared.";
+  };
+}
+
+
+document.querySelectorAll(".seg").forEach(b=>b.onclick=()=>{
+  task=+b.dataset.t;
+  document.querySelectorAll(".seg").forEach(x=>x.classList.toggle("on",x===b));
+});
+$("essay").addEventListener("input",()=>{
+  const n=$("essay").value.trim().split(/\s+/).filter(Boolean).length;
+  $("wc").textContent=n+" words";
+});
+$("clr").onclick=()=>{$("essay").value="";$("q").value="";$("out").innerHTML="";$("status").textContent="";$("wc").textContent="0 words";};
+
+function ieltsRound(a){const f=Math.floor(a),r=a-f;if(r<0.25)return f;if(r<0.75)return f+0.5;return f+1;}
+
+const PROMPT=(task,q,essay)=>`You are an experienced IELTS Academic Writing examiner marking a Task ${task} response.
+
+THE TASK SET:
+${q||"(not supplied — infer it from the response)"}
+
+THE CANDIDATE'S RESPONSE:
+${essay}
+
+Mark it against the four official criteria. For Task 1 the first criterion is Task Achievement; for Task 2 it is Task Response.
+
+Be accurate rather than kind. Most real candidates score 5.5-6.5; do not inflate. Justify each band with a specific quotation or observation from THIS response, never a generic description of the band.
+
+Return ONLY a JSON object, no preamble, no markdown fences:
+{
+ "criteria":[
+   {"name":"Task achievement","band":6.0,"evidence":"one or two sentences citing something specific in this response","toRaise":"the single concrete change that would move this criterion up half a band"},
+   {"name":"Coherence and cohesion","band":6.0,"evidence":"...","toRaise":"..."},
+   {"name":"Lexical resource","band":6.0,"evidence":"...","toRaise":"..."},
+   {"name":"Grammatical range and accuracy","band":6.0,"evidence":"...","toRaise":"..."}
+ ],
+ "errors":[{"quote":"exact text from the response","fix":"the correction","why":"short rule, under 12 words"}],
+ "priorities":["the most valuable thing to teach this student next","second","third"],
+ "rewrite":{"original":"the weakest sentence or short passage, quoted exactly","improved":"your rewrite of it","note":"what changed and why it scores higher"},
+ "summary":"two sentences on where this response actually sits and what is holding it there"
+}
+
+Bands must be whole or half numbers between 3 and 9. Include at most 6 errors, chosen for what is most worth correcting rather than every slip. Keep every field brief.`;
+
+async function mark(){
+  const essay=$("essay").value.trim();
+  if(essay.split(/\s+/).filter(Boolean).length<40){$("status").textContent="Paste a longer response — under 40 words there is nothing to mark.";return;}
+  $("go").disabled=true;
+  $("status").innerHTML='<span class="spin"></span>Marking — this takes a few seconds.';
+  $("out").innerHTML="";
+  try{
+    const url = proxyUrl ? proxyUrl : "https://api.anthropic.com/v1/messages";
+    const headers = {"Content-Type":"application/json"};
+    if(!proxyUrl && apiKey){
+      headers["x-api-key"]=apiKey;
+      headers["anthropic-version"]="2023-06-01";
+      headers["anthropic-dangerous-direct-browser-access"]="true";
+    }
+    const res=await fetch(url,{
+      method:"POST",
+      headers,
+      body:JSON.stringify({
+        model:"claude-sonnet-4-6",
+        max_tokens:1000,
+        messages:[{role:"user",content:PROMPT(task,$("q").value.trim(),essay)}]
+      })
+    });
+    if(res.status===401||res.status===403) throw new Error("The key was rejected (status "+res.status+"). Check it is a current Anthropic API key with credit on it.");
+    if(!res.ok) throw new Error("The request failed (status "+res.status+").");
+    const data=await res.json();
+    let text=(data.content||[]).filter(b=>b.type==="text").map(b=>b.text).join("").trim();
+    text=text.replace(/^```(?:json)?/i,"").replace(/```$/,"").trim();
+    const first=text.indexOf("{"), last=text.lastIndexOf("}");
+    if(first<0||last<0) throw new Error("The reply was not in the expected format.");
+    marks=JSON.parse(text.slice(first,last+1));
+    render();
+    $("status").textContent="";
+  }catch(e){
+    $("status").innerHTML="";
+    $("out").innerHTML='<div class="fail"><b>Could not mark it.</b><br>'+e.message+
+      '<br><br>'+(proxyUrl||apiKey?'Check the connection settings at the top of the page.':'Opened outside Claude with nothing configured — set a key or a proxy URL in the Connection panel above. Everything else on the page still works.')+'</div>';
+  }finally{$("go").disabled=false;}
+}
+$("go").onclick=mark;
+renderConn();
+
+function render(){
+  const c=marks.criteria||[];
+  let html='<div class="card"><h2>Band</h2>'+
+    '<div class="final"><div><div class="sl">Overall for this task</div><div class="big" id="bandOut">—</div></div>'+
+    '<div><div class="sl">Summary</div><div class="sd">'+esc(marks.summary||"")+'</div></div></div>'+
+    '<div id="crits"></div>'+
+    '<div class="note warn">This is an estimate from a language model, not an examiner\'s score. Read the evidence under each band and change any you disagree with — the sliders move the overall.</div></div>';
+
+  if(marks.errors&&marks.errors.length){
+    html+='<div class="card"><h2>Worth correcting</h2>'+
+      marks.errors.map(e=>'<div class="err"><span class="q">'+esc(e.quote)+'</span> → <span class="fix">'+esc(e.fix)+'</span><span class="why">'+esc(e.why)+'</span></div>').join("")+
+      '<div class="note teal">Correct three of these in the lesson, not all six. Errors fixed one at a time transfer; a page of red ink does not.</div></div>';
+  }
+  if(marks.rewrite&&marks.rewrite.original){
+    html+='<div class="card"><h2>One passage rewritten</h2>'+
+      '<div class="was">'+esc(marks.rewrite.original)+'</div>'+
+      '<div class="rw">'+esc(marks.rewrite.improved)+'</div>'+
+      '<p style="font-size:14px;color:var(--muted);margin-top:10px">'+esc(marks.rewrite.note||"")+'</p></div>';
+  }
+  if(marks.priorities&&marks.priorities.length){
+    html+='<div class="card"><h2>Teach this next</h2>'+
+      marks.priorities.map((p,i)=>'<div class="prio"><div class="n">'+(i+1)+'</div><div>'+esc(p)+'</div></div>').join("")+'</div>';
+  }
+  $("out").innerHTML=html;
+
+  $("crits").innerHTML=c.map((x,i)=>`
+   <div class="crit">
+     <div class="ch"><span class="cn">${esc(x.name)}</span><span class="cv" id="cv${i}">${(+x.band).toFixed(1)}</span></div>
+     <div class="ev">${esc(x.evidence||"")}</div>
+     ${x.toRaise?'<div class="up"><b>To raise it:</b> '+esc(x.toRaise)+'</div>':''}
+     <input type="range" min="3" max="9" step="0.5" value="${+x.band}" data-i="${i}">
+   </div>`).join("");
+  document.querySelectorAll('#crits input').forEach(inp=>inp.addEventListener("input",recompute));
+  recompute();
+}
+
+function recompute(){
+  const ins=[...document.querySelectorAll('#crits input')];
+  const vals=ins.map(i=>+i.value);
+  vals.forEach((v,i)=>$("cv"+i).textContent=v.toFixed(1));
+  const avg=vals.reduce((a,b)=>a+b,0)/vals.length;
+  $("bandOut").textContent=ieltsRound(avg).toFixed(1);
+}
+
+function esc(s){return String(s==null?"":s).replace(/[<>&]/g,ch=>({"<":"&lt;",">":"&gt;","&":"&amp;"}[ch]));}
+</script>
+</body>
+</html>
