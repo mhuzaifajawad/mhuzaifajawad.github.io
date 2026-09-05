@@ -1,1 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IELTS Academic · practice</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#e8edec;--card:#fff;--ink:#0f231f;--muted:#566b66;
+  --teal:#0d6e63;--teal-soft:#dcefec;--teal-line:#a9d5ce;
+  --hi:#ffd23f;--hi-soft:#fff3c9;--line:#d5dedc;
+  --disp:'Bricolage Grotesque',sans-serif;--body:'Hanken Grotesk',sans-serif;--mono:'Space Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--body);background:var(--paper);color:var(--ink);line-height:1.6;font-size:16.5px;-webkit-font-smoothing:antialiased}
+:focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+.wrap{max-width:860px;margin:0 auto;padding:clamp(28px,7vw,64px) clamp(16px,4vw,28px) 70px}
+.crest{width:44px;height:44px;border-radius:11px;background:var(--ink);color:var(--hi);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:16px;margin-bottom:20px}
+h1{font-family:var(--disp);font-weight:800;font-size:clamp(30px,7vw,48px);line-height:1.04;letter-spacing:-.02em;margin-bottom:14px}
+.lede{color:var(--muted);font-size:17px;max-width:54ch;margin-bottom:34px}
+.cards{display:grid;gap:14px;margin-bottom:34px}
+a.card{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;text-decoration:none;color:inherit;transition:border-color .14s,transform .08s}
+a.card:hover{border-color:var(--teal);transform:translateY(-1px)}
+a.card .icn{width:46px;height:46px;border-radius:12px;background:var(--teal-soft);display:flex;align-items:center;justify-content:center;font-size:21px}
+a.card h2{font-family:var(--disp);font-size:20px;margin-bottom:3px}
+a.card p{font-size:14.5px;color:var(--muted);line-height:1.45}
+a.card .go{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--teal);white-space:nowrap}
+@media(max-width:560px){a.card{grid-template-columns:auto 1fr;gap:14px}a.card .go{display:none}}
+.how{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px}
+.how h3{font-family:var(--disp);font-size:18px;margin-bottom:12px}
+.how ol{margin:0 0 0 20px}
+.how li{margin-bottom:9px;font-size:15px}
+.how li b{font-weight:700}
+.tail{font-size:14px;color:var(--muted);margin-top:26px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
 
+  <div class="crest">IELTS</div>
+  <h1>Six days, three sections</h1>
+  <p class="lede">Each page explains what the test actually asks for, then makes you do it under the real time limit, then marks it. Read the brief before you press start — that part is where most of the marks are.</p>
+
+  <div class="cards">
+    <a class="card" href="reading.html">
+      <span class="icn">📖</span>
+      <span><h2>Reading</h2><p>One passage, 13 questions, 20 minutes. Marked exactly, with the reason behind every answer.</p></span>
+      <span class="go">Start</span>
+    </a>
+    <a class="card" href="writing.html">
+      <span class="icn">✎</span>
+      <span><h2>Writing</h2><p>Task 1 and Task 2, timed, with a structure check and a model answer afterwards.</p></span>
+      <span class="go">Start</span>
+    </a>
+    <a class="card" href="speaking.html">
+      <span class="icn">🎙️</span>
+      <span><h2>Speaking</h2><p>All three parts with real timings, four topic sets, and model answers at the end.</p></span>
+      <span class="go">Start</span>
+    </a>
+  </div>
+
+  <div class="how">
+    <h3>How to use these</h3>
+    <ol>
+      <li><b>Do it once, properly.</b> One take, timed, no restarting. A polished second attempt tells your teacher nothing.</li>
+      <li><b>Read the model answer only after you finish.</b> Reading it first replaces your own thinking with someone else's.</li>
+      <li><b>Send the result.</b> Each page ends with what to send on WhatsApp. That is the part that makes the next lesson useful.</li>
+      <li><b>Do not memorise anything.</b> Examiners are trained to spot it and mark it down. Learn the shape, not the words.</li>
+    </ol>
+  </div>
+
+  <p class="tail">Nothing here is uploaded or saved. Refreshing clears your work.</p>
+
+</div>
+</body>
+</html>

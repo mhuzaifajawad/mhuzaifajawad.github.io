@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Speaking Room · IELTS Speaking Test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#e8edec;--card:#ffffff;--ink:#0f231f;--muted:#566b66;
+  --teal:#0d6e63;--teal-soft:#dcefec;--teal-line:#a9d5ce;
+  --hi:#ffd23f;--hi-soft:#fff3c9;
+  --live:#d6413c;--live-soft:#fbe4e2;
+  --good:#12855f;--good-soft:#dcefe6;--warn:#c07a10;--warn-soft:#fdf0d5;
+  --line:#d5dedc;
+  --disp:'Bricolage Grotesque',sans-serif;--body:'Hanken Grotesk',sans-serif;--mono:'Space Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--paper);color:var(--ink);line-height:1.6;font-size:16.5px;-webkit-font-smoothing:antialiased}
+::selection{background:var(--hi)}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+
+.hd{position:sticky;top:0;z-index:60;background:rgba(232,237,236,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hd-in{max-width:1080px;margin:0 auto;padding:10px clamp(14px,3vw,26px);display:flex;align-items:center;gap:14px}
+.wm{display:flex;align-items:center;gap:10px}
+.wm .crest{width:38px;height:38px;border-radius:9px;background:var(--ink);color:var(--hi);display:flex;align-items:center;justify-content:center;font-size:17px}
+.wm .lz{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);font-weight:700}
+.wm .nm{font-family:var(--disp);font-weight:800;font-size:18px;line-height:1}
+.hd-r{margin-left:auto;text-align:right}
+.hd-r .lbl{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.hd-r .val{font-family:var(--mono);font-weight:700;font-size:19px;line-height:1.1;font-variant-numeric:tabular-nums}
+.hd-r .val.run{color:var(--live)}.hd-r .val.done{color:var(--good)}
+@media(max-width:600px){.wm .nm{font-size:15px}}
+
+.shell{max-width:1080px;margin:0 auto;padding:0 clamp(14px,3vw,26px)}
+main{padding:22px 0 90px}
+section{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px clamp(18px,3vw,30px);margin-bottom:20px}
+section h2{font-family:var(--disp);font-weight:700;font-size:clamp(21px,3vw,26px);line-height:1.2;margin-bottom:6px}
+section .sub{color:var(--muted);font-size:14.5px;margin-bottom:20px}
+h3{font-family:var(--disp);font-size:18px;margin:22px 0 8px}
+p{margin-bottom:12px}p:last-child{margin-bottom:0}
+
+.btn{font-family:var(--body);font-size:14.5px;font-weight:700;border:none;border-radius:11px;padding:12px 22px;cursor:pointer;transition:transform .08s,opacity .15s}
+.btn:active{transform:scale(.97)}
+.btn:disabled{opacity:.35;cursor:not-allowed}
+.btn.solid{background:var(--teal);color:#fff}
+.btn.dark{background:var(--ink);color:#fff}
+.btn.big{font-size:16px;padding:15px 30px}
+.btn.quiet{background:var(--paper);color:var(--ink);border:1px solid var(--line)}
+.btn.hi{background:var(--hi);color:var(--ink)}
+
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px}
+.fact{border:1px solid var(--line);border-radius:13px;padding:14px;background:var(--paper)}
+.fact .fv{font-family:var(--mono);font-size:23px;font-weight:700;line-height:1;color:var(--teal)}
+.fact .fl{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.35}
+
+.tip{border:1px solid var(--line);border-left:5px solid var(--teal);border-radius:12px;padding:15px 17px;background:var(--paper);margin-bottom:11px}
+.tip h4{font-family:var(--disp);font-size:16px;margin-bottom:5px}
+.tip p{font-size:14.5px;color:var(--muted);margin:0 0 7px}
+.tip .rule{font-size:14px;background:var(--card);border:1px solid var(--line);border-radius:9px;padding:9px 12px;margin-top:8px}
+.tip .rule b{color:var(--teal)}
+
+.note{border-radius:12px;padding:13px 16px;font-size:14.5px;margin:16px 0}
+.note.teal{background:var(--teal-soft);border:1px solid var(--teal-line);border-left:5px solid var(--teal)}
+.note.warn{background:var(--warn-soft);border:1px solid #ecd9a8;border-left:5px solid var(--warn);color:#6b4707}
+
+/* stage */
+.stagebar{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+.st{font-family:var(--body);font-size:13.5px;font-weight:700;border:1px solid var(--line);background:var(--card);color:var(--muted);border-radius:10px;padding:9px 15px;cursor:pointer}
+.st.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.st.done{border-color:var(--good);color:var(--good);background:var(--good-soft)}
+
+.clockbox{background:var(--ink);color:#fff;border-radius:16px;padding:24px;text-align:center;margin-bottom:18px}
+.clockbox .cl{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8ba39e;font-weight:700;margin-bottom:8px}
+.clockbox .ct{font-family:var(--mono);font-weight:700;font-size:clamp(44px,11vw,64px);line-height:.95;color:var(--hi);font-variant-numeric:tabular-nums}
+.clockbox .ct.over{color:var(--good)}
+.clockbox .cz{font-family:var(--mono);font-size:12px;color:#8ba39e;margin-top:8px;min-height:18px}
+.clockbox .cc{display:flex;gap:9px;justify-content:center;margin-top:16px;flex-wrap:wrap}
+
+.qcard{border:1px solid var(--line);border-radius:13px;padding:16px 18px;background:var(--paper);margin-bottom:12px}
+.qcard .qt{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:9px}
+.qcard ol{margin:0 0 0 20px}
+.qcard li{margin-bottom:7px;font-size:15.5px}
+
+.cue{background:linear-gradient(135deg,#fff,var(--hi-soft));border:2px solid #f0d97a;border-radius:15px;padding:22px 24px;margin-bottom:14px}
+.cue .cl{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:#a97e00;margin-bottom:9px}
+.cue h4{font-family:var(--disp);font-size:clamp(19px,3vw,23px);margin-bottom:12px;line-height:1.2}
+.cue ul{margin:0 0 0 20px}.cue li{margin-bottom:5px;font-size:15.5px}
+.cue .last{margin-top:10px;font-weight:600;font-size:15.5px}
+
+/* band calculator */
+.crit{border:1px solid var(--line);border-radius:13px;padding:15px 17px;background:var(--paper);margin-bottom:12px}
+.crit .ch{display:flex;align-items:baseline;gap:10px;margin-bottom:4px}
+.crit .cn{font-family:var(--disp);font-size:16px;font-weight:700}
+.crit .cv{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--teal);margin-left:auto}
+.crit .cd{font-size:13.5px;color:var(--muted);min-height:38px;line-height:1.45}
+.crit input[type=range]{width:100%;margin-top:9px;accent-color:var(--teal)}
+.scale{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-top:3px}
+
+.final{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center;padding:24px;border-radius:16px;background:var(--ink);color:#fff}
+@media(max-width:560px){.final{grid-template-columns:1fr;text-align:center;gap:14px}}
+.final .big{font-family:var(--mono);font-weight:700;font-size:58px;line-height:.9;color:var(--hi);font-variant-numeric:tabular-nums}
+.final .sl{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#8ba39e;font-weight:700;margin-bottom:6px}
+.final .sd{font-size:14.5px;color:#c4d5d1;line-height:1.55}
+
+.mblock{border:1px solid var(--line);border-radius:14px;padding:18px 20px;background:var(--paper);margin-bottom:14px}
+.mblock .mh{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:9px}
+.mblock .mq{font-family:var(--disp);font-size:16.5px;font-weight:700;margin-bottom:10px}
+.mblock .mt{font-size:15.5px;line-height:1.75;background:var(--card);border:1px solid var(--line);border-radius:11px;padding:15px 17px}
+.mblock .mn{font-size:13.5px;color:var(--muted);margin-top:10px;line-height:1.5}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:680px){.vs{grid-template-columns:1fr}}
+.vs .box{border-radius:11px;padding:14px 16px;font-size:15px;line-height:1.6}
+.vs .box.bad{background:var(--live-soft);border:1px solid #f2c3bf}
+.vs .box.good{background:var(--good-soft);border:1px solid #b6ddc9}
+.vs .box .bl{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;font-weight:700;margin-bottom:7px}
+.vs .box.bad .bl{color:var(--live)}.vs .box.good .bl{color:var(--good)}
+.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-14px);z-index:80;background:var(--ink);color:#fff;font-weight:700;font-size:14.5px;padding:11px 20px;border-radius:99px;box-shadow:0 10px 26px rgba(15,35,31,.3);opacity:0;pointer-events:none;transition:all .3s}
+.toast .em{color:var(--hi)}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+footer{max-width:1080px;margin:0 auto;padding:10px clamp(14px,3vw,26px) 60px;font-size:13px;color:var(--muted);text-align:center}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="hd">
+  <div class="wm" style="display:none"></div>
+  <div class="hd-in">
+    <div class="wm">
+      <div class="crest">🎙️</div>
+      <div>
+        <div class="lz">IELTS · Speaking</div>
+        <div class="nm">The Speaking Room</div>
+      </div>
+    </div>
+    <div class="hd-r">
+      <div class="lbl">Timer</div>
+      <div class="val" id="hTime">—</div>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+<main>
+
+<!-- ======== BRIEF ======== -->
+<div id="brief">
+<section>
+  <h2>Before you start: how Speaking actually works 🎙️</h2>
+  <p class="sub">Eleven to fourteen minutes with one examiner, recorded, in three parts that never change.</p>
+
+  <div class="facts">
+    <div class="fact"><div class="fv">4–5</div><div class="fl">min · Part 1, familiar topics</div></div>
+    <div class="fact"><div class="fv">3–4</div><div class="fl">min · Part 2, the long turn</div></div>
+    <div class="fact"><div class="fv">4–5</div><div class="fl">min · Part 3, discussion</div></div>
+    <div class="fact"><div class="fv">4</div><div class="fl">criteria, equal weight</div></div>
+  </div>
+
+  <h3>What the examiner is scoring</h3>
+  <div class="tip"><h4>Fluency and coherence</h4><p>Can you keep going, and do your ideas connect? Hesitating to find an <i>idea</i> is normal. Hesitating to find a <i>word</i>, repeatedly, is what costs marks.</p><div class="rule"><b>The rule that matters most:</b> if a sentence goes wrong, finish it anyway. A flawed sentence delivered smoothly beats a correct one restarted three times.</div></div>
+  <div class="tip"><h4>Lexical resource</h4><p>Range and precision. Not long words — the right word, and not the same word eight times.</p><div class="rule"><b>Do this:</b> paraphrase yourself. If you say "important", follow it later with "essential" or "it really matters". Examiners hear the range.</div></div>
+  <div class="tip"><h4>Grammatical range and accuracy</h4><p>A mix of tenses and structures. Simple sentences only, however accurate, caps you around 5.</p><div class="rule"><b>Do this:</b> get a past tense, a conditional and a present perfect into every long answer. Part 2 gives you room for all three.</div></div>
+  <div class="tip"><h4>Pronunciation</h4><p>Being understood without effort. An accent is fine — every speaker has one. Word stress in the wrong place is the thing that breaks understanding.</p><div class="rule"><b>Do this:</b> slow down slightly. Speed is the commonest cause of a low pronunciation score, not accent.</div></div>
+
+  <h3>Three things people get wrong</h3>
+  <div class="tip"><h4>Answering Part 1 in two words</h4><p>"Do you like your hometown?" — "Yes." That answer alone caps you at 5.5 regardless of your English.</p><div class="rule"><b>Do this:</b> answer, then add one sentence. Always. Answer plus reason, or answer plus example.</div></div>
+  <div class="tip"><h4>Stopping early in Part 2</h4><p>Most candidates stop between 45 and 70 seconds and think they filled the time. The examiner stops you at two minutes — let them.</p><div class="rule"><b>Do this:</b> use all four bullets. The third one, the story, is what fills the middle minute.</div></div>
+  <div class="tip"><h4>Memorised answers</h4><p>Examiners are trained to hear them, and they are marked down. Part 3 questions are unpredictable on purpose.</p><div class="rule"><b>Do this:</b> memorise flexible <i>phrases</i>, not topics. Frames like "I can see why people say that, but…" fit any subject.</div></div>
+
+  <div class="note teal">Part 3 is where band 7 is won or lost. Part 1 and 2 are about you; Part 3 is abstract — society, government, the future. Opinion, reason, example, then a concession. Same shape every time.</div>
+
+  <div style="margin-top:24px;text-align:center">
+    <button class="btn dark big" id="bStart">Start the test</button>
+    <p style="font-size:13.5px;color:var(--muted);margin-top:10px">Record yourself on your phone and run all three parts without stopping. One take.</p>
+  </div>
+</section>
+</div>
+
+<!-- ======== TEST ======== -->
+<div id="test" hidden>
+<section>
+  <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:16px">
+    <h2 style="margin:0" id="stageTitle">Part 1</h2>
+    <button class="btn quiet" id="bNewSet" style="margin-left:auto;padding:8px 15px;font-size:13px">New topic set</button>
+  </div>
+  <div class="stagebar">
+    <button class="st on" data-s="0">Part 1 · 4–5 min</button>
+    <button class="st" data-s="1">Part 2 · prep + 2 min</button>
+    <button class="st" data-s="2">Part 3 · 4–5 min</button>
+    <button class="st" data-s="3">Mark it</button>
+  </div>
+
+  <div class="clockbox">
+    <div class="cl" id="clkLabel">Part 1</div>
+    <div class="ct" id="clk">0:00</div>
+    <div class="cz" id="clkZone">Press start when your recorder is running</div>
+    <div class="cc">
+      <button class="btn hi" id="bClock">Start</button>
+      <button class="btn quiet" id="bReset" style="background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.25)">Reset</button>
+    </div>
+  </div>
+
+  <div id="stageBody"></div>
+
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:18px">
+    <button class="btn solid" id="bNext">Next part</button>
+    <button class="btn quiet" id="bBrief">Back to the brief</button>
+  </div>
+</section>
+</div>
+
+<!-- ======== MARKING ======== -->
+<div id="marking" hidden>
+<section>
+  <h2>Mark it 🎓</h2>
+  <p class="sub">Listen back once, then set each criterion. The overall band is the average of the four, rounded the way IELTS rounds it.</p>
+  <div id="crits"></div>
+  <div class="final">
+    <div><div class="sl">Overall speaking band</div><div class="big" id="bandOut">—</div></div>
+    <div><div class="sl">How this was worked out</div><div class="sd" id="bandWhy">Set the four sliders above.</div></div>
+  </div>
+  <div class="note warn">These are simplified working descriptors, not the official wording. They are for deciding what to practise next, not for predicting a result.</div>
+  <div style="margin-top:18px"><button class="btn quiet" id="bAgain">Run another test</button></div>
+</section>
+
+  <section id="modelsec">
+    <h2>Model answers 🏅</h2>
+    <p class="sub">What a strong answer sounds like for the set you just did. Study the shape, not the content — the content has to be yours.</p>
+    <div id="modelBody"></div>
+    <div class="note warn">Do not learn these by heart. Examiners are trained to spot memorised answers and mark them down. What transfers is the structure and the phrases, never the story.</div>
+  </section>
+</div>
+
+</main>
+</div>
+
+<div class="toast" id="toast"></div>
+<footer>Nothing is uploaded or saved. Refreshing clears everything.</footer>
+
+<script>
+/* ================= topic sets ================= */
+const SETS=[
+{
+ p1:[["Studies",["What subjects are you studying at the moment?","Which subject do you find the most difficult, and why?","Do you prefer studying in the morning or in the evening?","Do you think school prepares students well for university?"]],
+     ["Free time",["What do you usually do when you have free time?","Has the way you spend your free time changed in recent years?","Do you prefer spending free time alone or with other people?","Is there a hobby you would like to start?"]]],
+ p2:{t:"Describe a skill you would like to learn.",b:["what the skill is","how you would learn it","how difficult you think it would be"],l:"and explain why you want to learn this skill."},
+ p3:["Should schools teach more practical skills? Why?","Some people say it is harder to learn new things as an adult. Do you agree?","How has technology changed the way people learn skills?","Should governments pay for adult education, or should individuals pay?","Will traditional universities still be important in twenty years?"]
+},
+{
+ p1:[["Your home",["Do you live in a house or an apartment?","What is your favourite room, and why?","Would you like to move somewhere else in the future?","What would you change about where you live?"]],
+     ["Food",["What kind of food do you usually eat?","Do you prefer eating at home or in restaurants?","Have your eating habits changed in the last few years?","Do you enjoy cooking?"]]],
+ p2:{t:"Describe a place you go to when you want to concentrate.",b:["where it is","how often you go there","what you do there"],l:"and explain why it helps you concentrate."},
+ p3:["Why do you think some people find it hard to concentrate these days?","Should schools teach students how to manage their attention?","Do you think public spaces in cities are designed well for quiet work?","How has working from home changed people's daily routines?","Will offices still exist in fifty years?"]
+},
+{
+ p1:[["Travel",["Do you enjoy travelling?","What is the best place you have visited?","Do you prefer travelling alone or with others?","Would you like to live in another country?"]],
+     ["Technology",["How often do you use your phone each day?","Which app do you use the most?","Do you think people spend too much time online?","Has technology made your life easier or harder?"]]],
+ p2:{t:"Describe a decision you made that turned out well.",b:["what the decision was","when you made it","what alternatives you considered"],l:"and explain why it turned out well."},
+ p3:["Do people make better decisions when they have more information, or less?","Should young people be allowed to make important decisions about their own education?","How do families influence the decisions young people make?","Is it better to decide quickly or to take a long time?","Do you think artificial intelligence should help people make decisions?"]
+},
+{
+ p1:[["Work and future",["What job would you like to do in the future?","Why does that job interest you?","Do you think you will change careers during your life?","Is it more important to enjoy a job or to earn well?"]],
+     ["Weather",["What is the weather usually like where you live?","Which season do you prefer?","Does the weather affect your mood?","Do you check the forecast?"]]],
+ p2:{t:"Describe a person who has taught you something important.",b:["who the person is","how you know them","what they taught you"],l:"and explain why it mattered to you."},
+ p3:["What makes someone a good teacher?","Should teachers be paid more than they are now?","Do young people today learn more from the internet than from people?","How has the role of teachers changed in the last thirty years?","Is it possible to teach someone to be creative?"]
+}
+];
+
+const CRITERIA=[
+ {k:"Fluency and coherence",d:{
+  5:"Frequent pauses and restarts; loses the thread; needs the question repeated.",
+  6:"Speaks at length but with noticeable hesitation, repetition and self-correction.",
+  7:"Speaks at length with only occasional hesitation; ideas connect clearly.",
+  8:"Fluent throughout; hesitates to find ideas, not words.",
+  9:"Effortless, natural flow; coherence never breaks."}},
+ {k:"Lexical resource",d:{
+  5:"Limited vocabulary; often the wrong word; can't paraphrase.",
+  6:"Enough vocabulary to discuss the topics, but imprecise and repetitive.",
+  7:"Some less common vocabulary used with awareness of style; can paraphrase.",
+  8:"Wide and flexible; precise; natural collocation.",
+  9:"Fully natural and precise in all topics."}},
+ {k:"Grammatical range and accuracy",d:{
+  5:"Mostly simple sentences; frequent errors that can block meaning.",
+  6:"Mix of simple and complex; errors common in the complex forms.",
+  7:"Range of structures; frequent error-free sentences.",
+  8:"Wide range, almost always accurate; occasional slips only.",
+  9:"Full range, consistently accurate."}},
+ {k:"Pronunciation",d:{
+  5:"Often hard to follow; word stress frequently misplaced.",
+  6:"Understandable, though the first language sometimes interferes.",
+  7:"Generally easy to understand throughout; stress and intonation used well.",
+  8:"Effortless to understand; sustained control of stress and rhythm.",
+  9:"Completely natural and effortless."}}
+];
+const MODELS=[
+{p2:"The skill I'd most like to learn is driving, and honestly it's something I've been putting off for far too long.<br><br>So, what it is — I mean proper driving, on real roads, not just knowing where the pedals are. I want to be able to get in a car and go somewhere without planning the whole day around bus timetables.<br><br>As for how I'd learn it, I'd definitely go to a driving school rather than let a family member teach me. My father keeps offering, but I've seen how that went with my cousin — they argued for about three months and she still failed the first time. An instructor knows what the examiner is actually looking for, which a parent doesn't.<br><br>How difficult would it be? The physical part, the steering and the gears, that's probably a couple of weeks. What worries me is the traffic. I get quite nervous when there's a lot happening at once, and our city centre in the evening is honestly chaos. So I imagine the hard part isn't the car, it's staying calm inside it.<br><br>And why I want to learn — there are two reasons really. The obvious one is independence. At the moment, if I want to visit my grandmother, who lives about forty minutes outside the city, I have to ask someone to take me, and I hate depending on people like that. The second reason is that it opens things up later. A lot of jobs simply assume you can drive, and if I can't, I've narrowed my options before I've even started.<br><br>So yes, that's the one. Hopefully next summer.",p3q:"Should schools teach more practical skills?",p3a:"Yes, I'd argue they should, though not at the expense of everything else. The main reason is that a lot of what people struggle with as adults is quite basic and completely teachable — managing money, understanding a contract, that sort of thing. To give an example, I know several people at university who have never filed a tax form and find it genuinely frightening, which is absurd after fourteen years of education. That said, I can see the counter-argument: schools already have an enormous amount to cover, and every practical hour has to come from somewhere. So my position would be that it's a question of proportion rather than principle."},
+{p2:"The place I go when I really need to concentrate is the reading room on the second floor of our city library.<br><br>It's in the older part of the building, quite far from the entrance, and I think that's half the reason it works — you have to make a decision to walk up there, so by the time you sit down you've already committed to doing something.<br><br>I go maybe twice a week, usually on Saturday mornings and one evening after school. In exam periods it becomes almost every day, which my mother finds slightly ridiculous, because we do have a perfectly good desk at home.<br><br>What I do there is mostly revision and any writing that needs proper thinking. I've got a routine now: I take the same seat by the window if it's free, put my phone in my bag rather than on the table, and work in blocks of about forty minutes.<br><br>As for why it helps — there are a couple of things. The obvious one is that it's quiet, but honestly, silence isn't really the main factor. It's more that everyone around you is also working. If I'm at home and I get bored, nothing stops me lying on the bed and scrolling for an hour. In the library there's a sort of social pressure, and it turns out I need that more than I'd like to admit.<br><br>The other thing is that there's nothing of mine in that room. No guitar, no fridge, no younger brother. It's a space with only one possible activity in it, and I think that's what makes the difference.",p3q:"Why do people find it hard to concentrate these days?",p3a:"I think the main factor is that the interruptions are now designed rather than accidental. Phones aren't neutral objects — they're built by people whose job is to bring you back to them, and that's a much harder thing to resist than ordinary distraction. For instance, I can sit for two hours with a book, but I can't sit for twenty minutes with my phone on the table. To be fair, I imagine every generation has complained about this, and people said the same about television. But I'd argue the scale is different now, because the distraction is in your pocket rather than in one room of the house."},
+{p2:"The decision I want to talk about is choosing to switch schools two years ago, which at the time felt like a huge risk.<br><br>So, what it was — I moved from a school very close to my house to one on the other side of the city that had a much stronger science programme. It meant an hour of travelling each day instead of ten minutes.<br><br>I made it at the end of ninth grade. My results had been fine but not exceptional, and a teacher told me quite bluntly that I was coasting, which I didn't want to hear but was probably right.<br><br>There were definitely alternatives. I could have stayed and just worked harder, which is what my parents initially preferred, and there was also a private school my uncle suggested that we couldn't really afford. I spent most of that summer going back and forth about it.<br><br>Why did it turn out well? A few reasons. Academically the difference was immediate — the classes moved faster and I stopped being the person who finished early and got bored. But the thing I didn't anticipate was the effect of the commute. I read on the bus now, every day, an hour of it. I've probably read more in two years than in the five before that.<br><br>And I made better friends, which I genuinely didn't expect at fifteen. So looking back, the thing I was most afraid of, the distance, turned out to be one of the benefits.",p3q:"Do people make better decisions with more information, or less?",p3a:"My view is that more information helps up to a point and then starts to hurt. The reason is that beyond a certain amount you're no longer choosing, you're just delaying — every extra option gives you something new to worry about. A good example is choosing a university: my cousin had a spreadsheet with about thirty of them and ended up applying late because she couldn't finish comparing. I'd concede that for genuinely technical decisions, medical ones especially, more information is almost always better. But for ordinary life decisions I think people would be happier deciding sooner with less."},
+{p2:"The person I'd like to describe is my physics teacher from ninth grade, a man called Mr Bekov.<br><br>I knew him for two years, and I should say he wasn't a warm teacher. He didn't tell jokes, he didn't try to be your friend, and a lot of students found him intimidating.<br><br>What he taught me wasn't really physics, although he taught that well. It was how to be wrong properly. He had this habit — if you gave a wrong answer in his class, he wouldn't correct you. He'd say “all right, follow that through” and make you keep going until you hit the contradiction yourself. It was uncomfortable the first few times. But you understood exactly where your thinking had broken, and you never made that particular mistake again.<br><br>Why it mattered to me is that up until then I'd been quite afraid of getting things wrong in front of people. I was one of those students who only put their hand up when they were certain. He essentially removed the penalty for being wrong, and once that fear went, I started learning much faster.<br><br>I still use it, actually. When I'm stuck on something now, instead of stopping, I try to follow the wrong idea until it breaks. It's a strange thing to have learned from a physics class, and I don't think he set out to teach it, but it's the part that stayed with me.",p3q:"What makes someone a good teacher?",p3a:"For me the most important quality is being able to tell what a student is actually confused about, which is rarer than it sounds. The reason it matters is that most students can't name their own confusion — they'll say “I don't understand this chapter” when the real problem is one idea from three chapters earlier. For example, I struggled with chemistry for a year, and it turned out I'd misunderstood a single definition at the start. A good teacher finds that. I'd accept that enthusiasm and subject knowledge matter too, and obviously you can't teach what you don't know. But I've had knowledgeable teachers who couldn't diagnose anything, and I didn't learn much from them."}
+];
+
+function renderModels(){
+  const M=MODELS[set];
+  $("modelBody").innerHTML=`
+   <div class="mblock">
+     <div class="mh">Part 1 · the difference one sentence makes</div>
+     <div class="mq">Which subject do you find the most difficult?</div>
+     <div class="vs">
+       <div class="box bad"><div class="bl">Caps you at 5.5</div>Chemistry. It's hard.</div>
+       <div class="box good"><div class="bl">Same idea, band 7</div>Probably chemistry, and it's mostly the maths side rather than the theory. I can follow what's happening in a reaction, but the moment we start calculating concentrations I lose the thread. I've started staying after class on Thursdays to go through it, and it's slowly getting better.</div>
+     </div>
+     <div class="mn">Both are true and both are correct English. The second is a whole band higher because it answers, gives a reason, and says what happened next.</div>
+   </div>
+   <div class="mblock">
+     <div class="mh">Part 2 · roughly two minutes spoken</div>
+     <div class="mq">${SETS[set].p2.t}</div>
+     <div class="mt">${M.p2}</div>
+     <div class="mn">One bullet per chunk, a specific story in the middle, and a deliberate ending rather than trailing off. The small asides and self-corrections are intentional — this is speech, not an essay read aloud.</div>
+   </div>
+   <div class="mblock">
+     <div class="mh">Part 3 · opinion, reason, example, concession</div>
+     <div class="mq">${M.p3q}</div>
+     <div class="mt">${M.p3a}</div>
+     <div class="mn">The concession at the end — "that said", "to be fair", "I'd concede" — is the part most candidates skip. Acknowledging the other side is what a band 7 answer does and a band 6 answer does not.</div>
+   </div>`;
+}
+
+/* ================= state ================= */
+let set=0, stage=0, t0=0, ticker=null, running=false;
+const LIMITS=[300,120,300];
+const $=id=>document.getElementById(id);
+const fmt=s=>Math.floor(s/60)+":"+String(Math.floor(s%60)).padStart(2,"0");
+function toast(m){const t=$("toast");t.innerHTML=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2600);}
+
+/* ================= stages ================= */
+function renderStage(){
+  const S=SETS[set];
+  const body=$("stageBody");
+  $("stageTitle").textContent = stage===0?"Part 1 · Introduction":stage===1?"Part 2 · The long turn":"Part 3 · Discussion";
+  $("clkLabel").textContent = stage===0?"Part 1 · aim for 4–5 minutes":stage===1?"Part 2 · speak for 2 minutes":"Part 3 · aim for 4–5 minutes";
+  document.querySelectorAll(".st").forEach(b=>{
+    const n=+b.dataset.s;
+    b.classList.toggle("on",n===stage);
+    b.classList.toggle("done",n<stage);
+  });
+
+  if(stage===0){
+    body.innerHTML=S.p1.map(([topic,qs])=>
+      `<div class="qcard"><div class="qt">${topic}</div><ol>${qs.map(q=>`<li>${q}</li>`).join("")}</ol></div>`).join("")
+      +`<div class="note teal">Answer, then add one more sentence. Never stop at "yes" or "I don't know".</div>`;
+  }else if(stage===1){
+    body.innerHTML=`<div class="cue"><div class="cl">Candidate task card</div><h4>${S.p2.t}</h4>
+      <p style="font-size:14.5px;color:var(--muted);margin-bottom:8px">You should say:</p>
+      <ul>${S.p2.b.map(b=>`<li>${b}</li>`).join("")}</ul>
+      <p class="last">${S.p2.l}</p></div>
+      <div class="note warn">Press <b>Prep</b> first for one minute of notes, then <b>Start</b> and speak for two minutes. Do not stop early — the examiner stops you.</div>`;
+  }else{
+    body.innerHTML=`<div class="qcard"><div class="qt">Discussion · linked to your Part 2 topic</div><ol>${S.p3.map(q=>`<li>${q}</li>`).join("")}</ol></div>
+      <div class="note teal">Opinion, reason, example, then a concession — "I can see why people say that, but…". Same shape for every question.</div>`;
+  }
+  $("bNext").textContent = stage===2?"Finish and mark it":"Next part";
+  $("bClock").textContent = stage===1?"Prep (1 min)":"Start";
+  resetClock();
+}
+
+/* ================= clock ================= */
+function resetClock(){
+  if(ticker){clearInterval(ticker);ticker=null;}
+  running=false;
+  $("clk").textContent="0:00";
+  $("clk").classList.remove("over");
+  $("hTime").textContent="—";$("hTime").className="val";
+  $("clkZone").textContent="Press start when your recorder is running";
+  $("bClock").textContent = stage===1?"Prep (1 min)":"Start";
+}
+function zone(sec){
+  if(stage===1){
+    if(sec<45)return "keep going — this is the easy part";
+    if(sec<75)return "most people stop here. don't.";
+    if(sec<105)return "this is band 6 length";
+    if(sec<120)return "nearly there — one more sentence";
+    return "full length. well done.";
+  }
+  const lim=LIMITS[stage];
+  if(sec<lim*0.4)return "settling in";
+  if(sec<lim*0.8)return "good — keep extending your answers";
+  if(sec<lim)return "nearly at time";
+  return "time is up for this part";
+}
+function tick(){
+  const sec=(Date.now()-t0)/1000;
+  $("clk").textContent=fmt(sec);
+  $("hTime").textContent=fmt(sec);
+  $("hTime").className="val run";
+  $("clkZone").textContent=zone(sec);
+  const target=stage===1?120:LIMITS[stage];
+  $("clk").classList.toggle("over",sec>=target);
+}
+$("bClock").onclick=function(){
+  if(stage===1&&!running&&this.textContent.startsWith("Prep")){
+    let left=60;this.disabled=true;
+    $("clkZone").textContent="preparation — notes only, not sentences";
+    const iv=setInterval(()=>{
+      left--;$("clk").textContent="0:"+String(left).padStart(2,"0");
+      if(left<=0){clearInterval(iv);this.disabled=false;this.textContent="Start";$("clk").textContent="0:00";
+        $("clkZone").textContent="prep over — start speaking";toast("Prep over — <span class='em'>start speaking</span>");}
+    },1000);
+    return;
+  }
+  if(running){
+    clearInterval(ticker);ticker=null;running=false;
+    const sec=(Date.now()-t0)/1000;
+    this.textContent="Start";
+    $("hTime").className="val done";
+    if(stage===1){
+      if(sec<90)toast(fmt(sec)+" — <span class='em'>short</span>. Run it again.");
+      else if(sec<115)toast(fmt(sec)+" — close. One more detail.");
+      else toast(fmt(sec)+" — <span class='em'>full length</span>.");
+    }else toast("Part "+(stage+1)+": <span class='em'>"+fmt(sec)+"</span>");
+    return;
+  }
+  running=true;t0=Date.now();this.textContent="Stop";
+  ticker=setInterval(tick,250);tick();
+};
+$("bReset").onclick=resetClock;
+
+/* ================= flow ================= */
+$("bStart").onclick=()=>{
+  $("brief").hidden=true;$("test").hidden=false;$("marking").hidden=true;
+  stage=0;renderStage();window.scrollTo({top:0,behavior:"instant"});
+  toast("Start your phone recorder, then <span class='em'>press start</span>");
+};
+$("bBrief").onclick=()=>{resetClock();$("test").hidden=true;$("brief").hidden=false;};
+$("bNext").onclick=()=>{
+  if(stage<2){stage++;renderStage();window.scrollTo({top:0,behavior:"smooth"});}
+  else{resetClock();renderModels();$("test").hidden=true;$("marking").hidden=false;window.scrollTo({top:0,behavior:"instant"});}
+};
+document.querySelectorAll(".st").forEach(b=>b.onclick=()=>{
+  const n=+b.dataset.s;
+  if(n===3){resetClock();renderModels();$("test").hidden=true;$("marking").hidden=false;window.scrollTo({top:0,behavior:"instant"});return;}
+  stage=n;renderStage();
+});
+$("bNewSet").onclick=()=>{
+  let n;do{n=Math.floor(Math.random()*SETS.length);}while(n===set&&SETS.length>1);
+  set=n;renderStage();toast("New topic set — <span class='em'>set "+(set+1)+"</span>");
+};
+$("bAgain").onclick=()=>{
+  $("marking").hidden=true;$("test").hidden=false;
+  let n;do{n=Math.floor(Math.random()*SETS.length);}while(n===set&&SETS.length>1);
+  set=n;stage=0;renderStage();window.scrollTo({top:0,behavior:"instant"});
+};
+
+/* ================= band calculator ================= */
+$("crits").innerHTML=CRITERIA.map((c,i)=>`
+ <div class="crit">
+   <div class="ch"><span class="cn">${c.k}</span><span class="cv" id="cv${i}">6.0</span></div>
+   <div class="cd" id="cd${i}"></div>
+   <input type="range" min="4" max="9" step="0.5" value="6" data-i="${i}">
+   <div class="scale"><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div>
+ </div>`).join("");
+
+function descFor(c,v){
+  const lo=Math.floor(v);
+  const base=c.d[lo]||c.d[5];
+  return v%1 ? base+" <i>— sitting between "+lo+" and "+(lo+1)+".</i>" : base;
+}
+function ieltsRound(avg){
+  const f=Math.floor(avg), r=avg-f;
+  if(r<0.25)return f;
+  if(r<0.75)return f+0.5;
+  return f+1;
+}
+function recompute(){
+  const vals=[...document.querySelectorAll('#crits input')].map(i=>+i.value);
+  vals.forEach((v,i)=>{
+    $("cv"+i).textContent=v.toFixed(1);
+    $("cd"+i).innerHTML=descFor(CRITERIA[i],v);
+  });
+  const avg=vals.reduce((a,b)=>a+b,0)/4;
+  const band=ieltsRound(avg);
+  $("bandOut").textContent=band.toFixed(1);
+  const lowest=CRITERIA[vals.indexOf(Math.min(...vals))].k;
+  $("bandWhy").innerHTML="Average of "+vals.map(v=>v.toFixed(1)).join(" · ")+" is "+avg.toFixed(2)+
+    ", which rounds to <b>"+band.toFixed(1)+"</b>. IELTS rounds a .25 up to the half band and a .75 up to the whole."+
+    "<br><br>Weakest criterion: <b>"+lowest+"</b>. Raising the lowest one by half a band moves the overall more than polishing the highest.";
+}
+document.querySelectorAll('#crits input').forEach(i=>i.addEventListener("input",recompute));
+recompute();
+renderStage();
+renderModels();
+</script>
+</body>
+</html>
