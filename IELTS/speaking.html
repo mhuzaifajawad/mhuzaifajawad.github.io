@@ -190,7 +190,7 @@ footer{max-width:1080px;margin:0 auto;padding:10px clamp(14px,3vw,26px) 60px;fon
     <button class="st on" data-s="0">Part 1 · 4–5 min</button>
     <button class="st" data-s="1">Part 2 · prep + 2 min</button>
     <button class="st" data-s="2">Part 3 · 4–5 min</button>
-    <button class="st" data-s="3">Mark it</button>
+    <button class="st" data-s="3">Model answers</button>
   </div>
 
   <div class="clockbox">
@@ -212,20 +212,8 @@ footer{max-width:1080px;margin:0 auto;padding:10px clamp(14px,3vw,26px) 60px;fon
 </section>
 </div>
 
-<!-- ======== MARKING ======== -->
+<!-- ======== MODELS ======== -->
 <div id="marking" hidden>
-<section>
-  <h2>Mark it 🎓</h2>
-  <p class="sub">Listen back once, then set each criterion. The overall band is the average of the four, rounded the way IELTS rounds it.</p>
-  <div id="crits"></div>
-  <div class="final">
-    <div><div class="sl">Overall speaking band</div><div class="big" id="bandOut">—</div></div>
-    <div><div class="sl">How this was worked out</div><div class="sd" id="bandWhy">Set the four sliders above.</div></div>
-  </div>
-  <div class="note warn">These are simplified working descriptors, not the official wording. They are for deciding what to practise next, not for predicting a result.</div>
-  <div style="margin-top:18px"><button class="btn quiet" id="bAgain">Run another test</button></div>
-</section>
-
   <section id="modelsec">
     <h2>Model answers 🏅</h2>
     <p class="sub">What a strong answer sounds like for the set you just did. Study the shape, not the content — the content has to be yours.</p>
@@ -266,40 +254,42 @@ const SETS=[
      ["Weather",["What is the weather usually like where you live?","Which season do you prefer?","Does the weather affect your mood?","Do you check the forecast?"]]],
  p2:{t:"Describe a person who has taught you something important.",b:["who the person is","how you know them","what they taught you"],l:"and explain why it mattered to you."},
  p3:["What makes someone a good teacher?","Should teachers be paid more than they are now?","Do young people today learn more from the internet than from people?","How has the role of teachers changed in the last thirty years?","Is it possible to teach someone to be creative?"]
+},
+{
+ p1:[["Music",["What kind of music do you listen to?","Has your taste changed as you have got older?","Do you ever listen to music while studying?","Have you ever learned an instrument?"]],
+     ["Shopping",["Do you enjoy shopping?","Do you prefer shops or buying online?","How often do you buy clothes?","Do you plan purchases or decide on the spot?"]]],
+ p2:{t:"Describe something you own that you have had for a long time.",b:["what it is","how you got it","how you have used it over the years"],l:"and explain why you have kept it."},
+ p3:["Why do you think people become attached to objects?","Are products today built to last as long as they used to be?","Should governments make companies repair things rather than replace them?","How has online shopping changed the way people value what they buy?","Will people own fewer things in the future?"]
+},
+{
+ p1:[["Your daily routine",["What does a normal weekday look like for you?","Are you busier now than a year ago?","Do you prefer a fixed routine or a flexible one?","What would you change about your day?"]],
+     ["Sport and exercise",["Do you play any sport?","Did you do more exercise as a child?","Do you prefer team sports or individual ones?","Do you watch sport on television?"]]],
+ p2:{t:"Describe an occasion when you had to work with other people.",b:["what the task was","who you worked with","what your part in it was"],l:"and explain how well it went."},
+ p3:["What makes a group work well together?","Are some tasks better done alone?","Should schools give more group work or less?","How has technology changed the way teams work?","Is it harder to work with people you do not know?"]
+},
+{
+ p1:[["Books and reading",["Do you read much?","What was the last thing you read?","Do you prefer paper or a screen?","Did you read a lot as a child?"]],
+     ["Your city",["What is the best thing about where you live?","Is it a good place for families?","Has it grown in recent years?","What does it need most?"]]],
+ p2:{t:"Describe a change you would like to see in your town or city.",b:["what the change is","why it is needed","who it would affect"],l:"and explain how it could be achieved."},
+ p3:["Should local people decide how a city is developed?","Why do so many young people move to larger cities?","What can cities do to become more pleasant to live in?","Are cities becoming more similar to one another?","Will most people live in cities in fifty years?"]
+},
+{
+ p1:[["Photography",["Do you take many photographs?","What do you usually photograph?","Do you print any of them?","Do you prefer being in photos or taking them?"]],
+     ["Time management",["Are you good at organising your time?","Do you use a calendar or a list?","Do you usually arrive early or late?","When do you work best during the day?"]]],
+ p2:{t:"Describe a time when you were surprised by something.",b:["what happened","where you were","who else was involved"],l:"and explain why it surprised you."},
+ p3:["Do people like surprises, or do they prefer to know what is coming?","Is it possible to plan for everything?","How do people react differently to unexpected news?","Has technology made life more predictable or less?","Should children be protected from bad news?"]
 }
 ];
 
-const CRITERIA=[
- {k:"Fluency and coherence",d:{
-  5:"Frequent pauses and restarts; loses the thread; needs the question repeated.",
-  6:"Speaks at length but with noticeable hesitation, repetition and self-correction.",
-  7:"Speaks at length with only occasional hesitation; ideas connect clearly.",
-  8:"Fluent throughout; hesitates to find ideas, not words.",
-  9:"Effortless, natural flow; coherence never breaks."}},
- {k:"Lexical resource",d:{
-  5:"Limited vocabulary; often the wrong word; can't paraphrase.",
-  6:"Enough vocabulary to discuss the topics, but imprecise and repetitive.",
-  7:"Some less common vocabulary used with awareness of style; can paraphrase.",
-  8:"Wide and flexible; precise; natural collocation.",
-  9:"Fully natural and precise in all topics."}},
- {k:"Grammatical range and accuracy",d:{
-  5:"Mostly simple sentences; frequent errors that can block meaning.",
-  6:"Mix of simple and complex; errors common in the complex forms.",
-  7:"Range of structures; frequent error-free sentences.",
-  8:"Wide range, almost always accurate; occasional slips only.",
-  9:"Full range, consistently accurate."}},
- {k:"Pronunciation",d:{
-  5:"Often hard to follow; word stress frequently misplaced.",
-  6:"Understandable, though the first language sometimes interferes.",
-  7:"Generally easy to understand throughout; stress and intonation used well.",
-  8:"Effortless to understand; sustained control of stress and rhythm.",
-  9:"Completely natural and effortless."}}
-];
 const MODELS=[
 {p2:"The skill I'd most like to learn is driving, and honestly it's something I've been putting off for far too long.<br><br>So, what it is — I mean proper driving, on real roads, not just knowing where the pedals are. I want to be able to get in a car and go somewhere without planning the whole day around bus timetables.<br><br>As for how I'd learn it, I'd definitely go to a driving school rather than let a family member teach me. My father keeps offering, but I've seen how that went with my cousin — they argued for about three months and she still failed the first time. An instructor knows what the examiner is actually looking for, which a parent doesn't.<br><br>How difficult would it be? The physical part, the steering and the gears, that's probably a couple of weeks. What worries me is the traffic. I get quite nervous when there's a lot happening at once, and our city centre in the evening is honestly chaos. So I imagine the hard part isn't the car, it's staying calm inside it.<br><br>And why I want to learn — there are two reasons really. The obvious one is independence. At the moment, if I want to visit my grandmother, who lives about forty minutes outside the city, I have to ask someone to take me, and I hate depending on people like that. The second reason is that it opens things up later. A lot of jobs simply assume you can drive, and if I can't, I've narrowed my options before I've even started.<br><br>So yes, that's the one. Hopefully next summer.",p3q:"Should schools teach more practical skills?",p3a:"Yes, I'd argue they should, though not at the expense of everything else. The main reason is that a lot of what people struggle with as adults is quite basic and completely teachable — managing money, understanding a contract, that sort of thing. To give an example, I know several people at university who have never filed a tax form and find it genuinely frightening, which is absurd after fourteen years of education. That said, I can see the counter-argument: schools already have an enormous amount to cover, and every practical hour has to come from somewhere. So my position would be that it's a question of proportion rather than principle."},
 {p2:"The place I go when I really need to concentrate is the reading room on the second floor of our city library.<br><br>It's in the older part of the building, quite far from the entrance, and I think that's half the reason it works — you have to make a decision to walk up there, so by the time you sit down you've already committed to doing something.<br><br>I go maybe twice a week, usually on Saturday mornings and one evening after school. In exam periods it becomes almost every day, which my mother finds slightly ridiculous, because we do have a perfectly good desk at home.<br><br>What I do there is mostly revision and any writing that needs proper thinking. I've got a routine now: I take the same seat by the window if it's free, put my phone in my bag rather than on the table, and work in blocks of about forty minutes.<br><br>As for why it helps — there are a couple of things. The obvious one is that it's quiet, but honestly, silence isn't really the main factor. It's more that everyone around you is also working. If I'm at home and I get bored, nothing stops me lying on the bed and scrolling for an hour. In the library there's a sort of social pressure, and it turns out I need that more than I'd like to admit.<br><br>The other thing is that there's nothing of mine in that room. No guitar, no fridge, no younger brother. It's a space with only one possible activity in it, and I think that's what makes the difference.",p3q:"Why do people find it hard to concentrate these days?",p3a:"I think the main factor is that the interruptions are now designed rather than accidental. Phones aren't neutral objects — they're built by people whose job is to bring you back to them, and that's a much harder thing to resist than ordinary distraction. For instance, I can sit for two hours with a book, but I can't sit for twenty minutes with my phone on the table. To be fair, I imagine every generation has complained about this, and people said the same about television. But I'd argue the scale is different now, because the distraction is in your pocket rather than in one room of the house."},
 {p2:"The decision I want to talk about is choosing to switch schools two years ago, which at the time felt like a huge risk.<br><br>So, what it was — I moved from a school very close to my house to one on the other side of the city that had a much stronger science programme. It meant an hour of travelling each day instead of ten minutes.<br><br>I made it at the end of ninth grade. My results had been fine but not exceptional, and a teacher told me quite bluntly that I was coasting, which I didn't want to hear but was probably right.<br><br>There were definitely alternatives. I could have stayed and just worked harder, which is what my parents initially preferred, and there was also a private school my uncle suggested that we couldn't really afford. I spent most of that summer going back and forth about it.<br><br>Why did it turn out well? A few reasons. Academically the difference was immediate — the classes moved faster and I stopped being the person who finished early and got bored. But the thing I didn't anticipate was the effect of the commute. I read on the bus now, every day, an hour of it. I've probably read more in two years than in the five before that.<br><br>And I made better friends, which I genuinely didn't expect at fifteen. So looking back, the thing I was most afraid of, the distance, turned out to be one of the benefits.",p3q:"Do people make better decisions with more information, or less?",p3a:"My view is that more information helps up to a point and then starts to hurt. The reason is that beyond a certain amount you're no longer choosing, you're just delaying — every extra option gives you something new to worry about. A good example is choosing a university: my cousin had a spreadsheet with about thirty of them and ended up applying late because she couldn't finish comparing. I'd concede that for genuinely technical decisions, medical ones especially, more information is almost always better. But for ordinary life decisions I think people would be happier deciding sooner with less."},
-{p2:"The person I'd like to describe is my physics teacher from ninth grade, a man called Mr Bekov.<br><br>I knew him for two years, and I should say he wasn't a warm teacher. He didn't tell jokes, he didn't try to be your friend, and a lot of students found him intimidating.<br><br>What he taught me wasn't really physics, although he taught that well. It was how to be wrong properly. He had this habit — if you gave a wrong answer in his class, he wouldn't correct you. He'd say “all right, follow that through” and make you keep going until you hit the contradiction yourself. It was uncomfortable the first few times. But you understood exactly where your thinking had broken, and you never made that particular mistake again.<br><br>Why it mattered to me is that up until then I'd been quite afraid of getting things wrong in front of people. I was one of those students who only put their hand up when they were certain. He essentially removed the penalty for being wrong, and once that fear went, I started learning much faster.<br><br>I still use it, actually. When I'm stuck on something now, instead of stopping, I try to follow the wrong idea until it breaks. It's a strange thing to have learned from a physics class, and I don't think he set out to teach it, but it's the part that stayed with me.",p3q:"What makes someone a good teacher?",p3a:"For me the most important quality is being able to tell what a student is actually confused about, which is rarer than it sounds. The reason it matters is that most students can't name their own confusion — they'll say “I don't understand this chapter” when the real problem is one idea from three chapters earlier. For example, I struggled with chemistry for a year, and it turned out I'd misunderstood a single definition at the start. A good teacher finds that. I'd accept that enthusiasm and subject knowledge matter too, and obviously you can't teach what you don't know. But I've had knowledgeable teachers who couldn't diagnose anything, and I didn't learn much from them."}
+{p2:"The person I'd like to describe is my physics teacher from ninth grade, a man called Mr Bekov.<br><br>I knew him for two years, and I should say he wasn't a warm teacher. He didn't tell jokes, he didn't try to be your friend, and a lot of students found him intimidating.<br><br>What he taught me wasn't really physics, although he taught that well. It was how to be wrong properly. He had this habit — if you gave a wrong answer in his class, he wouldn't correct you. He'd say “all right, follow that through” and make you keep going until you hit the contradiction yourself. It was uncomfortable the first few times. But you understood exactly where your thinking had broken, and you never made that particular mistake again.<br><br>Why it mattered to me is that up until then I'd been quite afraid of getting things wrong in front of people. I was one of those students who only put their hand up when they were certain. He essentially removed the penalty for being wrong, and once that fear went, I started learning much faster.<br><br>I still use it, actually. When I'm stuck on something now, instead of stopping, I try to follow the wrong idea until it breaks. It's a strange thing to have learned from a physics class, and I don't think he set out to teach it, but it's the part that stayed with me.",p3q:"What makes someone a good teacher?",p3a:"For me the most important quality is being able to tell what a student is actually confused about, which is rarer than it sounds. The reason it matters is that most students can't name their own confusion — they'll say “I don't understand this chapter” when the real problem is one idea from three chapters earlier. For example, I struggled with chemistry for a year, and it turned out I'd misunderstood a single definition at the start. A good teacher finds that. I'd accept that enthusiasm and subject knowledge matter too, and obviously you can't teach what you don't know. But I've had knowledgeable teachers who couldn't diagnose anything, and I didn't learn much from them."},
+{p2:"The thing I want to describe is a small pocket knife that belonged to my grandfather, and I have had it for about nine years now.<br><br>It is nothing impressive to look at — the handle is worn almost smooth and one of the blades does not lock properly any more. But it is well made, in a way things generally are not now.<br><br>I got it when he died, which was the summer I turned twelve. There was no ceremony about it; my mother simply gave me a box of his things and said to take what I wanted. I picked the knife because it was the object I most associated with him, since he used it constantly in the garden.<br><br>Over the years I have actually used it a great deal, which I think matters — I did not want to put it in a drawer and preserve it. It has opened parcels, cut string, sharpened pencils, and gone camping with me at least a dozen times.<br><br>As for why I have kept it, there are two things really. The obvious one is that it reminds me of him, although honestly the memory has faded more than I would like. The second reason is less sentimental: it is simply a good tool. Everything else I have bought since has broken and been replaced, and this thing from the nineteen-sixties still works.<br><br>I imagine I will still have it in forty years.",p3q:"Why do people become attached to objects?",p3a:"I think the main reason is that objects hold time in a way memories do not. A thing you have owned for twenty years is physical evidence that those twenty years happened, and memory on its own is much less reliable than we assume. For example, I have almost no clear recollection of being ten, but I have a jacket from then and holding it brings back more than trying to remember does. To be fair, I think this can go too far — people who cannot throw anything away are usually not happier for it. So I would say attachment is healthy up to the point where it starts making decisions for you."},
+{p2:"The occasion I want to talk about is a group project we did last year for our history course, which turned out to be far more complicated than any of us expected.<br><br>The task was to put together a presentation on how our city had changed over the last century, using original sources rather than textbooks. We had about three weeks.<br><br>There were four of us. Two I knew well, and one I had barely spoken to before, which is worth mentioning because she ended up doing the most important part.<br><br>My own part was the archive research, which meant a lot of time in the city library going through photographs and old newspapers. I also ended up doing the coordinating, not because anyone appointed me but because somebody had to send the messages.<br><br>How well did it go? Reasonably, in the end, though not smoothly. We lost most of the first week because everyone assumed someone else had started. What rescued it was that we finally sat down together in one room rather than messaging, and in two hours we did more than in the previous ten days.<br><br>So the thing I took from it was about process rather than history. Groups do not fail because people are lazy — they fail because nobody makes the first decision. I would volunteer for that role much sooner now.",p3q:"What makes a group work well together?",p3a:"For me the most important factor is that somebody makes the first decision, however small. The reason is that most group failures I have seen were not caused by conflict but by everyone politely waiting for someone else to start. A good example is a project I did last year where we lost a week to that exact problem and then did the whole thing in two days once one person just proposed a plan. I would accept that a group of very dominant people has the opposite issue, and then you need someone willing to listen instead. But in my experience hesitation does far more damage than disagreement."},
+{p2:"The change I would most like to see in my city is a proper network of bicycle lanes, physically separated from the traffic.<br><br>At the moment there are painted lines on a few roads, but they stop and start without warning, and cars park in them constantly, so almost nobody uses them except people who are already confident.<br><br>It is needed for a fairly simple reason: the city is not large, and most journeys people make by car are under four kilometres. Those are journeys that could easily be cycled, and the only real barrier is that the roads feel dangerous. My mother, for example, cycled everywhere as a student and will not now.<br><br>Who would it affect? Mostly ordinary commuters, but I think the bigger effect would be on children. At the moment almost every child is driven to school, which creates the traffic that makes it unsafe to walk, which then means more children get driven. It is a loop, and cycling infrastructure is one of the few things that breaks it.<br><br>As for how it could be achieved — honestly, mostly by removing parking, which is why it has not happened. The money is not the obstacle. Somebody has to be willing to be unpopular for about two years, and after that people generally like it.",p3q:"Should local people decide how a city is developed?",p3a:"I would argue they should have a real voice, though not the final word. The reason is that the people who live somewhere know things about it that no survey captures — which streets are frightening at night, where the traffic actually backs up. To give you an example, planners in my city built a park nobody uses because it is cut off by a main road, which any resident could have told them. That said, I can see the danger: local opposition tends to block housing everywhere, and if every neighbourhood had a veto, nothing would ever get built for the people who do not live there yet."},
+{p2:"The occasion I want to describe is finding out that a teacher I had assumed disliked me had recommended me for something.<br><br>It happened at the end of eleventh grade, in the corridor outside the staff room, which is a very ordinary place for something to change your mind about a person.<br><br>The teacher was my literature teacher, and I should explain that she had been quite hard on me for two years. My essays came back covered in corrections, and she almost never said anything encouraging. I had decided fairly early on that she thought I was not very good.<br><br>What actually happened was that the head of department stopped me and said I had been put forward for a regional writing competition, and that the recommendation had come from her. There were only two names from the whole school.<br><br>Why it surprised me is probably obvious, but the interesting part is what it made me realise afterwards. She had been marking my work more carefully than anyone else's, which is exactly what you would do for a student you thought had something. I had read the attention as criticism because it was not wrapped in anything friendly.<br><br>I think about that fairly often now, actually — that the people who take you seriously do not always sound like it.",p3q:"Do people like surprises, or prefer to know what is coming?",p3a:"My view is that people say they like surprises and mostly do not. The reason is that we tend to enjoy surprise only in hindsight, once we know it turned out well — in the moment it is mostly anxiety. A good example would be surprise parties, which are famously more fun for the person organising them than the person walking into the room. I would concede there are exceptions, and small pleasant surprises clearly do lift people. But for anything significant, I think most people would rather have the information and the time to prepare."}
 ];
 
 function renderModels(){
@@ -361,7 +351,7 @@ function renderStage(){
     body.innerHTML=`<div class="qcard"><div class="qt">Discussion · linked to your Part 2 topic</div><ol>${S.p3.map(q=>`<li>${q}</li>`).join("")}</ol></div>
       <div class="note teal">Opinion, reason, example, then a concession — "I can see why people say that, but…". Same shape for every question.</div>`;
   }
-  $("bNext").textContent = stage===2?"Finish and mark it":"Next part";
+  $("bNext").textContent = stage===2?"Finish and see the models":"Next part";
   $("bClock").textContent = stage===1?"Prep (1 min)":"Start";
   resetClock();
 }
@@ -453,42 +443,6 @@ $("bAgain").onclick=()=>{
   set=n;stage=0;renderStage();window.scrollTo({top:0,behavior:"instant"});
 };
 
-/* ================= band calculator ================= */
-$("crits").innerHTML=CRITERIA.map((c,i)=>`
- <div class="crit">
-   <div class="ch"><span class="cn">${c.k}</span><span class="cv" id="cv${i}">6.0</span></div>
-   <div class="cd" id="cd${i}"></div>
-   <input type="range" min="4" max="9" step="0.5" value="6" data-i="${i}">
-   <div class="scale"><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div>
- </div>`).join("");
-
-function descFor(c,v){
-  const lo=Math.floor(v);
-  const base=c.d[lo]||c.d[5];
-  return v%1 ? base+" <i>— sitting between "+lo+" and "+(lo+1)+".</i>" : base;
-}
-function ieltsRound(avg){
-  const f=Math.floor(avg), r=avg-f;
-  if(r<0.25)return f;
-  if(r<0.75)return f+0.5;
-  return f+1;
-}
-function recompute(){
-  const vals=[...document.querySelectorAll('#crits input')].map(i=>+i.value);
-  vals.forEach((v,i)=>{
-    $("cv"+i).textContent=v.toFixed(1);
-    $("cd"+i).innerHTML=descFor(CRITERIA[i],v);
-  });
-  const avg=vals.reduce((a,b)=>a+b,0)/4;
-  const band=ieltsRound(avg);
-  $("bandOut").textContent=band.toFixed(1);
-  const lowest=CRITERIA[vals.indexOf(Math.min(...vals))].k;
-  $("bandWhy").innerHTML="Average of "+vals.map(v=>v.toFixed(1)).join(" · ")+" is "+avg.toFixed(2)+
-    ", which rounds to <b>"+band.toFixed(1)+"</b>. IELTS rounds a .25 up to the half band and a .75 up to the whole."+
-    "<br><br>Weakest criterion: <b>"+lowest+"</b>. Raising the lowest one by half a band moves the overall more than polishing the highest.";
-}
-document.querySelectorAll('#crits input').forEach(i=>i.addEventListener("input",recompute));
-recompute();
 renderStage();
 renderModels();
 </script>

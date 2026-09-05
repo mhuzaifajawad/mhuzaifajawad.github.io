@@ -10,13 +10,15 @@ Test date 11–13 September. Today is 5 September.
 
 | File | Rename to | What it is |
 |---|---|---|
-| `ielts-index.html` | `index.html` | Landing page linking the other three |
+| `ielts-index.html` | `index.html` | Landing page linking the other five |
+| `ielts-writing-study.html` | `writing-study.html` | Writing technique + drills with model answers |
+| `ielts-speaking-study.html` | `speaking-study.html` | Speaking technique + drills, timers, question bank |
 | `ielts-reading-room.html` | `reading.html` | Reading brief + timed test + exact marking |
 | `ielts-writing-desk.html` | `writing.html` | Writing brief + Task 1/2 + structure check + models |
-| `ielts-speaking-room.html` | `speaking.html` | Speaking brief + all three parts + models |
+| `ielts-speaking-room.html` | `speaking.html` | Full three-part test, 8 topic sets, model answers |
 
-The filenames matter — `index.html` links to `reading.html`, `writing.html` and
-`speaking.html` exactly. Rename them or the links break.
+The filenames matter — `index.html` links to the other five by exactly these names. Rename
+them or the links break.
 
 **Your pile — do not publish these.**
 
@@ -89,6 +91,7 @@ key into the published page.
    - **Academic or General?** Everything here is built for Academic. If he needs General,
      Task 1 is a letter and that page needs rewriting.
 4. Open `ielts-teaching-guide.md` and read the Day 1 plan before tomorrow's session.
+5. Point him at the two **study** pages first. The test pages assume he has done the technique.
 
 ---
 

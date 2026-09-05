@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Speaking Study · IELTS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#e8edec;--card:#fff;--ink:#0f231f;--muted:#566b66;
+  --teal:#0d6e63;--teal-soft:#dcefec;--teal-line:#a9d5ce;
+  --hi:#ffd23f;--hi-soft:#fff3c9;
+  --live:#d6413c;--live-soft:#fbe4e2;
+  --good:#12855f;--good-soft:#dcefe6;--warn:#c07a10;--warn-soft:#fdf0d5;
+  --line:#d5dedc;
+  --disp:'Bricolage Grotesque',sans-serif;--body:'Hanken Grotesk',sans-serif;--mono:'Space Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--paper);color:var(--ink);line-height:1.6;font-size:16.5px;-webkit-font-smoothing:antialiased}
+::selection{background:var(--hi)}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+.hd{position:sticky;top:0;z-index:60;background:rgba(232,237,236,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hd-in{max-width:1120px;margin:0 auto;padding:10px clamp(14px,3vw,26px);display:flex;align-items:center;gap:14px}
+.wm{display:flex;align-items:center;gap:10px}
+.wm .crest{width:37px;height:37px;border-radius:9px;background:var(--ink);color:var(--hi);display:flex;align-items:center;justify-content:center;font-size:16px}
+.wm .lz{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);font-weight:700}
+.wm .nm{font-family:var(--disp);font-weight:800;font-size:18px;line-height:1}
+.hd-r{margin-left:auto;text-align:right}
+.hd-r .lbl{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.hd-r .val{font-family:var(--mono);font-weight:700;font-size:17px;color:var(--teal);font-variant-numeric:tabular-nums}
+@media(max-width:600px){.wm .nm{font-size:15px}}
+.shell{max-width:1120px;margin:0 auto;padding:0 clamp(14px,3vw,26px);display:grid;grid-template-columns:200px 1fr;gap:26px;align-items:start}
+.rail{position:sticky;top:68px;padding:22px 0 40px;max-height:calc(100vh - 78px);overflow-y:auto}
+.rail .rl-h{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700;margin:0 0 10px 12px}
+.rail a{display:block;padding:7px 12px;border-left:3px solid transparent;color:var(--muted);text-decoration:none;font-size:14px;font-weight:600;border-radius:0 8px 8px 0}
+.rail a:hover{background:var(--teal-soft);color:var(--ink)}
+.rail a.on{border-left-color:var(--teal);color:var(--teal);background:var(--teal-soft)}
+@media(max-width:900px){.shell{grid-template-columns:1fr}.rail{display:none}}
+main{padding:22px 0 90px;min-width:0}
+section{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px clamp(18px,3vw,30px);margin-bottom:20px}
+section h2{font-family:var(--disp);font-weight:700;font-size:clamp(21px,3vw,26px);line-height:1.2;margin-bottom:6px}
+section .sub{color:var(--muted);font-size:14.5px;margin-bottom:20px}
+h3{font-family:var(--disp);font-size:17.5px;margin:24px 0 9px}
+p{margin-bottom:12px}p:last-child{margin-bottom:0}
+.btn{font-family:var(--body);font-size:14px;font-weight:700;border:none;border-radius:10px;padding:10px 18px;cursor:pointer}
+.btn.solid{background:var(--teal);color:#fff}
+.btn.hi{background:var(--hi);color:var(--ink)}
+.btn.quiet{background:var(--paper);color:var(--ink);border:1px solid var(--line)}
+.note{border-radius:12px;padding:13px 16px;font-size:14.5px;margin:16px 0}
+.note.teal{background:var(--teal-soft);border:1px solid var(--teal-line);border-left:5px solid var(--teal)}
+.note.warn{background:var(--warn-soft);border:1px solid #ecd9a8;border-left:5px solid var(--warn);color:#6b4707}
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+@media(max-width:680px){.vs{grid-template-columns:1fr}}
+.vs .box{border-radius:11px;padding:13px 15px;font-size:14.5px;line-height:1.6}
+.vs .box.bad{background:var(--live-soft);border:1px solid #f2c3bf}
+.vs .box.good{background:var(--good-soft);border:1px solid #b6ddc9}
+.vs .box .bl{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;font-weight:700;margin-bottom:6px}
+.vs .box.bad .bl{color:var(--live)}.vs .box.good .bl{color:var(--good)}
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;border:1px solid var(--line);border-radius:12px;padding:13px 15px;background:var(--paper);margin-bottom:9px}
+.step .n{font-family:var(--mono);font-weight:700;font-size:12px;color:#fff;background:var(--teal);border-radius:7px;width:26px;height:26px;display:flex;align-items:center;justify-content:center}
+.step h4{font-family:var(--disp);font-size:15.5px;margin-bottom:2px}
+.step p{font-size:14px;color:var(--muted);margin:0}
+.bank{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:11px;margin:10px 0}
+.bcol{border:1px solid var(--line);border-radius:12px;padding:13px 15px;background:var(--paper)}
+.bcol .bh{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:8px}
+.bcol div.it{font-size:14.5px;padding:3px 0}
+.drill{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:var(--paper);margin-bottom:12px}
+.drill .dq{font-size:15.5px;line-height:1.6;margin-bottom:11px}
+.drill .dq b{color:var(--teal)}
+.drill .ans{margin-top:11px;background:var(--good-soft);border:1px solid #b6ddc9;border-radius:11px;padding:12px 15px;font-size:15px;line-height:1.65}
+.drill .ans .al{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--good);font-weight:700;margin-bottom:6px}
+.drill .ans .why{font-size:13.5px;color:var(--muted);margin-top:8px;line-height:1.5}
+.scroll{overflow-x:auto}
+table.w{border-collapse:collapse;width:100%;font-size:14.5px;margin:10px 0}
+table.w th,table.w td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+table.w th{background:var(--teal-soft);color:var(--teal);font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+table.w td:first-child{font-weight:700;white-space:nowrap}
+.clockbox{background:var(--ink);color:#fff;border-radius:15px;padding:20px;text-align:center;margin:14px 0}
+.clockbox .ct{font-family:var(--mono);font-weight:700;font-size:clamp(38px,10vw,54px);line-height:.95;color:var(--hi);font-variant-numeric:tabular-nums}
+.clockbox .cz{font-family:var(--mono);font-size:12px;color:#8ba39e;margin-top:7px;min-height:17px}
+.clockbox .cc{display:flex;gap:9px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+.tmpl{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}
+@media(max-width:680px){.tmpl{grid-template-columns:1fr 1fr}}
+.tcell{border:2px dashed var(--teal-line);border-radius:12px;padding:11px;background:var(--paper);min-height:96px}
+.tcell .th{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:6px}
+.tcell textarea{width:100%;border:none;background:transparent;font-family:var(--body);font-size:14px;resize:none;color:var(--ink);min-height:54px;line-height:1.45}
+.tcell textarea:focus{outline:none}
+.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-14px);z-index:80;background:var(--ink);color:#fff;font-weight:700;font-size:14.5px;padding:11px 20px;border-radius:99px;box-shadow:0 10px 26px rgba(15,35,31,.3);opacity:0;pointer-events:none;transition:all .3s}
+.toast .em{color:var(--hi)}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+footer{max-width:1120px;margin:0 auto;padding:10px clamp(14px,3vw,26px) 60px;font-size:13px;color:var(--muted);text-align:center}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="hd">
+  <div class="hd-in">
+    <div class="wm">
+      <div class="crest">🎙️</div>
+      <div><div class="lz">IELTS · Speaking</div><div class="nm">Speaking Study</div></div>
+    </div>
+    <div class="hd-r"><div class="lbl">Timer</div><div class="val" id="hTime">—</div></div>
+  </div>
+</header>
+
+<div class="shell">
+<nav class="rail">
+  <div class="rl-h">On this page</div>
+  <a href="#extend" class="on">Extending answers</a>
+  <a href="#notes">The 60 seconds</a>
+  <a href="#fill">Filling two minutes</a>
+  <a href="#part3">The Part 3 shape</a>
+  <a href="#phrases">Phrase bank</a>
+  <a href="#lost">When you don't know a word</a>
+  <a href="#fluency">Sounding fluent</a>
+  <a href="#stress">Word stress</a>
+  <a href="#bank">Question bank</a>
+</nav>
+
+<main>
+
+<section id="extend">
+  <h2>Extending every answer 🌱</h2>
+  <p class="sub">The single most common reason a capable speaker scores 5.5 in Part 1. Not vocabulary — length.</p>
+  <div class="vs">
+    <div class="box bad"><div class="bl">Caps you at 5.5</div>— Do you like your hometown?<br>— Yes, it's nice.</div>
+    <div class="box good"><div class="bl">Band 7</div>— Do you like your hometown?<br>— I do, though I've started to notice its limits. It's small enough that you run into people you know, which I like, but there's almost nothing to do in winter. I think I'll miss it once I've left.</div>
+  </div>
+  <h3>The formula</h3>
+  <div class="step"><div class="n">1</div><div><h4>Answer</h4><p>Directly. Do not dodge the question.</p></div></div>
+  <div class="step"><div class="n">2</div><div><h4>Add a reason or a detail</h4><p><i>because</i>, <i>though</i>, <i>especially</i>.</p></div></div>
+  <div class="step"><div class="n">3</div><div><h4>Add a contrast, an example, or a future</h4><p>This third move is what turns a 6 into a 7.</p></div></div>
+  <div class="note warn">Do not go beyond about four sentences in Part 1. It is a warm-up, and an over-long answer eats the examiner's question list and sounds rehearsed.</div>
+  <div id="d1"></div>
+</section>
+
+<section id="notes">
+  <h2>The 60 seconds of notes 📝</h2>
+  <p class="sub">Four boxes, four talking points, roughly thirty seconds each. Notes, never sentences — you will not have time to read them.</p>
+  <div class="tmpl">
+    <div class="tcell"><div class="th">What / who</div><textarea rows="3" placeholder="the thing itself"></textarea></div>
+    <div class="tcell"><div class="th">When / where</div><textarea rows="3" placeholder="set the scene"></textarea></div>
+    <div class="tcell"><div class="th">Detail or story</div><textarea rows="3" placeholder="the part that fills time"></textarea></div>
+    <div class="tcell"><div class="th">Why it matters</div><textarea rows="3" placeholder="your feeling / reason"></textarea></div>
+  </div>
+  <div class="clockbox">
+    <div class="ct" id="prepClk">1:00</div>
+    <div class="cz" id="prepZone">one minute — notes only</div>
+    <div class="cc"><button class="btn hi" id="bPrep">Start the minute</button></div>
+  </div>
+  <div class="note teal">The third box saves you. A story with specifics runs forty seconds on its own. Without one you will finish at eighty seconds and stand there in silence.</div>
+</section>
+
+<section id="fill">
+  <h2>Filling two minutes ⏱️</h2>
+  <p class="sub">Most candidates stop between 45 and 70 seconds and believe they used the time. Practise against the clock until two minutes feels normal.</p>
+  <div class="clockbox">
+    <div class="ct" id="clk">0:00</div>
+    <div class="cz" id="zone">press start and talk about anything for two minutes</div>
+    <div class="cc"><button class="btn hi" id="bGo">Start</button><button class="btn quiet" id="bRst" style="background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.25)">Reset</button></div>
+  </div>
+  <h3>Four ways to keep going when you run dry</h3>
+  <div class="step"><div class="n">1</div><div><h4>Add a contrast</h4><p>"That's now — it was completely different two years ago, because…"</p></div></div>
+  <div class="step"><div class="n">2</div><div><h4>Bring in another person</h4><p>"My brother sees it differently, actually. He thinks…"</p></div></div>
+  <div class="step"><div class="n">3</div><div><h4>Go specific</h4><p>Names, numbers, one particular occasion. Detail is the cheapest way to fill time convincingly.</p></div></div>
+  <div class="step"><div class="n">4</div><div><h4>Say what you would change</h4><p>"If I did it again, I'd probably…" — brings in a conditional too, which the examiner is listening for.</p></div></div>
+  <div class="note warn">Do not stop when you reach the end of the bullets. Keep going until the examiner stops you — being stopped is a good sign, not a bad one.</div>
+</section>
+
+<section id="part3">
+  <h2>The Part 3 shape ⚖️</h2>
+  <p class="sub">This is where band 7 is won. Part 1 and 2 are about you; Part 3 is abstract — society, government, the future.</p>
+  <div class="step"><div class="n">1</div><div><h4>Opinion</h4><p>"I'd argue that…" — take a position, do not sit on the fence.</p></div></div>
+  <div class="step"><div class="n">2</div><div><h4>Reason</h4><p>"The main reason is…" — why is it true?</p></div></div>
+  <div class="step"><div class="n">3</div><div><h4>Example</h4><p>"To give you an example…" — concrete, even if invented.</p></div></div>
+  <div class="step"><div class="n">4</div><div><h4>Concession</h4><p>"That said, I can see why…" — the move most candidates skip, and the clearest 7 signal there is.</p></div></div>
+  <div class="note teal">Same four moves for every question, whatever the topic. That is the point — you are not preparing content, you are preparing a shape that fits any content.</div>
+  <div id="d2"></div>
+</section>
+
+<section id="phrases">
+  <h2>Phrase bank 🧰</h2>
+  <p class="sub">Memorising topic vocabulary does not work in a week. Memorising frames does, because they attach to anything.</p>
+  <div class="bank">
+    <div class="bcol"><div class="bh">Buying a second</div><div class="it">That's an interesting question…</div><div class="it">I've never really thought about it, but…</div><div class="it">Let me think for a moment.</div></div>
+    <div class="bcol"><div class="bh">Opinion</div><div class="it">Personally, I'd argue that…</div><div class="it">From my point of view…</div><div class="it">If you ask me…</div></div>
+    <div class="bcol"><div class="bh">Reason and example</div><div class="it">The main reason for this is…</div><div class="it">To give you an example…</div><div class="it">A good case would be…</div></div>
+    <div class="bcol"><div class="bh">Conceding</div><div class="it">I can see why people say that, but…</div><div class="it">That's true to some extent, although…</div><div class="it">To be fair…</div></div>
+    <div class="bcol"><div class="bh">Speculating</div><div class="it">It's hard to predict, but I imagine…</div><div class="it">There's a good chance that…</div><div class="it">I suspect we'll see…</div></div>
+    <div class="bcol"><div class="bh">Being vague on purpose</div><div class="it">something along those lines</div><div class="it">more or less</div><div class="it">roughly speaking</div></div>
+  </div>
+  <div class="note warn">Three per answer is plenty. Using eight makes it obvious you are deploying a list, which sounds worse than using none.</div>
+</section>
+
+<section id="lost">
+  <h2>When you don't know the word 🕳️</h2>
+  <p class="sub">This happens to every candidate. Stopping loses marks; talking around it gains them, because paraphrasing is in the band descriptor.</p>
+  <div class="vs">
+    <div class="box bad"><div class="bl">What it costs you</div>"It's a… I don't know the word in English… sorry." <em>[silence]</em></div>
+    <div class="box good"><div class="bl">What it earns you</div>"It's a kind of tool you use for cutting metal — I can't think of the name, but you'd find one in any workshop."</div>
+  </div>
+  <h3>Three ways round a missing word</h3>
+  <div class="step"><div class="n">1</div><div><h4>Say what it is</h4><p>"It's a kind of…", "It's a sort of thing that…"</p></div></div>
+  <div class="step"><div class="n">2</div><div><h4>Say what it does</h4><p>"You use it for…", "It's what you do when…"</p></div></div>
+  <div class="step"><div class="n">3</div><div><h4>Say where you'd meet it</h4><p>"You'd see one in a hospital", "It's something farmers have."</p></div></div>
+  <div class="note teal">Never apologise and never say "I don't know the word in English". Both draw the examiner's attention to a gap they might otherwise not have registered.</div>
+  <div id="d3"></div>
+</section>
+
+<section id="fluency">
+  <h2>Sounding fluent 🌊</h2>
+  <p class="sub">Fluency is not speed. It is the absence of visible repair work.</p>
+  <h3>The one rule worth more than everything else here</h3>
+  <div class="note teal" style="font-size:16px"><b>If a sentence goes wrong, finish it anyway.</b> A flawed sentence delivered smoothly scores higher than a correct one restarted three times. Restarting is audible; a small grammar slip usually is not.</div>
+  <h3>Replace the fillers, don't remove them</h3>
+  <p style="font-size:14.5px;color:var(--muted)">Silence is worse than "um". But English fillers score better than sounds.</p>
+  <div class="scroll"><table class="w">
+    <thead><tr><th>Instead of</th><th>Say</th></tr></thead>
+    <tbody>
+      <tr><td>um… er…</td><td>Well, … / Actually, …</td></tr>
+      <tr><td>[long pause]</td><td>How can I put this…</td></tr>
+      <tr><td>repeating the question word for word</td><td>That's a good question, because…</td></tr>
+      <tr><td>"I don't know"</td><td>I've not thought about it before, but I'd guess…</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note warn">Slow down slightly. Speed is a more common cause of a low pronunciation score than accent is — an accent the examiner can follow costs nothing.</div>
+</section>
+
+<section id="stress">
+  <h2>Word stress 🥁</h2>
+  <p class="sub">Stress in the wrong place is the thing that actually breaks understanding. Individual sounds matter far less.</p>
+  <div class="scroll"><table class="w">
+    <thead><tr><th>Word</th><th>Stress</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td>comfortable</td><td><b>COMF</b>-ta-ble</td><td>three syllables, not four</td></tr>
+      <tr><td>vegetables</td><td><b>VEJ</b>-ta-bles</td><td>three, not four</td></tr>
+      <tr><td>photograph</td><td><b>PHO</b>-to-graph</td><td>but pho-<b>TOG</b>-ra-phy</td></tr>
+      <tr><td>develop</td><td>de-<b>VEL</b>-op</td><td>never on the first</td></tr>
+      <tr><td>opportunity</td><td>op-por-<b>TU</b>-ni-ty</td><td>fourth of five</td></tr>
+      <tr><td>advantage</td><td>ad-<b>VAN</b>-tage</td><td>middle</td></tr>
+      <tr><td>economy</td><td>e-<b>CON</b>-o-my</td><td>but ec-o-<b>NOM</b>-ic</td></tr>
+      <tr><td>necessary</td><td><b>NES</b>-e-ssa-ry</td><td>first</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note teal">Notice <i>photograph / photography</i> and <i>economy / economic</i>. The stress moves when the ending changes. Say each pair aloud twice.</div>
+</section>
+
+<section id="bank">
+  <h2>Question bank 🗂️</h2>
+  <p class="sub">Common Part 1 topics. Answer three questions from a topic out loud, in the three-move shape, then move on.</p>
+  <div class="bank">
+    <div class="bcol"><div class="bh">Hometown</div><div class="it">Where are you from?</div><div class="it">What is it known for?</div><div class="it">Has it changed much?</div><div class="it">Would you recommend it to a visitor?</div></div>
+    <div class="bcol"><div class="bh">Work / study</div><div class="it">What do you study?</div><div class="it">Why did you choose it?</div><div class="it">What is the hardest part?</div><div class="it">What will you do afterwards?</div></div>
+    <div class="bcol"><div class="bh">Free time</div><div class="it">What do you do to relax?</div><div class="it">Has that changed recently?</div><div class="it">Do you prefer indoors or outdoors?</div><div class="it">Is there enough to do where you live?</div></div>
+    <div class="bcol"><div class="bh">Food</div><div class="it">What do you usually eat?</div><div class="it">Do you cook?</div><div class="it">Home or restaurants?</div><div class="it">Has your diet changed?</div></div>
+    <div class="bcol"><div class="bh">Technology</div><div class="it">How much do you use your phone?</div><div class="it">Which app matters most to you?</div><div class="it">Do people spend too long online?</div><div class="it">Has it made life easier?</div></div>
+    <div class="bcol"><div class="bh">Travel</div><div class="it">Do you enjoy travelling?</div><div class="it">Best place you have been?</div><div class="it">Alone or with others?</div><div class="it">Where would you live?</div></div>
+    <div class="bcol"><div class="bh">Weather</div><div class="it">What is it like where you live?</div><div class="it">Which season do you prefer?</div><div class="it">Does it affect your mood?</div><div class="it">Do you check the forecast?</div></div>
+    <div class="bcol"><div class="bh">Friends</div><div class="it">Do you have a large circle?</div><div class="it">How did you meet your closest friend?</div><div class="it">Old friends or new ones?</div><div class="it">What makes a good friend?</div></div>
+  </div>
+  <div class="note teal">When you can answer any question here in three moves without thinking about it, Part 1 is finished as a problem and you can spend your remaining time on Part 3.</div>
+</section>
+
+</main>
+</div>
+
+<div class="toast" id="toast"></div>
+<footer>Nothing is uploaded or saved.</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+const fmt=s=>Math.floor(s/60)+":"+String(Math.floor(s%60)).padStart(2,"0");
+function toast(m){const t=$("toast");t.innerHTML=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2400);}
+
+/* two-minute clock */
+let t0=0,tick=null,run=false;
+function zone(s){
+  if(s<45)return "keep going — this is the easy part";
+  if(s<75)return "most people stop here. don't.";
+  if(s<105)return "this is band 6 length";
+  if(s<120)return "nearly there — one more sentence";
+  return "full length. the examiner stops you, not you.";
+}
+$("bGo").onclick=function(){
+  if(run){clearInterval(tick);run=false;this.textContent="Start";
+    const s=(Date.now()-t0)/1000;$("hTime").textContent=fmt(s);
+    toast(fmt(s)+(s<90?" — <span class='em'>short</span>. Again.":s<115?" — close.":" — <span class='em'>full length</span>."));return;}
+  run=true;t0=Date.now();this.textContent="Stop";
+  tick=setInterval(()=>{const s=(Date.now()-t0)/1000;$("clk").textContent=fmt(s);$("hTime").textContent=fmt(s);$("zone").textContent=zone(s);},250);
+};
+$("bRst").onclick=()=>{clearInterval(tick);run=false;$("bGo").textContent="Start";$("clk").textContent="0:00";$("hTime").textContent="—";$("zone").textContent="press start and talk about anything for two minutes";};
+
+/* prep minute */
+$("bPrep").onclick=function(){
+  let left=60;this.disabled=true;
+  $("prepZone").textContent="notes only — do not write sentences";
+  const iv=setInterval(()=>{
+    left--;$("prepClk").textContent="0:"+String(left).padStart(2,"0");
+    if(left<=0){clearInterval(iv);this.disabled=false;$("prepClk").textContent="1:00";
+      $("prepZone").textContent="time — now speak for two minutes";toast("Prep over — <span class='em'>start speaking</span>");}
+  },1000);
+};
+
+/* drills */
+const DRILLS={
+ d1:{h:"Answer each one out loud in three moves — answer, reason, then a contrast or example. Then compare.",items:[
+  {q:"Do you prefer mornings or evenings?",
+   a:"Evenings, without question. I've never been able to think clearly before about ten, whereas after dinner I can work for hours without noticing. It does cause problems though — most of my classes are at eight in the morning, so I spend half the week slightly behind.",
+   w:"Answer, reason, then a complication. The third move is what takes it past band 6."},
+  {q:"Do you like cooking?",
+   a:"I like it more than I expected to, actually. I only started during the pandemic because there was nothing else to do, and it turned out to be the part of the day I looked forward to. I'm still fairly limited — about six dishes I can do properly — but I'd like to learn more.",
+   w:"Notice the honesty. Admitting a limit sounds natural and gives you something concrete to say."},
+  {q:"Is your hometown a good place for young people?",
+   a:"Honestly, not especially. There's very little for anyone between sixteen and twenty-five, so most people my age leave for the city as soon as they finish school. That said, it's changed a bit recently — a couple of cafés have opened that stay open late, which sounds small but it matters when there was nothing before.",
+   w:"A negative answer with a concession. Disagreeing is fine — sitting on the fence is what costs marks."}]},
+
+ d2:{h:"Answer each in the four moves: opinion, reason, example, concession.",items:[
+  {q:"Should governments spend more on public transport than on roads?",
+   a:"I'd argue they should, yes. The main reason is that road building tends to generate its own traffic — you widen a motorway and within a few years it's as congested as before, because the capacity itself encourages driving. A good example is almost any ring road built in the last thirty years. That said, I can see the difficulty for rural areas, where there simply isn't the density to make buses viable, so it can't be a blanket policy.",
+   w:"Opinion, reason, example, concession, in order. The concession also stops the answer sounding naive."},
+  {q:"Will people still read printed books in fifty years?",
+   a:"I suspect they will, though far fewer of them. The reason is that print has survived every technology that was supposed to kill it, and it seems to do something screens don't — people remember what they read on paper slightly better, and they're less interrupted. To give you an example, most students I know still print things out before an exam despite having everything digitally. To be fair, that might be habit rather than anything real, and my generation may be the last that has it.",
+   w:"Speculating about the future needs <i>I suspect</i>, <i>might</i>, <i>may</i>. Notice the concession questions the speaker's own example — that is a strong move."}]},
+
+ d3:{h:"Describe each without using the word itself. Say it out loud before revealing.",items:[
+  {q:"A <b>corkscrew</b>",
+   a:"It's a small tool you use to open wine — it's got a metal spiral that you twist down into the top and then pull.",
+   w:"What it does, then what it looks like. Fifteen seconds and the examiner knows exactly what you mean."},
+  {q:"To <b>commute</b>",
+   a:"It's the travelling you do between your home and your work, usually every day and usually at the same time as everybody else.",
+   w:"Defining a verb needs 'It's when you…' or 'It's the … you do'."},
+  {q:"A <b>landlord</b>",
+   a:"It's the person who owns the flat you're renting — the one you pay every month and complain to when the heating breaks.",
+   w:"The small joke at the end is natural speech, and natural speech scores well."}]}
+};
+
+function build(id){
+  const D=DRILLS[id];
+  $(id).innerHTML='<h3>Practise it</h3><p style="font-size:14.5px;color:var(--muted);margin-bottom:12px">'+D.h+'</p>'+
+   D.items.map((it,i)=>`<div class="drill"><div class="dq">${it.q}</div>
+     <button class="btn solid" data-d="${id}" data-i="${i}">Show a model</button>
+     <div class="ans" id="${id}a${i}" hidden></div></div>`).join("");
+}
+Object.keys(DRILLS).forEach(build);
+
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-d]");if(!b)return;
+  const {d,i}=b.dataset,box=$(d+"a"+i);
+  if(box.hidden){
+    const it=DRILLS[d].items[+i];
+    box.innerHTML='<div class="al">One good version</div>'+it.a+'<div class="why">'+it.w+'</div>';
+    box.hidden=false;b.textContent="Hide";
+  }else{box.hidden=true;b.textContent="Show a model";}
+});
+
+const links=[...document.querySelectorAll(".rail a")];
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+e.target.id));});},{rootMargin:"-45% 0px -50% 0px"});
+document.querySelectorAll("section[id]").forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>

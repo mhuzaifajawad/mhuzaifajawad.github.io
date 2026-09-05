@@ -21,7 +21,8 @@ body{font-family:var(--body);background:var(--paper);color:var(--ink);line-heigh
 .crest{width:44px;height:44px;border-radius:11px;background:var(--ink);color:var(--hi);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:700;font-size:16px;margin-bottom:20px}
 h1{font-family:var(--disp);font-weight:800;font-size:clamp(30px,7vw,48px);line-height:1.04;letter-spacing:-.02em;margin-bottom:14px}
 .lede{color:var(--muted);font-size:17px;max-width:54ch;margin-bottom:34px}
-.cards{display:grid;gap:14px;margin-bottom:34px}
+.cards{display:grid;gap:14px;margin-bottom:28px}
+.grouph{font-family:var(--disp);font-size:15px;font-weight:700;color:var(--teal);margin-bottom:12px;letter-spacing:.01em}
 a.card{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px 22px;text-decoration:none;color:inherit;transition:border-color .14s,transform .08s}
 a.card:hover{border-color:var(--teal);transform:translateY(-1px)}
 a.card .icn{width:46px;height:46px;border-radius:12px;background:var(--teal-soft);display:flex;align-items:center;justify-content:center;font-size:21px}
@@ -42,22 +43,37 @@ a.card .go{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--te
 
   <div class="crest">IELTS</div>
   <h1>Six days, three sections</h1>
-  <p class="lede">Each page explains what the test actually asks for, then makes you do it under the real time limit, then marks it. Read the brief before you press start — that part is where most of the marks are.</p>
+  <p class="lede">Work through the study pages first — that is where the technique is. The test pages then make you do it under the real time limit and mark it.</p>
 
+  <h2 class="grouph">Study first</h2>
+  <div class="cards">
+    <a class="card" href="writing-study.html">
+      <span class="icn">✎</span>
+      <span><h2>Writing study</h2><p>Paraphrasing, overviews, taking a position, building longer sentences. Drills with model answers.</p></span>
+      <span class="go">Open</span>
+    </a>
+    <a class="card" href="speaking-study.html">
+      <span class="icn">🎙️</span>
+      <span><h2>Speaking study</h2><p>Extending answers, the one-minute notes, the Part 3 shape, word stress, question bank.</p></span>
+      <span class="go">Open</span>
+    </a>
+  </div>
+
+  <h2 class="grouph">Then test yourself</h2>
   <div class="cards">
     <a class="card" href="reading.html">
       <span class="icn">📖</span>
-      <span><h2>Reading</h2><p>One passage, 13 questions, 20 minutes. Marked exactly, with the reason behind every answer.</p></span>
+      <span><h2>Reading test</h2><p>One passage, 13 questions, 20 minutes. Marked exactly, with the reason behind every answer.</p></span>
       <span class="go">Start</span>
     </a>
     <a class="card" href="writing.html">
-      <span class="icn">✎</span>
-      <span><h2>Writing</h2><p>Task 1 and Task 2, timed, with a structure check and a model answer afterwards.</p></span>
+      <span class="icn">📝</span>
+      <span><h2>Writing test</h2><p>Task 1 and Task 2, timed, with a structure check and a model answer afterwards.</p></span>
       <span class="go">Start</span>
     </a>
     <a class="card" href="speaking.html">
-      <span class="icn">🎙️</span>
-      <span><h2>Speaking</h2><p>All three parts with real timings, four topic sets, and model answers at the end.</p></span>
+      <span class="icn">🗣️</span>
+      <span><h2>Speaking test</h2><p>All three parts with real timings, eight different topic sets, model answers at the end.</p></span>
       <span class="go">Start</span>
     </a>
   </div>
@@ -66,7 +82,7 @@ a.card .go{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--te
     <h3>How to use these</h3>
     <ol>
       <li><b>Do it once, properly.</b> One take, timed, no restarting. A polished second attempt tells your teacher nothing.</li>
-      <li><b>Read the model answer only after you finish.</b> Reading it first replaces your own thinking with someone else's.</li>
+      <li><b>Try it before you reveal the model.</b> On the study pages and the tests both. Reading a model without attempting it teaches you almost nothing.</li>
       <li><b>Send the result.</b> Each page ends with what to send on WhatsApp. That is the part that makes the next lesson useful.</li>
       <li><b>Do not memorise anything.</b> Examiners are trained to spot it and mark it down. Learn the shape, not the words.</li>
     </ol>

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Writing Study · IELTS Academic</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#e8edec;--card:#fff;--ink:#0f231f;--muted:#566b66;
+  --teal:#0d6e63;--teal-soft:#dcefec;--teal-line:#a9d5ce;
+  --hi:#ffd23f;--hi-soft:#fff3c9;
+  --live:#d6413c;--live-soft:#fbe4e2;
+  --good:#12855f;--good-soft:#dcefe6;--warn:#c07a10;--warn-soft:#fdf0d5;
+  --line:#d5dedc;
+  --disp:'Bricolage Grotesque',sans-serif;--body:'Hanken Grotesk',sans-serif;--mono:'Space Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--body);background:var(--paper);color:var(--ink);line-height:1.6;font-size:16.5px;-webkit-font-smoothing:antialiased}
+::selection{background:var(--hi)}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+
+.hd{position:sticky;top:0;z-index:60;background:rgba(232,237,236,.94);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.hd-in{max-width:1120px;margin:0 auto;padding:10px clamp(14px,3vw,26px);display:flex;align-items:center;gap:14px}
+.wm{display:flex;align-items:center;gap:10px}
+.wm .crest{width:37px;height:37px;border-radius:9px;background:var(--ink);color:var(--hi);display:flex;align-items:center;justify-content:center;font-size:16px}
+.wm .lz{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);font-weight:700}
+.wm .nm{font-family:var(--disp);font-weight:800;font-size:18px;line-height:1}
+.hd-r{margin-left:auto;text-align:right}
+.hd-r .lbl{font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.hd-r .val{font-family:var(--mono);font-weight:700;font-size:16px;color:var(--teal)}
+@media(max-width:600px){.wm .nm{font-size:15px}}
+
+.shell{max-width:1120px;margin:0 auto;padding:0 clamp(14px,3vw,26px);display:grid;grid-template-columns:200px 1fr;gap:26px;align-items:start}
+.rail{position:sticky;top:68px;padding:22px 0 40px;max-height:calc(100vh - 78px);overflow-y:auto}
+.rail .rl-h{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700;margin:0 0 10px 12px}
+.rail a{display:block;padding:7px 12px;border-left:3px solid transparent;color:var(--muted);text-decoration:none;font-size:14px;font-weight:600;border-radius:0 8px 8px 0}
+.rail a:hover{background:var(--teal-soft);color:var(--ink)}
+.rail a.on{border-left-color:var(--teal);color:var(--teal);background:var(--teal-soft)}
+@media(max-width:900px){.shell{grid-template-columns:1fr}.rail{display:none}}
+main{padding:22px 0 90px;min-width:0}
+
+section{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:26px clamp(18px,3vw,30px);margin-bottom:20px}
+section h2{font-family:var(--disp);font-weight:700;font-size:clamp(21px,3vw,26px);line-height:1.2;margin-bottom:6px}
+section .sub{color:var(--muted);font-size:14.5px;margin-bottom:20px}
+h3{font-family:var(--disp);font-size:17.5px;margin:24px 0 9px}
+p{margin-bottom:12px}p:last-child{margin-bottom:0}
+
+.btn{font-family:var(--body);font-size:14px;font-weight:700;border:none;border-radius:10px;padding:10px 18px;cursor:pointer}
+.btn.solid{background:var(--teal);color:#fff}
+.btn.quiet{background:var(--paper);color:var(--ink);border:1px solid var(--line)}
+
+.note{border-radius:12px;padding:13px 16px;font-size:14.5px;margin:16px 0}
+.note.teal{background:var(--teal-soft);border:1px solid var(--teal-line);border-left:5px solid var(--teal)}
+.note.warn{background:var(--warn-soft);border:1px solid #ecd9a8;border-left:5px solid var(--warn);color:#6b4707}
+
+/* drill */
+.drill{border:1px solid var(--line);border-radius:14px;padding:16px 18px;background:var(--paper);margin-bottom:12px}
+.drill .dq{font-size:15.5px;line-height:1.6;margin-bottom:11px}
+.drill .dq b{color:var(--teal)}
+.drill textarea{width:100%;min-height:64px;border:1px solid var(--line);border-radius:10px;padding:10px 13px;font-family:var(--body);font-size:15px;line-height:1.6;background:var(--card);resize:vertical}
+.drill textarea:focus{outline:none;border-color:var(--teal)}
+.drill .dbar{display:flex;gap:9px;align-items:center;margin-top:10px;flex-wrap:wrap}
+.drill .ans{margin-top:11px;background:var(--good-soft);border:1px solid #b6ddc9;border-radius:11px;padding:12px 15px;font-size:15px;line-height:1.65}
+.drill .ans .al{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--good);font-weight:700;margin-bottom:6px}
+.drill .ans .why{font-size:13.5px;color:var(--muted);margin-top:8px;line-height:1.5}
+
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+@media(max-width:680px){.vs{grid-template-columns:1fr}}
+.vs .box{border-radius:11px;padding:13px 15px;font-size:14.5px;line-height:1.6}
+.vs .box.bad{background:var(--live-soft);border:1px solid #f2c3bf}
+.vs .box.good{background:var(--good-soft);border:1px solid #b6ddc9}
+.vs .box .bl{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;font-weight:700;margin-bottom:6px}
+.vs .box.bad .bl{color:var(--live)}.vs .box.good .bl{color:var(--good)}
+
+table.w{border-collapse:collapse;width:100%;font-size:14.5px;margin:10px 0}
+table.w th,table.w td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+table.w th{background:var(--teal-soft);color:var(--teal);font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.04em}
+table.w td:first-child{font-weight:700;white-space:nowrap}
+.scroll{overflow-x:auto}
+
+.bank{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:11px;margin:10px 0}
+.bcol{border:1px solid var(--line);border-radius:12px;padding:13px 15px;background:var(--paper)}
+.bcol .bh{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:8px}
+.bcol div.it{font-size:14.5px;padding:3px 0}
+
+.step{display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start;border:1px solid var(--line);border-radius:12px;padding:13px 15px;background:var(--paper);margin-bottom:9px}
+.step .n{font-family:var(--mono);font-weight:700;font-size:12px;color:#fff;background:var(--teal);border-radius:7px;width:26px;height:26px;display:flex;align-items:center;justify-content:center}
+.step h4{font-family:var(--disp);font-size:15.5px;margin-bottom:2px}
+.step p{font-size:14px;color:var(--muted);margin:0}
+
+.data{border-collapse:collapse;font-size:14.5px;margin:10px 0;max-width:380px;width:100%}
+.data th,.data td{border:1px solid var(--line);padding:7px 11px;text-align:left}
+.data th{background:var(--teal-soft);color:var(--teal);font-family:var(--mono);font-size:11px;text-transform:uppercase}
+.data td:not(:first-child){font-family:var(--mono);text-align:right}
+
+.toast{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-14px);z-index:80;background:var(--ink);color:#fff;font-weight:700;font-size:14.5px;padding:11px 20px;border-radius:99px;box-shadow:0 10px 26px rgba(15,35,31,.3);opacity:0;pointer-events:none;transition:all .3s}
+.toast .em{color:var(--hi)}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+footer{max-width:1120px;margin:0 auto;padding:10px clamp(14px,3vw,26px) 60px;font-size:13px;color:var(--muted);text-align:center}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header class="hd">
+  <div class="hd-in">
+    <div class="wm">
+      <div class="crest">✎</div>
+      <div><div class="lz">IELTS Academic · Writing</div><div class="nm">Writing Study</div></div>
+    </div>
+    <div class="hd-r"><div class="lbl">Drills done</div><div class="val" id="done">0</div></div>
+  </div>
+</header>
+
+<div class="shell">
+<nav class="rail">
+  <div class="rl-h">On this page</div>
+  <a href="#para" class="on">Paraphrasing</a>
+  <a href="#overview">The overview</a>
+  <a href="#trend">Trend language</a>
+  <a href="#position">Taking a position</a>
+  <a href="#develop">Developing an idea</a>
+  <a href="#combine">Longer sentences</a>
+  <a href="#linkers">Linking words</a>
+  <a href="#errors">Your ten errors</a>
+  <a href="#check">The last 3 minutes</a>
+</nav>
+
+<main>
+
+<section id="para">
+  <h2>Paraphrasing the question 🔁</h2>
+  <p class="sub">Every essay starts here, and copied words do not count towards your total. This is free marks, and it takes about forty seconds once you have a method.</p>
+  <div class="step"><div class="n">1</div><div><h4>Change the nouns first</h4><p>They are easiest. <i>Teenagers</i> becomes <i>young people</i>, <i>cars</i> becomes <i>private vehicles</i>.</p></div></div>
+  <div class="step"><div class="n">2</div><div><h4>Change the word class</h4><p><i>The government spends</i> becomes <i>government spending</i>. This changes more than a synonym does.</p></div></div>
+  <div class="step"><div class="n">3</div><div><h4>Reorder the clauses</h4><p>Put the second half first. Structure counts as paraphrase, not just vocabulary.</p></div></div>
+  <div class="note warn">Do not force a synonym for a technical word. If the table says <i>social media</i>, write <i>social media</i>. Inventing <i>communal internet platforms</i> is worse than repeating.</div>
+  <div id="d1"></div>
+</section>
+
+<section id="overview">
+  <h2>Writing an overview 🎯</h2>
+  <p class="sub">The single highest-value paragraph in Task 1. Two sentences, no figures, straight after the introduction.</p>
+  <div class="vs">
+    <div class="box bad"><div class="bl">Not an overview</div>Television fell from 12 hours to 5 hours, while social media rose from 3 to 14.</div>
+    <div class="box good"><div class="bl">An overview</div>Overall, the most striking change was the reversal between television and social media, while the remaining activities stayed broadly stable.</div>
+  </div>
+  <p style="font-size:14.5px;color:var(--muted)">The difference is not length. The first one is data. The second one is a statement about the data as a whole — and it contains no numbers at all.</p>
+  <h3>The two moves that make one</h3>
+  <div class="step"><div class="n">1</div><div><h4>Name the biggest change</h4><p>Which line moved most? Say that, without figures.</p></div></div>
+  <div class="step"><div class="n">2</div><div><h4>Name the contrast</h4><p>What stayed the same, or moved the other way? One clause is enough.</p></div></div>
+  <div class="note teal">Openers that signal an overview to the examiner: <b>Overall</b>, <b>In general</b>, <b>It is clear that</b>, <b>The most striking feature is</b>. Use one. They are looking for it.</div>
+  <div id="d2"></div>
+</section>
+
+<section id="trend">
+  <h2>Trend language 📈</h2>
+  <p class="sub">Task 1 is largely a vocabulary test in disguise. Using <i>increase</i> six times caps Lexical Resource at 6.</p>
+  <div class="bank">
+    <div class="bcol"><div class="bh">Going up</div><div class="it">rose</div><div class="it">increased</div><div class="it">climbed</div><div class="it">grew</div><div class="it">surged (sharp)</div><div class="it">edged up (small)</div></div>
+    <div class="bcol"><div class="bh">Going down</div><div class="it">fell</div><div class="it">declined</div><div class="it">dropped</div><div class="it">decreased</div><div class="it">plummeted (sharp)</div><div class="it">dipped (small)</div></div>
+    <div class="bcol"><div class="bh">Not moving</div><div class="it">remained stable</div><div class="it">held steady</div><div class="it">levelled off</div><div class="it">changed little</div><div class="it">was unchanged</div></div>
+    <div class="bcol"><div class="bh">How much</div><div class="it">sharply / steeply</div><div class="it">gradually / steadily</div><div class="it">slightly / marginally</div><div class="it">dramatically</div></div>
+  </div>
+  <h3>The grammar that goes with them</h3>
+  <div class="scroll"><table class="w">
+    <thead><tr><th>Pattern</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td>rise <b>to</b> a figure</td><td>Social media rose <b>to</b> 14 hours.</td></tr>
+      <tr><td>rise <b>by</b> an amount</td><td>Social media rose <b>by</b> 11 hours.</td></tr>
+      <tr><td>rise <b>from … to</b></td><td>It rose <b>from</b> 3 <b>to</b> 14 hours.</td></tr>
+      <tr><td>a rise <b>in</b> something</td><td>There was a sharp rise <b>in</b> social media use.</td></tr>
+      <tr><td>verb + adverb</td><td>Television fell <b>sharply</b>.</td></tr>
+      <tr><td>adjective + noun</td><td>There was a <b>sharp fall</b> in television viewing.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note teal">The last two rows are the same fact written two ways. Using both in one essay is exactly what "flexibility" means in the band descriptor.</div>
+  <div id="d3"></div>
+</section>
+
+<section id="position">
+  <h2>Taking a position ⚖️</h2>
+  <p class="sub">Task 2 only. Without a clear stance in the introduction, Task Response is capped at 5 whatever else you do.</p>
+  <div class="vs">
+    <div class="box bad"><div class="bl">No position — capped at 5</div>This essay will discuss both sides of this issue and look at the advantages and disadvantages.</div>
+    <div class="box good"><div class="bl">A position</div>While there are clear arguments on both sides, I believe the benefits of the policy outweigh its drawbacks, provided it is introduced gradually.</div>
+  </div>
+  <p style="font-size:14.5px;color:var(--muted)">The second one tells the examiner what you think before they read a single reason. That is the whole requirement.</p>
+  <h3>Frames that work for any question</h3>
+  <div class="bank">
+    <div class="bcol"><div class="bh">Agree / disagree</div><div class="it">I largely agree that…</div><div class="it">While I accept X, I would argue that…</div></div>
+    <div class="bcol"><div class="bh">Discuss both views</div><div class="it">Although both positions have merit, I find X more convincing.</div><div class="it">Of the two views, I side with…</div></div>
+    <div class="bcol"><div class="bh">Advantages / disadvantages</div><div class="it">On balance, the benefits outweigh…</div><div class="it">The drawbacks are real, but in my view…</div></div>
+  </div>
+  <div class="note warn">"On the fence" essays lose marks. If you genuinely see both sides, pick the one you can argue better and add a qualification later — that is what <i>provided</i>, <i>as long as</i> and <i>although</i> are for.</div>
+  <div id="d4"></div>
+</section>
+
+<section id="develop">
+  <h2>Developing one idea 🌱</h2>
+  <p class="sub">A body paragraph with three ideas mentioned scores lower than one idea taken seriously.</p>
+  <div class="step"><div class="n">1</div><div><h4>Claim</h4><p>The point of the paragraph, in one sentence.</p></div></div>
+  <div class="step"><div class="n">2</div><div><h4>Reason</h4><p><i>because</i>, <i>since</i>, <i>this is largely due to</i>. Why is the claim true?</p></div></div>
+  <div class="step"><div class="n">3</div><div><h4>Example</h4><p><i>for instance</i>, <i>a good example is</i>. Concrete, even if invented — examiners do not fact-check.</p></div></div>
+  <div class="step"><div class="n">4</div><div><h4>Consequence</h4><p><i>as a result</i>, <i>which means that</i>. Close the loop back to the question.</p></div></div>
+  <div class="note teal">Test any paragraph you write: does it contain a <b>because</b> and a <b>for example</b>? If not, it is a claim, not an argument, and it will not score above 6.</div>
+  <div id="d5"></div>
+</section>
+
+<section id="combine">
+  <h2>Longer sentences 🧵</h2>
+  <p class="sub">Only simple sentences caps Grammatical Range at 5, however accurate they are. You need variety, not length everywhere.</p>
+  <div class="scroll"><table class="w">
+    <thead><tr><th>Tool</th><th>Use it to</th><th>Example</th></tr></thead>
+    <tbody>
+      <tr><td>which / who</td><td>add information</td><td>Cities absorb heat, <b>which</b> keeps them warm at night.</td></tr>
+      <tr><td>although</td><td>concede</td><td><b>Although</b> the policy is expensive, it works.</td></tr>
+      <tr><td>because / since</td><td>give a reason</td><td>Costs rose <b>because</b> demand outpaced supply.</td></tr>
+      <tr><td>-ing clause</td><td>join two actions</td><td>Prices fell, <b>leaving</b> producers with losses.</td></tr>
+      <tr><td>If / unless</td><td>condition</td><td><b>Unless</b> funding increases, the scheme will fail.</td></tr>
+      <tr><td>Not only … but</td><td>emphasise</td><td><b>Not only</b> is it cheap, <b>but</b> it is quick.</td></tr>
+    </tbody>
+  </table></div>
+  <div class="note warn">Do not make every sentence long. A short sentence after two long ones is a deliberate effect and reads as control. Range means both.</div>
+  <div id="d6"></div>
+</section>
+
+<section id="linkers">
+  <h2>Linking words ⛓️</h2>
+  <p class="sub">The commonest way to lose Coherence marks is not too few linkers. It is too many, used mechanically.</p>
+  <div class="vs">
+    <div class="box bad"><div class="bl">Mechanical — band 6</div>Firstly, cars cause pollution. Moreover, they cause traffic. Furthermore, they are expensive. In addition, they are dangerous.</div>
+    <div class="box good"><div class="bl">Natural — band 7</div>Cars pollute the air, and in dense cities they also bring the traffic that makes journeys slower than walking. The cost, both to owners and to the public purse, is a further problem.</div>
+  </div>
+  <p style="font-size:14.5px;color:var(--muted)">The second version has one linker instead of four. Cohesion is mostly achieved by <i>referring back</i> — pronouns, repeated ideas, <i>this</i>, <i>such</i> — not by signposts.</p>
+  <div class="note teal">A rough test: more than about one linker every two sentences and it starts to read like a list rather than an argument.</div>
+</section>
+
+<section id="errors">
+  <h2>The ten errors worth knowing 🔧</h2>
+  <p class="sub">These come up constantly and every one is a fixed rule, so they are cheap to eliminate.</p>
+  <div class="scroll"><table class="w">
+    <thead><tr><th>Wrong</th><th>Right</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>peoples are</td><td>people are</td><td><i>people</i> is already plural</td></tr>
+      <tr><td>people is</td><td>people are</td><td>plural verb</td></tr>
+      <tr><td>informations</td><td>information</td><td>uncountable</td></tr>
+      <tr><td>advices</td><td>advice</td><td>uncountable</td></tr>
+      <tr><td>discuss about</td><td>discuss</td><td>no preposition</td></tr>
+      <tr><td>depend of</td><td>depend on</td><td>fixed preposition</td></tr>
+      <tr><td>according to me</td><td>in my view</td><td>not used for your own opinion</td></tr>
+      <tr><td>in nowadays</td><td>nowadays</td><td>no preposition</td></tr>
+      <tr><td>more better</td><td>better</td><td>double comparative</td></tr>
+      <tr><td>don't, it's, can't</td><td>do not, it is, cannot</td><td>contractions are informal</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="check">
+  <h2>The last three minutes ⏳</h2>
+  <p class="sub">Stop writing with three minutes left and do these four things in order. It is worth more than three extra sentences.</p>
+  <div class="step"><div class="n">1</div><div><h4>Count the parts of the question</h4><p>Did you answer all of them? A missing part costs more than any grammar error.</p></div></div>
+  <div class="step"><div class="n">2</div><div><h4>Find your overview or your position</h4><p>Point at it. If you cannot, add one sentence now — it is the cheapest band you will ever buy.</p></div></div>
+  <div class="step"><div class="n">3</div><div><h4>Scan for s endings</h4><p>Third person verbs and plural nouns. It is the most frequent error type and the fastest to fix.</p></div></div>
+  <div class="step"><div class="n">4</div><div><h4>Check the word count once</h4><p>Under the minimum is an automatic penalty. Know roughly how many words your handwriting puts on a line.</p></div></div>
+  <div class="note teal">Do not reread for style. You will not improve the vocabulary in three minutes, and you may introduce a new error while trying.</div>
+</section>
+
+</main>
+</div>
+
+<div class="toast" id="toast"></div>
+<footer>Nothing is uploaded or saved.</footer>
+
+<script>
+const $=id=>document.getElementById(id);
+let done=0;
+function toast(m){const t=$("toast");t.innerHTML=m;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2400);}
+
+const DRILLS={
+ d1:{h:"Rewrite each one without reusing the underlined words.",items:[
+  {q:"The <b>chart</b> shows the <b>number of people</b> who <b>travelled</b> by train between 2005 and 2020.",
+   a:"The graph illustrates how many passengers used rail transport over the fifteen years from 2005.",
+   w:"Three changes: chart→graph, number of people→how many passengers, travelled by train→used rail transport. The date range was also restructured."},
+  {q:"Some people think <b>governments</b> should <b>spend more money</b> on public transport.",
+   a:"It is sometimes argued that greater state investment in public transport is needed.",
+   w:"Word class change does the heavy lifting: <i>governments spend money</i> became <i>state investment</i>. That is stronger than swapping synonyms."},
+  {q:"<b>Children</b> today spend too much <b>time</b> playing <b>computer games</b>.",
+   a:"Young people now devote excessive hours to video gaming.",
+   w:"children→young people, time→hours, computer games→video gaming. Note <i>devote</i> instead of <i>spend</i>."}]},
+
+ d2:{h:"Write the overview only. Two sentences, no figures.",items:[
+  {q:"<b>Table:</b> households owning a car — 1990: 41%, 2020: 78%. Households owning a bicycle — 1990: 62%, 2020: 59%.",
+   a:"Overall, car ownership rose substantially across the period, becoming far more common than it had been. Bicycle ownership, by contrast, remained almost unchanged.",
+   w:"Names the big movement, then the contrast, and contains no numbers. Both requirements met in two sentences."},
+  {q:"<b>Chart:</b> three cities' rainfall. City A is highest every month. City B and City C are similar and much lower.",
+   a:"It is clear that City A received considerably more rainfall than the other two throughout the year. City B and City C followed a similar pattern to one another at a much lower level.",
+   w:"When one item dominates, say so first. Grouping the two similar ones together is the selection the examiner is looking for."}]},
+
+ d3:{h:"Write the same fact two ways: once verb + adverb, once adjective + noun.",items:[
+  {q:"Unemployment went down a lot between 2015 and 2019.",
+   a:"Unemployment fell sharply between 2015 and 2019. / There was a sharp fall in unemployment between 2015 and 2019.",
+   w:"Same information, two grammatical shapes. Doing this once or twice in an essay is what raises Grammatical Range."},
+  {q:"The price of housing went up a little in 2021.",
+   a:"House prices rose slightly in 2021. / There was a slight rise in house prices in 2021.",
+   w:"Note <i>slightly</i> and <i>slight</i> — adverb with the verb, adjective with the noun."}]},
+
+ d4:{h:"Turn each question into a one-sentence position for your introduction.",items:[
+  {q:"Some people believe that university education should be free for everyone. To what extent do you agree?",
+   a:"While free tuition would undoubtedly widen access, I believe a partial contribution from graduates is fairer and more sustainable.",
+   w:"Concedes something real, then states a clear view. The concession is what stops it sounding simplistic."},
+  {q:"Do the advantages of remote working outweigh the disadvantages?",
+   a:"Although remote working brings genuine costs to collaboration, in my view its benefits for productivity and quality of life clearly outweigh them.",
+   w:"Answers the actual question asked — <i>outweigh</i> — rather than just listing advantages and disadvantages."}]},
+
+ d5:{h:"Write a full body paragraph: claim, reason, example, consequence.",items:[
+  {q:"Claim to develop: <b>Public transport should be free in large cities.</b>",
+   a:"Making public transport free in large cities would cut congestion significantly. This is largely because the main reason people drive is cost comparison: once the bus is free and parking is not, the calculation changes for a great many commuters. Tallinn, which removed fares for residents, saw a measurable shift away from car journeys within the first year. As a result, the roads become usable for the vehicles that genuinely need them, such as deliveries and emergency services.",
+   w:"Four sentences, four jobs. Notice the example is specific — a named place and a stated outcome — which is what separates a 7 from a 6."},
+  {q:"Claim to develop: <b>Learning a second language should start in primary school.</b>",
+   a:"Second-language teaching is far more effective when it begins in primary school. The reason is that young children acquire pronunciation and rhythm almost automatically, whereas older learners must consciously study what younger ones absorb. A child who starts at six will typically speak without a marked accent, while one starting at sixteen rarely will, however hard they work. This means that an early start buys a level of fluency that later effort cannot easily replace.",
+   w:"The example here is a comparison rather than a named case. Both work — what matters is that it is concrete."}]},
+
+ d6:{h:"Join each pair into one sentence. Do not use 'and'.",items:[
+  {q:"Cities are getting hotter. Many of them are planting more trees.",
+   a:"Because cities are getting hotter, many of them are planting more trees. / Cities, which are getting hotter, are increasingly planting trees in response.",
+   w:"Two different tools for the same pair. The second embeds one idea inside the other, which reads as more control."},
+  {q:"The policy was expensive. It reduced pollution significantly.",
+   a:"Although the policy was expensive, it reduced pollution significantly.",
+   w:"<i>Although</i> does more than <i>but</i>: it tells the reader which half of the sentence you consider more important."},
+  {q:"Prices rose in 2020. Many small businesses closed.",
+   a:"Prices rose in 2020, leaving many small businesses unable to continue. / Prices rose in 2020, which forced many small businesses to close.",
+   w:"The -ing clause is worth practising — it is a band 7 marker and most candidates never use it."}]}
+};
+
+function build(id){
+  const D=DRILLS[id];
+  $(id).innerHTML='<h3>Practise it</h3><p style="font-size:14.5px;color:var(--muted);margin-bottom:12px">'+D.h+'</p>'+
+   D.items.map((it,i)=>`
+    <div class="drill">
+      <div class="dq">${it.q}</div>
+      <textarea placeholder="Write yours here first — reading the answer without trying does nothing."></textarea>
+      <div class="dbar">
+        <button class="btn solid" data-d="${id}" data-i="${i}">Show a model</button>
+      </div>
+      <div class="ans" id="${id}a${i}" hidden></div>
+    </div>`).join("");
+}
+Object.keys(DRILLS).forEach(build);
+
+document.addEventListener("click",e=>{
+  const b=e.target.closest("[data-d]");
+  if(!b)return;
+  const {d,i}=b.dataset;
+  const box=$(d+"a"+i);
+  if(box.hidden){
+    const it=DRILLS[d].items[+i];
+    box.innerHTML='<div class="al">One good version</div>'+it.a+'<div class="why">'+it.w+'</div>';
+    box.hidden=false;
+    b.textContent="Hide";
+    done++;$("done").textContent=done;
+    if(done===5)toast("Five done — <span class='em'>keep going</span>");
+  }else{box.hidden=true;b.textContent="Show a model";}
+});
+
+const links=[...document.querySelectorAll(".rail a")];
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)links.forEach(a=>a.classList.toggle("on",a.getAttribute("href")==="#"+e.target.id));});},{rootMargin:"-45% 0px -50% 0px"});
+document.querySelectorAll("section[id]").forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>
