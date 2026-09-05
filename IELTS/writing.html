@@ -295,15 +295,15 @@ footer{max-width:1140px;margin:0 auto;padding:10px clamp(14px,3vw,26px) 60px;fon
     <div class="note teal" id="planNote"></div>
   </section>
 
-  <section id="bandsec">
+  <section id="bandsec" hidden>
     <h2>Band 🎓</h2>
     <p class="sub">Two criteria are estimated from the structure of what you wrote. Two need a reader — set those yourself, or hand the page to your teacher. Adjust any of them.</p>
     <div id="crits"></div>
     <div class="final">
-      <div><div class="sl">Band for this task</div><div class="big" id="bandOut">—</div></div>
+      <div><div class="sl">Expected band</div><div class="big" id="bandOut">—</div><div class="sl" style="margin-top:8px;color:#c4d5d1" id="bandRange"></div></div>
       <div><div class="sl">How this was worked out</div><div class="sd" id="bandWhy">Press <b>Check it</b> above first.</div></div>
     </div>
-    <div class="note warn">The two estimated criteria come from structural evidence only — an overview being present, a position being stated, paragraphs being developed. They cannot see how well you write, so treat them as a floor, not a verdict. Descriptors are simplified working versions, not the official wording.</div>
+    <div class="note warn"><b>This is an estimate, not a score.</b> Task response and coherence come from structure — is there an overview, a position, developed paragraphs. Vocabulary and grammar come from measurable things: how varied the words are, how many sentences are complex, how many errors from a fixed list. None of that can judge whether an argument is any good or catch an error the list does not know. Tested against sample scripts it lands within about half a band, which is why a range is shown. Move any slider you disagree with.</div>
 
     <h3>Full descriptors</h3>
     <div class="msheet">
@@ -556,8 +556,6 @@ function check(){
   const ic={pass:"✓",fail:"✕",warn:"!"};
   $("reqs").innerHTML=reqs.map(r=>`<div class="req ${r.s}"><span class="ic">${ic[r.s]}</span><div><b>${r.label}</b><span class="why">${r.why}</span></div></div>`).join("");
 
-  /* errors */
-  const errs=findErrors(text);
   if(errs.length){
     $("errwrap").hidden=false;
     $("errs").innerHTML=errs.map(e=>`<div class="err ${e.hard?"":"soft"}">${e.samples.map(s=>'<span class="q">'+s.replace(/</g,"&lt;")+'</span>').join(" ")} → <span class="fix">${e.fix}</span><br><span style="font-size:13.5px;color:var(--muted)">${e.why}${e.hits>e.samples.length?" ("+e.hits+" times)":""}</span></div>`).join("");
@@ -566,14 +564,27 @@ function check(){
     $("errs").innerHTML='<div class="req pass"><span class="ic">✓</span><div><b>Nothing on the list came up</b><span class="why">That means no <i>known</i> errors, not no errors. Read it aloud once — your ear catches what a word list cannot.</span></div></div>';
   }
 
+  const errs=findErrors(text);
   estimate=estimateBands(reqs,task);
+  const wl=raw.toLowerCase().replace(/[^a-z\s']/g," ").split(/\s+/).filter(Boolean);
+  const hardErrs=errs.filter(e=>e.hard).reduce((a,e)=>a+e.hits,0);
+  const pw=new Set(norm(T.prompt));
+  const short=wc.net<T.min;
+  estimate.lex=lexEstimate(raw,wl,wc.net,pw,short);
+  estimate.gram=gramEstimate(raw,wl,wc.net,hardErrs,task,short);
   const ins=[...document.querySelectorAll('#crits input')];
-  if(ins.length){ins[0].value=estimate.tr;ins[1].value=estimate.cc;wRecompute();}
+  if(ins.length){
+    ins[0].value=estimate.tr;ins[1].value=estimate.cc;
+    ins[2].value=estimate.lex.band;ins[3].value=estimate.gram.band;
+    wRecompute();
+  }
   $("c1n").textContent=task===1?"Task achievement":"Task response";
+  WCRIT[2].auto=true;WCRIT[3].auto=true;
   WCRIT[0].k=task===1?"Task achievement":"Task response";
   document.querySelectorAll('#crits .cn')[0].textContent=WCRIT[0].k;
 
   showModel();
+  $("bandsec").hidden=false;
   $("result").hidden=false;
   $("result").scrollIntoView({behavior:"smooth",block:"start"});
   toast(passed+"/10 — <span class='em'>"+(failed?failed+" to fix":"nothing failed")+"</span>");
@@ -613,8 +624,12 @@ function loadTask(n){
   $("planNote").textContent=T.planNote;
   $("planSub").textContent=n===1?"Four paragraphs. This order, every time — Task 1 rewards a formula.":"Four paragraphs. One idea each, developed properly.";
   $("c1n").textContent=n===1?"Task achievement":"Task response";
+  WCRIT[0].k=n===1?"Task achievement":"Task response";
+  const cn=document.querySelector('#crits .cn');
+  if(cn)cn.textContent=WCRIT[0].k;
   $("result").hidden=true;
   $("modelsec").hidden=true;
+  $("bandsec").hidden=true;
   document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("on",+t.dataset.task===n));
   live();
 }
@@ -623,7 +638,94 @@ document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{
   loadTask(+t.dataset.task);
 });
 $("bCheck").onclick=check;
-$("bClear").onclick=()=>{$("essay").value="";$("result").hidden=true;$("modelsec").hidden=true;live();toast("Cleared");};
+$("bClear").onclick=()=>{$("essay").value="";$("result").hidden=true;$("modelsec").hidden=true;$("bandsec").hidden=true;live();toast("Cleared");};
+
+
+/* ============ lexical + grammatical estimators ============ */
+/* Proxies only. They measure variety and structure, which correlate with band;
+   they cannot measure accuracy beyond the fixed error list, so they run
+   conservatively and are shown as a range. */
+
+const STOP=new Set(("the and for that with this from have has had was were are but not you they them their there which who what when where why how also more most some any all one two into over after about than then than its his her our your can could will would should may might must been being does did done such each other same very just only").split(" "));
+const COMMON=new Set(("the be to of and a in that have i it for not on with he as you do at this but his by from they we say her she or an will my one all would there their what so up out if about who get which go me when make can like time no just him know take people into year your good some could them see other than then now look only come its over think also back after use two how our work first well way even new want because any these give day most us is are was were has had been being am do does did says get got make made go went take took come came know knew see saw think thought look looked want wanted use used find found tell told ask asked seem seemed feel felt try tried leave left call called very more much many such own same right still every own place case part group number world life hand eye week point government company problem fact").split(" "));
+
+function lexEstimate(text,words,n,promptWords,underLength){
+  const notes=[];
+  const content=words.filter(w=>w.length>3&&!STOP.has(w));
+  const uniq=new Set(content);
+  const ttr=content.length?uniq.size/content.length:0;
+
+  const freq={};
+  content.forEach(w=>freq[w]=(freq[w]||0)+1);
+  const counts=Object.values(freq);
+  const heavy=counts.filter(v=>v>=4).length;
+  const worst=counts.length?Math.max(...counts):0;
+
+  /* sophistication ignores words lifted from the prompt — they are topic words,
+     not evidence of the candidate's own range */
+  const soph=words.filter(w=>w.length>7&&!COMMON.has(w)&&!promptWords.has(w)).length;
+  const sophPct=n?soph/n*100:0;
+
+  let b=6;
+  /* variety is only meaningful once there is enough text to measure */
+  if(n>=130){
+    if(ttr>=0.72){b+=0.5;notes.push("wide vocabulary spread");}
+    else if(ttr<0.52){b-=0.5;notes.push("narrow vocabulary spread");}
+  }
+  if(worst>=6){b-=0.5;notes.push("one word used "+worst+" times");}
+  else if(heavy>=3){b-=0.5;notes.push(heavy+" words repeated four or more times");}
+  else if(heavy===0&&n>=130){b+=0.5;notes.push("no word overused");}
+
+  if(sophPct>=11){b+=0.5;notes.push("strong proportion of less common words");}
+  else if(sophPct<4){b-=0.5;notes.push("almost entirely everyday vocabulary");}
+
+  if(underLength){b=Math.min(b,5.5);notes.push("too short to show range");}
+  b=Math.max(4,Math.min(8.5,b));
+  return {band:b,notes,detail:uniq.size+" different content words, "+sophPct.toFixed(1)+"% less common (prompt words excluded)"};
+}
+
+const SUBORD=/\b(which|who|whom|whose|although|though|because|since|while|whereas|unless|if|despite|whilst|so that|in order to|even though|given that)\b/i;
+function gramEstimate(text,words,n,errCount,task,underLength){
+  const notes=[];
+  const sents=text.split(/[.!?]+/).map(x=>x.trim()).filter(x=>x.split(/\s+/).length>2);
+  const lens=sents.map(x=>x.split(/\s+/).length);
+  const avg=lens.length?lens.reduce((a,b)=>a+b,0)/lens.length:0;
+  const spread=lens.length?Math.max(...lens)-Math.min(...lens):0;
+  const complex=sents.filter(x=>SUBORD.test(x)).length;
+  const cRatio=sents.length?complex/sents.length:0;
+
+  const tenses=[
+    [/\b(was|were|had|did|went|took|made|said|thought|felt|got|came|saw|rose|fell|declined|dropped|climbed)\b/i,"past"],
+    [/\b(have|has|had)\s+\w+(ed|en)\b/i,"perfect"],
+    [/\b(would|could|might)\b/i,"conditional"],
+    [/\b(is|are|was|were|be|been)\s+\w+(ed|en)\b/i,"passive"],
+    [/\b(will|going to)\b/i,"future"]
+  ].filter(t=>t[0].test(text)).map(t=>t[1]);
+  /* Task 1 describes finished data, so a narrow tense range is correct there.
+     Only Task 2 is expected to move across tenses. */
+  const wantTenses = task===1 ? 2 : 4;
+
+  const errPer100=n?errCount/n*100:0;
+
+  let b=6;
+  if(cRatio>=0.50){b+=1;notes.push("half or more of the sentences are complex");}
+  else if(cRatio>=0.30){b+=0.5;notes.push("a good share of complex sentences");}
+  else if(cRatio<0.15){b-=1;notes.push("almost no complex sentences");}
+
+  if(tenses.length>wantTenses){b+=0.5;notes.push(tenses.length+" verb forms: "+tenses.join(", "));}
+  else if(tenses.length<wantTenses){b-=0.5;notes.push("limited range of verb forms");}
+
+  if(spread>=14&&avg>=15){b+=0.5;notes.push("sentence length varies well");}
+  else if(avg<11){b-=1;notes.push("sentences are short and simple");}
+
+  if(errPer100>2.5){b-=1.5;notes.push("frequent errors from the checked list");}
+  else if(errPer100>1){b-=1;notes.push("several errors from the checked list");}
+  else if(errPer100>0.4){b-=0.5;notes.push("a few errors from the checked list");}
+
+  if(underLength){b=Math.min(b,5.5);notes.push("too short to show range");}
+  b=Math.max(4,Math.min(8.5,b));
+  return {band:b,notes,detail:sents.length+" sentences, "+Math.round(cRatio*100)+"% complex, avg "+avg.toFixed(0)+" words"};
+}
 
 /* ================= band ================= */
 const WCRIT=[
@@ -703,7 +805,7 @@ function ieltsRound(a){const f=Math.floor(a),r=a-f;if(r<0.25)return f;if(r<0.75)
 function buildCrits(){
   $("crits").innerHTML=WCRIT.map((c,i)=>`
    <div class="crit">
-     <div class="ch"><span class="cn">${c.k}</span><span class="src ${c.auto?"":"you"}">${c.auto?"estimated":"your judgement"}</span><span class="cv" id="wv${i}">6.0</span></div>
+     <div class="ch"><span class="cn">${c.k}</span><span class="src ${c.auto?"":"you"}">${c.auto?"from structure":"from text measures"}</span><span class="cv" id="wv${i}">6.0</span></div>
      <div class="cd" id="wd${i}"></div>
      <input type="range" min="4" max="9" step="0.5" value="6" data-i="${i}">
      <div class="scale"><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span></div>
@@ -716,8 +818,15 @@ function wRecompute(){
   const avg=vals.reduce((a,b)=>a+b,0)/4;
   const band=ieltsRound(avg);
   $("bandOut").textContent=band.toFixed(1);
-  const low=WCRIT[vals.indexOf(Math.min(...vals))].k;
+  const lo=Math.min(...vals), hi=Math.max(...vals);
+  const low=WCRIT[vals.indexOf(lo)].k;
+  const rEl=document.getElementById("bandRange");
+  if(rEl)rEl.textContent = band?("likely "+Math.max(3,band-0.5).toFixed(1)+" – "+Math.min(9,band+0.5).toFixed(1)):"";
   let why="Average of "+vals.map(v=>v.toFixed(1)).join(" · ")+" is "+avg.toFixed(2)+", rounding to <b>"+band.toFixed(1)+"</b>.";
+  if(estimate&&estimate.lex){
+    why+="<br><br><b>Vocabulary:</b> "+estimate.lex.detail+(estimate.lex.notes.length?" — "+estimate.lex.notes.join(", ")+".":".");
+    why+="<br><b>Grammar:</b> "+estimate.gram.detail+(estimate.gram.notes.length?" — "+estimate.gram.notes.join(", ")+".":".");
+  }
   if(estimate){
     const n=[];
     if(estimate.notes.tr.length)n.push("Task response held at "+estimate.tr.toFixed(1)+" by: "+estimate.notes.tr.join(", ")+".");
@@ -725,7 +834,9 @@ function wRecompute(){
     if(n.length)why+="<br><br>"+n.join(" ");
     else why+="<br><br>Nothing structural is holding the first two criteria down.";
   }
-  why+="<br><br>Weakest: <b>"+low+"</b>. Half a band there moves the overall more than polishing the strongest.";
+  why+= lo===hi
+    ? "<br><br>All four are level, so nothing stands out as the weakest yet. Move the two you are judging to what you actually see."
+    : "<br><br>Weakest: <b>"+low+"</b>. Half a band there moves the overall more than polishing the strongest.";
   $("bandWhy").innerHTML=why;
 }
 buildCrits();
