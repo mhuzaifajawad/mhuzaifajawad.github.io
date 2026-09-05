@@ -88,6 +88,17 @@ table.w td:first-child{font-weight:700;white-space:nowrap}
 .tcell .th{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:6px}
 .tcell textarea{width:100%;border:none;background:transparent;font-family:var(--body);font-size:14px;resize:none;color:var(--ink);min-height:54px;line-height:1.45}
 .tcell textarea:focus{outline:none}
+.ex{border:1px solid var(--teal-line);border-radius:13px;background:var(--teal-soft);padding:15px 17px;margin:14px 0}
+.ex .exh{font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:9px}
+.ex .card2{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:15px;line-height:1.6;margin-bottom:10px}
+.ex .card2 b{color:var(--teal)}
+.notegrid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+@media(max-width:680px){.notegrid{grid-template-columns:1fr 1fr}}
+.notecell{background:var(--card);border:1px solid var(--teal-line);border-radius:10px;padding:10px 12px}
+.notecell .nh{font-family:var(--mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--teal);font-weight:700;margin-bottom:6px}
+.notecell .nb{font-family:var(--mono);font-size:13px;line-height:1.7;color:var(--ink)}
+.rescue{border-left:4px solid var(--teal);background:var(--card);border-radius:0 10px 10px 0;padding:11px 14px;margin-top:8px;font-size:15px;line-height:1.6;font-style:italic}
+.hl{background:var(--hi-soft);border-bottom:2px solid var(--hi);font-style:normal;font-weight:600;padding:0 2px}
 .toast{position:fixed;top:70px;left:50%;transform:translateX(-50%) translateY(-14px);z-index:80;background:var(--ink);color:#fff;font-weight:700;font-size:14.5px;padding:11px 20px;border-radius:99px;box-shadow:0 10px 26px rgba(15,35,31,.3);opacity:0;pointer-events:none;transition:all .3s}
 .toast .em{color:var(--hi)}.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 footer{max-width:1120px;margin:0 auto;padding:10px clamp(14px,3vw,26px) 60px;font-size:13px;color:var(--muted);text-align:center}
@@ -151,6 +162,22 @@ footer{max-width:1120px;margin:0 auto;padding:10px clamp(14px,3vw,26px) 60px;fon
     <div class="cz" id="prepZone">one minute — notes only</div>
     <div class="cc"><button class="btn hi" id="bPrep">Start the minute</button></div>
   </div>
+  <div class="ex">
+    <div class="exh">Worked example</div>
+    <div class="card2"><b>Card:</b> Describe a place you go to when you want to concentrate. You should say where it is, how often you go, what you do there, and explain why it helps you concentrate.</div>
+    <div class="notegrid">
+      <div class="notecell"><div class="nh">What / who</div><div class="nb">library<br>2nd floor<br>old part</div></div>
+      <div class="notecell"><div class="nh">When / where</div><div class="nb">Sat morning<br>2× week<br>exams = daily</div></div>
+      <div class="notecell"><div class="nh">Detail / story</div><div class="nb">same seat<br>phone in bag<br>40 min blocks</div></div>
+      <div class="notecell"><div class="nh">Why</div><div class="nb">others working<br>= pressure<br>nothing mine there</div></div>
+    </div>
+    <p style="font-size:14px;color:var(--muted);margin-top:11px;line-height:1.5">Fourteen words in total. Not one sentence. Every line is a hook you can talk around for thirty seconds — and because they are fragments, you have to look up and speak rather than read aloud, which sounds far better.</p>
+  </div>
+  <div class="vs" style="margin-top:14px">
+    <div class="box bad"><div class="bl">What most people write</div>I go to the library on the second floor because it is quiet and I can concentrate there when I need to study for my exams.</div>
+    <div class="box good"><div class="bl">What notes should look like</div>library · 2nd flr · Sat am · same seat · phone away · others working</div>
+  </div>
+  <p style="font-size:14.5px;color:var(--muted);margin-top:10px">The first version took forty of your sixty seconds and gives you one sentence. The second took eight seconds and gives you six.</p>
   <div class="note teal">The third box saves you. A story with specifics runs forty seconds on its own. Without one you will finish at eighty seconds and stand there in silence.</div>
 </section>
 
@@ -163,10 +190,10 @@ footer{max-width:1120px;margin:0 auto;padding:10px clamp(14px,3vw,26px) 60px;fon
     <div class="cc"><button class="btn hi" id="bGo">Start</button><button class="btn quiet" id="bRst" style="background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.25)">Reset</button></div>
   </div>
   <h3>Four ways to keep going when you run dry</h3>
-  <div class="step"><div class="n">1</div><div><h4>Add a contrast</h4><p>"That's now — it was completely different two years ago, because…"</p></div></div>
-  <div class="step"><div class="n">2</div><div><h4>Bring in another person</h4><p>"My brother sees it differently, actually. He thinks…"</p></div></div>
-  <div class="step"><div class="n">3</div><div><h4>Go specific</h4><p>Names, numbers, one particular occasion. Detail is the cheapest way to fill time convincingly.</p></div></div>
-  <div class="step"><div class="n">4</div><div><h4>Say what you would change</h4><p>"If I did it again, I'd probably…" — brings in a conditional too, which the examiner is listening for.</p></div></div>
+  <div class="step"><div class="n">1</div><div><h4>Add a contrast</h4><p>"That's now — it was completely different two years ago, because…"</p></div></div><div class="rescue">…so that is how it is now. <span class="hl">It was completely different two years ago, actually</span> — back then I did all my revision at home and I never once thought about going anywhere else. What changed was that my brother moved back in, and suddenly the house had someone in every room.</div>
+  <div class="step"><div class="n">2</div><div><h4>Bring in another person</h4><p>"My brother sees it differently, actually. He thinks…"</p></div></div><div class="rescue">…and that works for me. <span class="hl">My sister sees it completely differently, though.</span> She cannot work in silence at all — she needs music, and preferably other people talking. We shared a room for years and it was a genuine problem.</div>
+  <div class="step"><div class="n">3</div><div><h4>Go specific</h4><p>Names, numbers, one particular occasion. Detail is the cheapest way to fill time convincingly.</p></div></div><div class="rescue">…it really helps. <span class="hl">There was one Saturday in March, just before the exams</span>, when I got there at nine and did not leave until the guard came round at six. I had four chapters to get through and I finished three of them. I remember it because it is the only time I have ever forgotten to eat lunch.</div>
+  <div class="step"><div class="n">4</div><div><h4>Say what you would change</h4><p>"If I did it again, I'd probably…" — brings in a conditional too, which the examiner is listening for.</p></div></div><div class="rescue">…so overall it worked well. <span class="hl">If I were doing it again, though, I would probably start earlier in the day</span> — by the afternoon I am much slower, and I think I would get the same amount done in less time.</div>
   <div class="note warn">Do not stop when you reach the end of the bullets. Keep going until the examiner stops you — being stopped is a good sign, not a bad one.</div>
 </section>
 
@@ -192,6 +219,12 @@ footer{max-width:1120px;margin:0 auto;padding:10px clamp(14px,3vw,26px) 60px;fon
     <div class="bcol"><div class="bh">Speculating</div><div class="it">It's hard to predict, but I imagine…</div><div class="it">There's a good chance that…</div><div class="it">I suspect we'll see…</div></div>
     <div class="bcol"><div class="bh">Being vague on purpose</div><div class="it">something along those lines</div><div class="it">more or less</div><div class="it">roughly speaking</div></div>
   </div>
+  <div class="ex">
+    <div class="exh">The same answer, with three of them in it</div>
+    <div class="card2"><b>Q:</b> Do you think people read less than they used to?</div>
+    <div class="card2"><span class="hl">That is an interesting question</span> — I would say they read differently rather than less. <span class="hl">The main reason for this is</span> that most people are reading constantly now, just in short pieces on a screen rather than a book from beginning to end. <span class="hl">To be fair</span>, I can see why older people think it counts as a decline, because sustained attention on one long thing genuinely is rarer. But I would argue the reading itself has not gone anywhere.</div>
+    <p style="font-size:14px;color:var(--muted);line-height:1.5">Three phrases across five sentences. They do the joining work so your energy goes on the ideas, and notice the last one is a concession — which is the move that pushes an answer towards band 7.</p>
+  </div>
   <div class="note warn">Three per answer is plenty. Using eight makes it obvious you are deploying a list, which sounds worse than using none.</div>
 </section>
 
@@ -215,6 +248,16 @@ footer{max-width:1120px;margin:0 auto;padding:10px clamp(14px,3vw,26px) 60px;fon
   <p class="sub">Fluency is not speed. It is the absence of visible repair work.</p>
   <h3>The one rule worth more than everything else here</h3>
   <div class="note teal" style="font-size:16px"><b>If a sentence goes wrong, finish it anyway.</b> A flawed sentence delivered smoothly scores higher than a correct one restarted three times. Restarting is audible; a small grammar slip usually is not.</div>
+  <div class="vs" style="margin-top:14px">
+    <div class="box bad"><div class="bl">Restarting — this is what costs you</div>I think the government should… the government have to… no sorry, I mean the government <em>should</em> make… they should be making the transport more… I do not know the word… cheaper. Cheaper for students.</div>
+    <div class="box good"><div class="bl">Pushing through — same speaker, higher band</div>I think the government should make transport cheaper for students, or free even, because at the moment it is one of the biggest costs for anyone studying away from home.</div>
+  </div>
+  <p style="font-size:14.5px;color:var(--muted);margin-top:10px">Both speakers know the same amount of English. The first one repaired four times in one sentence and reached the same idea more slowly. An examiner hears the repairs, not the grammar underneath them.</p>
+  <div class="ex">
+    <div class="exh">A wrong sentence, finished anyway</div>
+    <div class="card2">"When I was child, I <b>go</b> to my grandmother house every summer, and we <b>was</b> spending the whole day in the garden."</div>
+    <p style="font-size:14px;color:var(--muted);line-height:1.5">Three grammar errors, delivered smoothly, and the meaning is completely clear. This scores better than the same sentence restarted twice to fix the tenses. Accuracy is one criterion out of four; fluency is another, and stopping damages both at once.</p>
+  </div>
   <h3>Replace the fillers, don't remove them</h3>
   <p style="font-size:14.5px;color:var(--muted)">Silence is worse than "um". But English fillers score better than sounds.</p>
   <div class="scroll"><table class="w">
